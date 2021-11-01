@@ -62,8 +62,7 @@ public class ImageUtil {
         }
       }
     } catch (FileNotFoundException e) {
-      System.out.println("File "+filename+ " not found!");
-      System.exit(0);
+      throw new IllegalArgumentException("File "+filename+ " not found!");
     }
     return pixelMatrix;
   }

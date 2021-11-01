@@ -1,125 +1,116 @@
 package model;
 
+import util.Image;
+import util.ImageImpl;
+import util.ImageUtil;
 import util.Pixel;
-
-public class Model implements ImageProcessingModel {
-
-  @Override
-  public Pixel[][] getImage() {
-    return new Pixel[0][];
-  }
-
-  @Override
-  public void adjustImage(String adjType, int increment) {
-
-  }
-
-  @Override
-  public void adjustGreyscale() {
-
-  }
-
-  @Override
-  public void flipImage(int axis) {
-
-  }
-
-  @Override
-  public void save(String filename) {
-
-  }
-
-  @Override
-  public void load(String filename) {
-
-  }
-
-  @Override
-  public Pixel getPixelAt(int row, int col) {
-    return null;
-  }
-
-  @Override
-  public int getHeight() {
-    return 0;
-  }
-
-  @Override
-  public int getWidth() {
-    return 0;
-  }
-}
-
-
-package model;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public class Model implements ImageProcessorModel {
-  private Pixel[][] rawImage;
-  private int imageHeight;
-  private int imageWidth;
+/**
+ * Represents an ImageProcessor for an image, along with its height and width.
+ */
+public class Model implements ImageProcessingModel {
+  // imagename : Image
+  private static Map<String, Image> images = new HashMap<String, Image>();
 
-  public Model(String filename) {
-    this.rawImage = ImageUtil.readPPM(filename);
-    this.imageHeight = rawImage.length;
-    this.imageWidth = rawImage[0].length;
+  // filename : Image
+  private static Map<String, Image> filePaths = new HashMap<String, Image>();
+
+  private Image image;
+
+  /**
+   * Given a the file path of an image, creates the model of the image processor where that image
+   * can be altered.
+   *
+   * @param  imageName string that represents the name of an image.
+   * @throws NullPointerException if the image name is null.
+   * @throws IllegalArgumentException if an image with the give image name doesn't exist.
+   */
+  public Model(String imageName) throws NullPointerException, IllegalArgumentException {
+    if (imageName.equals(null)) {
+      throw new NullPointerException("The imageName cannot be null");
+    }
+    if (!(images.containsKey(imageName)) || images.get(imageName) == null)  {
+      throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
+    }
+    this.image = images.get(imageName);
   }
 
-
+  /**
+   * Returns the image that is contained within this model.
+   *
+   * @return a 2D array of pixels that represents an image.
+   */
   @Override
-  public Pixel getPixelAt(int row, int col) {
-    if (row < 0 || row >= this.imageHeight || col < 0 || col >= this.imageWidth) {
-      throw new IllegalArgumentException("The given row and/or column coordinates are invalid.");
-    }
-    return this.rawImage[row][col];
+  public Image getImage() {
+    return this.image;
   }
 
-  public void adjustBrightness(int increment, String adjustmentSpec) {
-    for (int row = 0; row < this.imageHeight; row++) {
-      for (int col = 0; col < this.imageWidth; col++) {
-        //get to each pixel
-        //obtain the highest
-        switch (adjustmentSpec) {
-          case "Value":
-            //decide how to change the color value of the pixel.
-            rawImage[row][col].adjustByValue(increment);
-            break;
-          case "Intensity":
-            rawImage[row][col].adjustByIntensity(increment);
-            break;
-          case "Luma":
-            rawImage[row][col].adjustByLuma(increment);
-            break;
-          default:
-            throw new IllegalArgumentException("The given brightness adjustment mode is invalid.");
-        }
-      }
+
+  /**
+   * @param filename the path of the file.
+   * @param imageName the name that the image will be referred to.
+   */
+  @Override
+  public void load(String filename, String imageName) throws IllegalArgumentException {
+    if (imageName.equals(null) || filename.equals(null)) {
+      throw new IllegalArgumentException("The given fileName and/or imageName cannot be null.");
     }
+    images.put(imageName, new ImageImpl(filename));
   }
 
-  //change to void method
-  public void flipImage(String axis) {
-    switch (axis) {
-      case "vertical":
-        for (int row = 0; row < this.imageHeight; row++) {
-          Collections.reverse(Arrays.asList(rawImage[row]));
-        }
-        break;
-      case "horizontally":
-        Pixel tempPixel;
-        for (int row = 0; row < this.imageHeight; row++) {
-          for (int col = 0; col < this.imageWidth / 2; col++) {
-            tempPixel = rawImage[row][col];
-            rawImage[row][col] = rawImage[rawImage.length - 1 - row][col];
-            rawImage[rawImage.length - 1 - row][col] = tempPixel;
-          }
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The given axis is not valid");
+  /**
+   * @param filename the path of the file.
+   * @param imageName the name of the image.
+   */
+  @Override
+  public void save(String filename, String imageName) {
+
+  }
+
+  public Pixel[][] adjustGreyscale(String component) throws NullPointerException, IllegalArgumentException {
+    if (component.equals(null)) {
+      throw new NullPointerException("The given component is null");
     }
+    if (!(component.equals("Red")) || !(component.equals("Green")) || !(component.equals("Blue"))) {
+      throw  new IllegalArgumentException("Given RGB component is invalid.");
+    }
+    return this.image.adjustGreyscale(component);
+  }
+
+  /**
+   * Given an increment value, adjusts the brightness of each pixel of this model's image
+   * using the given desired brightening method
+   *
+   * @param adjustmentType whether the image will be brightened or darkened.
+   * @param brightnessMode the brightening method that will be used (intensity, value, or luma.)
+   * @param increment      the increment value that will be used to adjust the image's brightness.
+   * @throws IllegalArgumentException when the given brightness adjustment mode is not
+   *                                  Value, Intensity, or Luma
+   */
+  public Pixel[][] adjustBrightness(String adjustmentType, String brightnessMode, int increment)
+          throws IllegalArgumentException {
+    return this.image.adjustBrightness(adjustmentType, brightnessMode, increment);
+  }
+
+  /**
+   * Rearranges the pixels of an image
+   *
+   * @param axis the axis that the image will be flipped across.
+   * @throws IllegalArgumentException when the given String is not
+   *                                  a valid axis to flip the image across.
+   */
+  @Override
+  public Pixel[][] flipImage(String axis) throws IllegalArgumentException {
+    if(!(axis.equals("vertically")) || !(axis.equals("horizontally"))) {
+      throw new IllegalArgumentException("The given axis is invalid.");
+    }
+    return this.image.flipImage(axis);
   }
 }
 
