@@ -1,12 +1,18 @@
 package model;
 
 import util.Image;
+import util.ImageImpl;
 import util.ImageUtil;
 import util.Pixel;
-import util.PixelImpl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 //TODO decide on consistent return types for methods that deal with the Pixel matrix
 
@@ -15,12 +21,12 @@ import java.util.Map;
  */
 public class Model implements ImageProcessingModel {
   // imagename : Image
-  private static Map<String, Image> images = new HashMap<String, Image>();
+  private static Map<String, Image> loadMap = new HashMap<String, Image>();
 
-  // filename : Image
-  private static Map<String, Image> filePaths = new HashMap<String, Image>();
+  // filepath : Image
+  private static Map<String, Image> saveMap = new HashMap<String, Image>();
 
-  private Pixel[][] image;
+  private Image image;
 
   /**
    * Given a the file path of an image, creates the model of the image processor where that image
@@ -34,10 +40,12 @@ public class Model implements ImageProcessingModel {
     if (filePath.equals(null)) {
       throw new NullPointerException("The imageName cannot be null");
     }
-    if (!(images.containsKey(filePath)) || images.get(filePath) == null)  {
+
+    if (!(loadMap.containsKey(filePath)) || loadMap.get(filePath) == null)  {
       throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
     }
-    this.image = ImageUtil.readPPM(filePath);
+
+    this.image = loadMap.get(filePath);
   }
 
   /**
@@ -46,44 +54,34 @@ public class Model implements ImageProcessingModel {
    * @return a 2D array of pixels that represents an image.
    */
   @Override
-  public Pixel[][] getImage() {
+  public Image getImage() {
     return this.image;
   }
 
   @Override
-  public Pixel[][] brightenImage(int increment) {
-    Pixel[][] brightened = new Pixel[image.length][image[0].length];
-    for (int row = 0; row < brightened.length; row++) {
-      for (int col = 0; col < brightened[0].length; col++) {
-        brightened[row][col] = brightenImage(increment);
-      }
-    }
-    return brightened;
-  }
-
-  @Override
-  public Pixel[][] displayGreyscale(String component) {
-    return new Pixel[0][];
-  }
-
-  @Override
-  public Pixel[][] adjustImage(String adjType, int increment) {
+  public Image adjustImage(String adjType, int increment) {
     return null;
   }
 
   @Override
   //TODO finish load method implementation
-  public void load() {
-    //images.put(filePath, this.image);
+  public void load(String filename, String imageName) {
+    this.loadMap.put(imageName, new ImageImpl(filename));
   }
 
   /**
-   * @param filename the path of the file.
+   * @param filepath the path of the file.
    */
   @Override
   //TODO finish save method implementation
-  public void save(String filename) {
-
+  public void save(String filepath, String imageName)throws IllegalArgumentException{
+    if(!(filepath.contains(imageName))) {
+      throw new IllegalArgumentException("specified path does not include imageName");
+    }
+    if(filepath == null || imageName == null) {
+      throw new IllegalArgumentException("filepath and/or imageName is invalid");
+    }
+    ImageUtil.writePPM(filepath, this.loadMap.get(imageName));
   }
 
   @Override

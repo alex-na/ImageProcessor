@@ -50,7 +50,7 @@ public class Controller implements ImageProcessingController {
 
     knownCommands = new HashMap<>();
     knownCommands.put("load", s -> new Load(s.next()));
-    knownCommands.put("save", s -> new Save(s.next()));
+    knownCommands.put("save", s -> new Save(s.next(), s.next()));
     knownCommands.put("brighten", s -> new Brighten(s.nextInt()));
     knownCommands.put("horizontal-flip", s -> new Flip("horizontal"));
     knownCommands.put("vertical-flip", s -> new Flip("vertical"));

@@ -1,5 +1,8 @@
 package util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -7,7 +10,7 @@ import java.io.FileInputStream;
 
 /**
  * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method
- *  as required.
+ * as required.
  */
 public class ImageUtil {
 
@@ -51,7 +54,7 @@ public class ImageUtil {
 
       //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
       for (int j = 0; j < height; j++) {
-      for (int i = 0; i < width; i++) {
+        for (int i = 0; i < width; i++) {
 
           int r = sc.nextInt();
           int g = sc.nextInt();
@@ -62,23 +65,60 @@ public class ImageUtil {
         }
       }
     } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("File "+filename+ " not found!");
+      throw new IllegalArgumentException("File " + filename + " not found!");
     }
     return pixelMatrix;
   }
 
   //demo main
-  public static void main(String []args) {
+  public static void main(String[] args) {
     String filename;
 
-    if (args.length>0) {
+    if (args.length > 0) {
       filename = args[0];
-    }
-    else {
+    } else {
       filename = "images/Koala.ppm";
     }
 
     ImageUtil.readPPM(filename);
+  }
+
+  public static void writePPM(String filepath, Image image) {
+    if (filepath == null || image == null) {
+      throw new IllegalArgumentException("filepath and/or given image are invalid");
+    }
+
+    File saveFile = new File(filepath);
+    FileOutputStream saveFileOutputStream = null;
+
+    try {
+      saveFileOutputStream = new FileOutputStream(saveFile);
+
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(image.getHeight() + " ");
+      sb.append(image.getWidth() + " ");
+      sb.append("255 ");
+
+      for (int j = 0; j < image.getHeight(); j++) {
+        for (int i = 0; i < image.getWidth(); i++) {
+          int r = image.getImage()[j][i].getRed();
+          int g = image.getImage()[j][i].getGreen();
+          int b = image.getImage()[j][i].getBlue();
+          sb.append(String.format("%d %d %d ", r, g, b));
+        }
+      }
+      byte[] strToBytes = sb.toString().stripTrailing().getBytes();
+
+      try {
+        saveFileOutputStream.write(strToBytes);
+      }  catch (IOException e) {
+        throw new IllegalStateException("Cannot write to file.");
+      }
+
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File " + filepath + " not found!");
+    }
   }
 }
 
