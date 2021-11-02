@@ -1,5 +1,4 @@
 package model;
-import util.Image;
 import util.Pixel;
 
 /**
