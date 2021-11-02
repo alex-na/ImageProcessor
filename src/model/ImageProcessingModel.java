@@ -22,6 +22,8 @@ public interface ImageProcessingModel {
 
   /**
    *
+   * @param component
+   * @return
    */
   Pixel[][] displayGreyscale(String component);
 
@@ -37,13 +39,16 @@ public interface ImageProcessingModel {
   /**
    *
    * @param filename
+   * @param imageName
    */
   void save(String filename, String imageName);
 
   /**
    *
+   * @param filePath
+   * @param imageName
    */
-  void load(String imageName);
+  void load(String filePath, String imageName);
 
   /**
    *

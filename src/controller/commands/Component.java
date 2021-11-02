@@ -20,22 +20,22 @@ public class Component implements ImageProcessingCommand {
     String in = this.type;
     switch (in) {
       case "value":
-          model.adjustGreyscale("value");
+          model.displayGreyscale("value");
           break;
       case "intensity":
-        model.adjustGreyscale("intensity");
+        model.displayGreyscale("intensity");
         break;
       case "luma":
-        model.adjustGreyscale("luma");
+        model.displayGreyscale("luma");
         break;
       case "red":
-        model.adjustGreyscale("red");
+        model.displayGreyscale("red");
         break;
       case "green":
-        model.adjustGreyscale("green");
+        model.displayGreyscale("green");
         break;
       case "blue":
-        model.adjustGreyscale("blue");
+        model.displayGreyscale("blue");
         break;
       default : throw new IllegalArgumentException("Invalid input.");
     }
