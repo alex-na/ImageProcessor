@@ -7,8 +7,9 @@ import util.Pixel;
 public interface ImageProcessingModel {
 
   /**
+   * Returns the image that is contained within this model.
    *
-   * @return
+   * @return a 2D array of pixels that represents an image.
    */
   Pixel[][] getImage();
 
@@ -20,30 +21,33 @@ public interface ImageProcessingModel {
 
   /**
    *
+   * @param component
+   * @return
    */
   Pixel[][] displayGreyscale(String component);
 
-
   /**
+   * Rearranges the pixels of an image to flip them over a given axis.
    *
-   * @param flipType
+   * @param axis the axis that the image will be flipped across.
+   * @throws IllegalArgumentException when the given String is not
+   *                                  a valid axis to flip the image across.
    */
-  Pixel[][] flipImage(String flipType);
-
-  /**
-   *
-   * @param filepath
-   * @param imageName
-   */
-  void save(String filepath, String imageName)throws IllegalArgumentException;
+  Pixel[][] flipImage(String axis);
 
   /**
    *
    * @param filename
    * @param imageName
-   * @throws IllegalArgumentException
    */
-  void load(String filename, String imageName) throws IllegalArgumentException;
+  void save(String filename, String imageName);
+
+  /**
+   *
+   * @param filePath
+   * @param imageName
+   */
+  void load(String filePath, String imageName);
 
   /**
    *
