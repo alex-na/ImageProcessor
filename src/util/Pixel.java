@@ -42,5 +42,4 @@ public interface Pixel {
    * @return Pixel with updated RGB values
    */
   Pixel adjustBrightness(int increment);
-
 }

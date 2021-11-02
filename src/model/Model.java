@@ -5,11 +5,8 @@ import util.ImageImpl;
 import util.ImageUtil;
 import util.Pixel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Arrays;
-import java.util.Collections;
+
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,12 +18,9 @@ import java.util.Objects;
  */
 public class Model implements ImageProcessingModel {
   // imagename : Image
-  private static Map<String, Image> loadMap = new HashMap<String, Image>();
+  private Map<String, Pixel[][]> loadMap = new HashMap<String, Pixel[][]>();
 
-  // filepath : Image
-  private static Map<String, Image> saveMap = new HashMap<String, Image>();
-
-  private Image image;
+  private Pixel[][] image;
 
   /**
    * Given a the file path of an image, creates the model of the image processor where that image
@@ -45,7 +39,10 @@ public class Model implements ImageProcessingModel {
       throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
     }
 
-    this.image = loadMap.get(filePath);
+    this.image = ImageUtil.readPPM(filePath);
+
+    loadMap.get(filePath)
+
   }
 
   /**
@@ -66,7 +63,7 @@ public class Model implements ImageProcessingModel {
   @Override
   //TODO finish load method implementation
   public void load(String filename, String imageName) {
-    this.loadMap.put(imageName, new ImageImpl(filename));
+    this.loadMap.put(imageName, ImageUtil.readPPM(filename));
   }
 
   /**
@@ -74,7 +71,7 @@ public class Model implements ImageProcessingModel {
    */
   @Override
   //TODO finish save method implementation
-  public void save(String filepath, String imageName)throws IllegalArgumentException{
+  public void save(String filepath, String imageName)throws IllegalArgumentException {
     if(!(filepath.contains(imageName))) {
       throw new IllegalArgumentException("specified path does not include imageName");
     }
@@ -86,17 +83,17 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public Pixel getPixelAt(int row, int col) {
-    return null;
+    return this.image[row][col];
   }
 
   @Override
   public int getHeight() {
-    return 0;
+    return this.image.length;
   }
 
   @Override
   public int getWidth() {
-    return 0;
+    return this.image[0].length;
   }
 
   //TODO edit functionality to include value, intensity, luma
@@ -107,7 +104,13 @@ public class Model implements ImageProcessingModel {
     if (!(component.equals("Red")) || !(component.equals("Green")) || !(component.equals("Blue"))) {
       throw  new IllegalArgumentException("Given RGB component is invalid.");
     }
-    return this.image.adjustGreyscale(component);
+    Color[][] greyScaleImage = new Pixel[this.getHeight()][this.getWidth()];
+
+    for(int row = 0; row < this.getHeight());
+    for()
+      greyScaleImage[row][col]
+              = new Color(image[row][col].getRed(), image[row][col].getGreen(), image[row][col].getBlue();
+    return greyScaleImage;
   }
 
   /**
@@ -141,6 +144,148 @@ public class Model implements ImageProcessingModel {
       throw new IllegalArgumentException("The given axis is invalid.");
     }
     return this.image.flipImage(axis);
+  }
+
+  /**
+   * Returns the pixel of an image at a particular row,column grid coordinate.
+   *
+   * @param row the row of a row,col grid coordinate.
+   * @param col the column of a row,col grid coordinate.
+   * @return the Pixel at the row and column of an image's 2D array of pixels.
+   * @throws IllegalArgumentException when the given row and/or column is out
+   *                                  of the range of an image's width and height.
+   */
+  public Pixel getPixelAt(int row, int col) throws IllegalArgumentException {
+    if (row < 0 || row >= this.height || col < 0 || col >= this.width) {
+      throw new IllegalArgumentException("The given row and/or column coordinates are invalid.");
+    }
+    return this.image[row][col];
+  }
+
+  /**
+   * Adjusts the model's image to a greyscale representation of the image.
+   *
+   * @param component the component of an image's pixel that will
+   *                  be used to set the greyscale value of that pixel.
+   * @throws IllegalArgumentException if the given rgb component is not Red, Green, or Blue.
+   */
+  public Pixel[][] adjustGreyscale(String component) throws IllegalArgumentException {
+    Pixel[][] greyScaleImage = new Pixel[height][width];
+
+    for (int row = 0; row < this.height; row++) {
+      for (int col = 0; col < this.width; col++) {
+        greyScaleImage[row][col] = this.image[row][col].adjustPixelGreyscale(component);
+      }
+    }
+    return greyScaleImage;
+  }
+
+  /**
+   * Rearranges the pixels of an image across a given axis to flip the image.
+   *
+   * @param axis the axis that the image will be flipped across.
+   * @return a Pixel[][] that represent a flipped version of this model's image.
+   * @throws IllegalArgumentException when the given String is not
+   *                                  a valid axis to flip the image across.
+   */
+  public Pixel[][] flipImage(String axis) throws IllegalArgumentException {
+    Pixel[][] flippedImage = new Pixel[height][width];
+    switch (axis) {
+      case "vertically":
+        for (int row = 0; row < this.height; row++) {
+          for (int col = 0; col < this.width; col++) {
+            flippedImage[row][col] = image[row][width - 1 - col];
+          }
+        }
+        break;
+      case "horizontally":
+        Pixel tempPixel;
+        for (int row = 0; row < this.height; row++) {
+          for (int col = 0; col < this.width; col++) {
+            flippedImage[row][col] = image[height - 1 - row][col];
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The given axis is not valid");
+    }
+    return flippedImage;
+  }
+
+  /**
+   * Given an increment value, adjusts the brightness of each pixel of this model's image
+   * using the given desired brightening method
+   *
+   * @param adjustmentType whether the image will be brightened or darkened.
+   * @param brightnessMode the brightening method that will be used (intensity, value, or luma.)
+   * @param increment      the increment value that will be used to adjust the image's brightness.
+   * @throws IllegalArgumentException when the given brightness adjustment mode is not
+   *                                  Value, Intensity, or Luma
+   */
+  public Pixel[][] adjustBrightness(String adjustmentType, String brightnessMode, int increment)
+          throws IllegalArgumentException {
+    Pixel[][] adjustedImage = new Pixel[height][width];
+    for (int row = 0; row < this.height; row++) {
+      for (int col = 0; col < this.width; col++) {
+        if (adjustmentType.equals("Brighten")) {
+          switch (brightnessMode) {
+            case "Value":
+              adjustedImage[row][col] = this.image[row][col].adjustByValue(increment);
+              break;
+            case "Intensity":
+              adjustedImage[row][col] = this.image[row][col].adjustByIntensity(increment);
+              break;
+            case "Luma":
+              adjustedImage[row][col] = this.image[row][col].adjustByLuma(increment);
+              break;
+            default: throw new IllegalArgumentException("The given brightness mode was invalid");
+          }
+        } else if (adjustmentType.equals("Darken")) {
+          switch (brightnessMode) {
+            case "Value":
+              adjustedImage[row][col]
+                      = this.image[row][col].adjustByValue(increment * -1);
+              break;
+            case "Intensity":
+              adjustedImage[row][col]
+                      = this.image[row][col].adjustByIntensity(increment * -1);
+              break;
+            case "Luma":
+              adjustedImage[row][col]
+                      = this.image[row][col].adjustByLuma(increment * -1);
+              break;
+            default:
+              throw new IllegalArgumentException("The given brightness mode was invalid");
+          }
+        } else {
+          throw new IllegalArgumentException("The adjustment type was invalid");
+        }
+      }
+    }
+    return adjustedImage;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    // Fast path for pointer equality:
+    if (this == o) {
+      return true;
+    }
+
+    // If o isn't the right class then it can't be equal:
+    if (! (o instanceof Model)) {
+      return false;
+    }
+
+    // The successful instanceof check means our cast will succeed:
+    Model that = (Model) o;
+
+    return  this.loadMap == that.loadMap && this.image == that.image;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(loadMap, image);
   }
 }
 

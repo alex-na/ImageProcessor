@@ -33,14 +33,18 @@ public interface ImageProcessingModel {
 
   /**
    *
-   * @param filename
+   * @param filepath
+   * @param imageName
    */
-  void save(String filename);
+  void save(String filepath, String imageName)throws IllegalArgumentException;
 
   /**
    *
+   * @param filename
+   * @param imageName
+   * @throws IllegalArgumentException
    */
-  void load();
+  void load(String filename, String imageName) throws IllegalArgumentException;
 
   /**
    *

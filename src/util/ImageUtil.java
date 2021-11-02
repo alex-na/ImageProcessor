@@ -83,7 +83,7 @@ public class ImageUtil {
     ImageUtil.readPPM(filename);
   }
 
-  public static void writePPM(String filepath, Image image) {
+  public static void writePPM(String filepath, Pixel[][] image) {
     if (filepath == null || image == null) {
       throw new IllegalArgumentException("filepath and/or given image are invalid");
     }
@@ -96,15 +96,15 @@ public class ImageUtil {
 
       StringBuilder sb = new StringBuilder();
 
-      sb.append(image.getHeight() + " ");
-      sb.append(image.getWidth() + " ");
+      sb.append(image.length + " ");
+      sb.append(image[0].length + " ");
       sb.append("255 ");
 
-      for (int j = 0; j < image.getHeight(); j++) {
-        for (int i = 0; i < image.getWidth(); i++) {
-          int r = image.getImage()[j][i].getRed();
-          int g = image.getImage()[j][i].getGreen();
-          int b = image.getImage()[j][i].getBlue();
+      for (int j = 0; j < image.length; j++) {
+        for (int i = 0; i < image[0].length; i++) {
+          int r = image[j][i].getRed();
+          int g = image[j][i].getGreen();
+          int b = image[j][i].getBlue();
           sb.append(String.format("%d %d %d ", r, g, b));
         }
       }
