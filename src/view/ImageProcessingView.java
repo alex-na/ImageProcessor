@@ -1,5 +1,7 @@
 package view;
 
+import java.io.IOException;
+
 /**
  *
  */
@@ -13,8 +15,7 @@ public interface ImageProcessingView {
   /**
    *
    * @param message
-   * @return
    */
-  void renderMessage(String message);
+  void renderMessage(String message) throws IOException;
 
 }
