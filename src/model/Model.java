@@ -5,6 +5,9 @@ import util.ImageImpl;
 import util.ImageUtil;
 import util.Pixel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,10 +21,10 @@ import java.util.Objects;
  */
 public class Model implements ImageProcessingModel {
   // imagename : Image
-  private static Map<String, Image> images = new HashMap<String, Image>();
+  private static Map<String, Image> loadMap = new HashMap<String, Image>();
 
-  // filename : Image
-  private static Map<String, Image> filePaths = new HashMap<String, Image>();
+  // filepath : Image
+  private static Map<String, Image> saveMap = new HashMap<String, Image>();
 
   private Image image;
 
@@ -37,10 +40,12 @@ public class Model implements ImageProcessingModel {
     if (filePath.equals(null)) {
       throw new NullPointerException("The imageName cannot be null");
     }
-    if (!(images.containsKey(filePath)) || images.get(filePath) == null)  {
+
+    if (!(loadMap.containsKey(filePath)) || loadMap.get(filePath) == null)  {
       throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
     }
-    this.image = images.get(filePath);
+
+    this.image = loadMap.get(filePath);
   }
 
   /**
@@ -60,17 +65,23 @@ public class Model implements ImageProcessingModel {
 
   @Override
   //TODO finish load method implementation
-  public Image load() {
-    return this.image;
+  public void load(String filename, String imageName) {
+    this.loadMap.put(imageName, new ImageImpl(filename));
   }
 
   /**
-   * @param filename the path of the file.
+   * @param filepath the path of the file.
    */
   @Override
   //TODO finish save method implementation
-  public void save(String filename) {
-
+  public void save(String filepath, String imageName)throws IllegalArgumentException{
+    if(!(filepath.contains(imageName))) {
+      throw new IllegalArgumentException("specified path does not include imageName");
+    }
+    if(filepath == null || imageName == null) {
+      throw new IllegalArgumentException("filepath and/or imageName is invalid");
+    }
+    ImageUtil.writePPM(filepath, this.loadMap.get(imageName));
   }
 
   @Override

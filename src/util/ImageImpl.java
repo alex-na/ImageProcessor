@@ -9,7 +9,6 @@ import model.Model;
  */
 public class ImageImpl implements Image {
   private Pixel[][] image;
-  private String filename;
   private int height;
   private int width;
 
@@ -27,7 +26,6 @@ public class ImageImpl implements Image {
       throw new NullPointerException("given filename is null.");
     }
     this.image = ImageUtil.readPPM(filename);
-    this.filename = filename;
     this.height = this.image.length;
     this.width = this.image[0].length;
 
