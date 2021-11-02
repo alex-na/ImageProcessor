@@ -5,7 +5,6 @@ package util;
  */
 public interface Image {
 
-
   /**
    * Returns the 2D array of pixels associated with this image.
    *

@@ -2,8 +2,6 @@ package util;
 
 import java.util.Objects;
 
-import model.Model;
-
 /**
  * Implementation of an image that is represented as a 2D array of pixels with a height and width.
  */

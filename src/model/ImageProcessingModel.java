@@ -11,19 +11,18 @@ public interface ImageProcessingModel {
    *
    * @return
    */
-  Image getImage();
+  Pixel[][] getImage();
 
   /**
    *
-   * @param adjType
    * @param increment
    */
-  Image adjustImage(String adjType, int increment);
+  Pixel[][] brightenImage(int increment);
 
   /**
    *
    */
-  Pixel[][] adjustGreyscale(String type);
+  Pixel[][] displayGreyscale(String component);
 
 
   /**
@@ -41,7 +40,7 @@ public interface ImageProcessingModel {
   /**
    *
    */
-  Image load();
+  void load();
 
   /**
    *

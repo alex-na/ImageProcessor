@@ -16,9 +16,9 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    */
-  public static Pixel[][] readPPM(String filename) {
+  public static PixelImpl[][] readPPM(String filename) {
     Scanner sc;
-    Pixel[][] pixelMatrix = null;
+    PixelImpl[][] pixelMatrix = null;
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -47,7 +47,7 @@ public class ImageUtil {
       //System.out.println("Height of image: " + height);
       int maxValue = sc.nextInt();
 
-      pixelMatrix = new Pixel[height][width];
+      pixelMatrix = new PixelImpl[height][width];
 
       //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
       for (int j = 0; j < height; j++) {
@@ -56,7 +56,7 @@ public class ImageUtil {
           int r = sc.nextInt();
           int g = sc.nextInt();
           int b = sc.nextInt();
-          pixelMatrix[j][i] = new Pixel(r, g, b);
+          pixelMatrix[j][i] = new PixelImpl(r, g, b);
 
           //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
