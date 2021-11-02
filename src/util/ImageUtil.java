@@ -67,8 +67,6 @@ public class ImageUtil {
     return pixelMatrix;
   }
 
-
-
   //demo main
   public static void main(String []args) {
     String filename;
@@ -77,7 +75,7 @@ public class ImageUtil {
       filename = args[0];
     }
     else {
-      filename = "/Users/ryankii/Desktop/OOD/Hw4/src/Koala.ppm";
+      filename = "images/Koala.ppm";
     }
 
     ImageUtil.readPPM(filename);

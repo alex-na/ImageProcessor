@@ -40,9 +40,8 @@ public interface ImageProcessingModel {
 
   /**
    *
-   * @param filename
    */
-  void load(String filename);
+  Image load();
 
   /**
    *

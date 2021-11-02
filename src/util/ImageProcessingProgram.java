@@ -25,7 +25,7 @@ public final class ImageProcessingProgram {
 
     //TODO fix filePath to find the input.
     ImageProcessingModel model =  new Model("");
-    ImageProcessingView view = new View(model, appendable);
+    ImageProcessingView view = new View(appendable);
     ImageProcessingController controller = new Controller(model, view, readable);
 
     controller.processImage();

@@ -58,16 +58,19 @@ public class Model implements ImageProcessingModel {
     return null;
   }
 
+  @Override
+  //TODO finish load method implementation
+  public Image load() {
+    return this.image;
+  }
+
   /**
    * @param filename the path of the file.
    */
   @Override
-  //TODO finish load method implementation
-  public void load(String filename) throws IllegalArgumentException {
-//    if (imageName.equals(null) || filename.equals(null)) {
-//      throw new IllegalArgumentException("The given fileName and/or imageName cannot be null.");
-//    }
-//    images.put(imageName, new ImageImpl(filename));
+  //TODO finish save method implementation
+  public void save(String filename) {
+
   }
 
   @Override
@@ -83,16 +86,6 @@ public class Model implements ImageProcessingModel {
   @Override
   public int getWidth() {
     return 0;
-  }
-
-
-  /**
-   * @param filename the path of the file.
-   */
-  @Override
-  //TODO finish save method implementation
-  public void save(String filename) {
-
   }
 
   //TODO edit functionality to include value, intensity, luma
@@ -116,7 +109,8 @@ public class Model implements ImageProcessingModel {
    * @throws IllegalArgumentException when the given brightness adjustment mode is not
    *                                  Value, Intensity, or Luma
    */
-  //TODO edit method to match with interface and delete adjustmentType (component implementation moved to adjustGreyscale,
+  //TODO edit method to match with interface and delete
+  // adjustmentType (component implementation moved to adjustGreyscale),
   // brightnessMode (darken is just negative brightness, functionality stays the same.)
   public Pixel[][] adjustBrightness(String adjustmentType, String brightnessMode, int increment)
           throws IllegalArgumentException {
