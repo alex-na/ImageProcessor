@@ -1,4 +1,5 @@
 package model;
+import util.Image;
 import util.Pixel;
 
 /**
@@ -10,26 +11,26 @@ public interface ImageProcessingModel {
    *
    * @return
    */
-  Pixel[][] getImage();
+  Image getImage();
 
   /**
    *
    * @param adjType
    * @param increment
    */
-  void adjustImage(String adjType, int increment);
+  Image adjustImage(String adjType, int increment);
 
   /**
    *
    */
-  void adjustGreyscale();
+  Pixel[][] adjustGreyscale(String type);
 
 
   /**
    *
    * @param flipType
    */
-  void flipImage(String flipType);
+  Pixel[][] flipImage(String flipType);
 
   /**
    *

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+//TODO decide on consistent return types for methods that deal with the Pixel matrix
+
 /**
  * Represents an ImageProcessor for an image, along with its height and width.
  */
@@ -27,18 +29,18 @@ public class Model implements ImageProcessingModel {
    * Given a the file path of an image, creates the model of the image processor where that image
    * can be altered.
    *
-   * @param  imageName string that represents the name of an image.
+   * @param  filePath string that represents the name of an image.
    * @throws NullPointerException if the image name is null.
    * @throws IllegalArgumentException if an image with the give image name doesn't exist.
    */
-  public Model(String imageName) throws NullPointerException, IllegalArgumentException {
-    if (imageName.equals(null)) {
+  public Model(String filePath) throws NullPointerException, IllegalArgumentException {
+    if (filePath.equals(null)) {
       throw new NullPointerException("The imageName cannot be null");
     }
-    if (!(images.containsKey(imageName)) || images.get(imageName) == null)  {
+    if (!(images.containsKey(filePath)) || images.get(filePath) == null)  {
       throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
     }
-    this.image = images.get(imageName);
+    this.image = images.get(filePath);
   }
 
   /**
@@ -51,28 +53,49 @@ public class Model implements ImageProcessingModel {
     return this.image;
   }
 
-
-  /**
-   * @param filename the path of the file.
-   * @param imageName the name that the image will be referred to.
-   */
   @Override
-  public void load(String filename, String imageName) throws IllegalArgumentException {
-    if (imageName.equals(null) || filename.equals(null)) {
-      throw new IllegalArgumentException("The given fileName and/or imageName cannot be null.");
-    }
-    images.put(imageName, new ImageImpl(filename));
+  public Image adjustImage(String adjType, int increment) {
+    return null;
   }
 
   /**
    * @param filename the path of the file.
-   * @param imageName the name of the image.
    */
   @Override
-  public void save(String filename, String imageName) {
+  //TODO finish load method implementation
+  public void load(String filename) throws IllegalArgumentException {
+//    if (imageName.equals(null) || filename.equals(null)) {
+//      throw new IllegalArgumentException("The given fileName and/or imageName cannot be null.");
+//    }
+//    images.put(imageName, new ImageImpl(filename));
+  }
+
+  @Override
+  public Pixel getPixelAt(int row, int col) {
+    return null;
+  }
+
+  @Override
+  public int getHeight() {
+    return 0;
+  }
+
+  @Override
+  public int getWidth() {
+    return 0;
+  }
+
+
+  /**
+   * @param filename the path of the file.
+   */
+  @Override
+  //TODO finish save method implementation
+  public void save(String filename) {
 
   }
 
+  //TODO edit functionality to include value, intensity, luma
   public Pixel[][] adjustGreyscale(String component) throws NullPointerException, IllegalArgumentException {
     if (component.equals(null)) {
       throw new NullPointerException("The given component is null");
@@ -93,6 +116,8 @@ public class Model implements ImageProcessingModel {
    * @throws IllegalArgumentException when the given brightness adjustment mode is not
    *                                  Value, Intensity, or Luma
    */
+  //TODO edit method to match with interface and delete adjustmentType (component implementation moved to adjustGreyscale,
+  // brightnessMode (darken is just negative brightness, functionality stays the same.)
   public Pixel[][] adjustBrightness(String adjustmentType, String brightnessMode, int increment)
           throws IllegalArgumentException {
     return this.image.adjustBrightness(adjustmentType, brightnessMode, increment);

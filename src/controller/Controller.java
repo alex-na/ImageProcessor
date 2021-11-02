@@ -1,11 +1,11 @@
 package controller;
 
 import controller.commands.Brighten;
-import controller.commands.Horizontal;
+import controller.commands.Component;
+import controller.commands.Flip;
 import controller.commands.ImageProcessingCommand;
 import controller.commands.Load;
 import controller.commands.Save;
-import controller.commands.Vertical;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -52,8 +52,14 @@ public class Controller implements ImageProcessingController {
     knownCommands.put("load", s -> new Load(s.next()));
     knownCommands.put("save", s -> new Save(s.next()));
     knownCommands.put("brighten", s -> new Brighten(s.nextInt()));
-    knownCommands.put("horizontal-flip", s -> new Horizontal());
-    knownCommands.put("vertical-flip", s -> new Vertical());
+    knownCommands.put("horizontal-flip", s -> new Flip("horizontal"));
+    knownCommands.put("vertical-flip", s -> new Flip("vertical"));
+    knownCommands.put("value-component", s -> new Component("value"));
+    knownCommands.put("intensity-component", s -> new Component("intensity"));
+    knownCommands.put("luma-component", s -> new Component("luma"));
+    knownCommands.put("red-component", s -> new Component("red"));
+    knownCommands.put("green-component", s -> new Component("green"));
+    knownCommands.put("blue-component", s -> new Component("blue"));
 
     while(scan.hasNext()) {
       ImageProcessingCommand c;
@@ -62,7 +68,7 @@ public class Controller implements ImageProcessingController {
           knownCommands.getOrDefault(in, null);
 
       if (cmd == null) {
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Invalid command entered.");
       } else {
         c = cmd.apply(scan);
         c.go(this.model, this.view);
