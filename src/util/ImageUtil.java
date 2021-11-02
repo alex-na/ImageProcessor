@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+import model.pixel.Pixel;
+import model.pixel.PixelImpl;
 
 
 /**

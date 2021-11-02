@@ -1,6 +1,5 @@
 import model.ImageProcessingModel;
 import model.Model;
-import util.Pixel;
 
 import org.junit.Before;
 import org.junit.Test;

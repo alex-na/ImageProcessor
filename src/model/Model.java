@@ -3,16 +3,10 @@ package model;
 import util.Image;
 import util.ImageImpl;
 import util.ImageUtil;
-import util.Pixel;
+import model.pixel.Pixel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 //TODO decide on consistent return types for methods that deal with the Pixel matrix
 

@@ -1,4 +1,4 @@
-package util;
+package model.pixel;
 
 import java.util.Objects;
 
