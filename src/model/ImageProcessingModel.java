@@ -1,5 +1,5 @@
 package model;
-import model.pixel.Pixel;
+import util.Pixel;
 
 /**
  *
@@ -11,20 +11,20 @@ public interface ImageProcessingModel {
    *
    * @return a 2D array of pixels that represents an image.
    */
-  Pixel[][] getImage(String imageName);
+  Pixel[][] getImage();
 
   /**
    *
    * @param increment
    */
-  Pixel[][] brightenImage(int increment);
+  void brightenImage(int increment, String imageName, String desiredName);
 
   /**
    *
    * @param component
    * @return
    */
-  Pixel[][] displayGreyscale(String component);
+  void displayGreyscale(String component, String imageName, String desiredName);
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.
@@ -33,14 +33,14 @@ public interface ImageProcessingModel {
    * @throws IllegalArgumentException when the given String is not
    *                                  a valid axis to flip the image across.
    */
-  Pixel[][] flipImage(String axis);
+  void flipImage(String axis, String imageName, String desiredName);
 
   /**
    *
-   * @param filePath
+   * @param filename
    * @param imageName
    */
-  void save(String filePath, String imageName);
+  void save(String filename, String imageName);
 
   /**
    *
@@ -56,17 +56,5 @@ public interface ImageProcessingModel {
    * @return
    */
   Pixel getPixelAt(int row, int col);
-
-  /**
-   *
-   * @return
-   */
-  int getHeight();
-
-  /**
-   *
-   * @return
-   */
-  int getWidth();
 
 }
