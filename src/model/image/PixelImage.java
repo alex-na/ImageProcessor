@@ -25,15 +25,46 @@ public class PixelImage implements Image {
   }
 
   public Pixel[][] brightenImage(int increment) {
-    return null;
+    Pixel[][] brightened = new Pixel[this.height][this.width];
+    for (int row = 0; row < brightened.length; row++) {
+      for (int col = 0; col < brightened[0].length; col++) {
+        brightened[row][col] = image[row][col].adjustBrightness(increment);
+      }
+    }
+    return brightened;
   }
 
   public Pixel[][] displayGreyscale(String component) {
-    return null;
+    Pixel[][] greyscale = new Pixel[this.height][this.width];
+    for (int row = 0; row < greyscale.length; row++) {
+      for (int col = 0; col < greyscale[0].length; col++) {
+        greyscale[row][col] = image[row][col].displayComponent(component);
+      }
+    }
+    return greyscale;
   }
 
   public Pixel[][] flipImage(String axis) {
-    return null;
+    Pixel[][] flippedImage = new Pixel[this.height][this.width];
+    switch (axis) {
+      case "vertical":
+        for (int row = 0; row < image.length; row++) {
+          for (int col = 0; col < image[0].length; col++) {
+            flippedImage[row][col] = image[row][image[0].length - 1 - col];
+          }
+        }
+        break;
+      case "horizontal":
+        for (int row = 0; row < image.length; row++) {
+          for (int col = 0; col < image[0].length; col++) {
+            flippedImage[row][col] = image[image.length - 1 - row][col];
+          }
+        }
+        break;
+      default:
+        throw new IllegalArgumentException("The given axis is not valid");
+    }
+    return flippedImage;
   }
 
   @Override

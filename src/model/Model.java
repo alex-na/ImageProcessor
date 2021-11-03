@@ -1,5 +1,7 @@
 package model;
 
+import model.image.Image;
+import model.image.PixelImage;
 import model.pixel.Pixel;
 import util.ImageUtil;
 
@@ -13,22 +15,22 @@ import java.util.Map;
  * Represents an ImageProcessor for an image, along with its height and width.
  */
 public class Model implements ImageProcessingModel {
-  private Map<String, Pixel[][]> loadMap;
-
+  private Map<String, Image> loadMap;
 
   /**
-   * Given a the file path of an image, creates the model of the image processor where that image
-   * can be altered.
-   *
-   * @throws NullPointerException if the image name is null.
-   * @throws IllegalArgumentException if an image with the give image name doesn't exist.
+   * Instantiates a Map of Image-names and Images that stores images.
+   * Images can be retrieved by their names.
    */
   public Model() {
-    this.loadMap = new HashMap<String, Pixel[][]>();
+    this.loadMap = new HashMap<String, Image>();
   }
 
-
-  //TODO finish load method implementation
+  /**
+   *
+   * @param filePath
+   * @param imageName
+   * @throws IllegalArgumentException
+   */
   public void load(String filePath, String imageName) throws IllegalArgumentException {
     if (filePath == null || imageName == null) {
       throw new IllegalArgumentException("Given parameters are invalid.");
@@ -36,91 +38,82 @@ public class Model implements ImageProcessingModel {
     this.loadMap.put(imageName, ImageUtil.readPPM(filePath));
   }
 
-  //TODO finish save method implementation
-  public void save(String filePath, String imageName)throws IllegalArgumentException {
-    if(!(filePath.contains(imageName))) {
-      throw new IllegalArgumentException("specified path does not include imageName");
+  /**
+   *
+   * @param filePath
+   * @param imageName
+   * @throws IllegalArgumentException
+   */
+  public void save(String filePath, String imageName) throws IllegalArgumentException {
+    if (!(filePath.contains(imageName))) {
+      throw new IllegalArgumentException("Specified path does not include imageName");
     }
-    if(filePath == null || imageName == null) {
-      throw new IllegalArgumentException("filepath and/or imageName is invalid");
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("Image name is not associated with an image.");
     }
     ImageUtil.writePPM(filePath, this.loadMap.get(imageName));
   }
 
+  /**
+   *
+   * @param increment
+   * @param imageName
+   * @param desiredName
+   * @throws IllegalArgumentException
+   */
+  public void brightenImage(int increment, String imageName, String desiredName) throws IllegalArgumentException {
+    validNames(imageName, desiredName);
 
-  public void brightenImage(int increment, String imageName, String desiredName) {
-    if (inputHelper(imageName, desiredName)) {
-      throw new IllegalArgumentException("The given parameters are invalid.");
-    }
-    Pixel[][] image = loadMap.get(imageName);
-    Pixel[][] brightened = new Pixel[image.length][image[0].length];
-    for (int row = 0; row < brightened.length; row++) {
-      for (int col = 0; col < brightened[0].length; col++) {
-        brightened[row][col] = image[row][col].adjustBrightness(increment);
-      }
-    }
-    this.loadMap.put(desiredName, brightened);
+    Pixel[][] brightened = loadMap.get(imageName).brightenImage(increment);
+    this.loadMap.put(desiredName, new PixelImage(brightened));
   }
 
+  /**
+   *
+   * @param component
+   * @param imageName
+   * @param desiredName
+   * @throws IllegalArgumentException
+   */
   @Override
-  public void displayGreyscale(String component, String imageName, String desiredName) {
-    if (inputHelper(imageName, desiredName)) {
-      throw new IllegalArgumentException("The given parameters are invalid.");
+  public void displayGreyscale(String component, String imageName, String desiredName) throws IllegalArgumentException {
+    validNames(imageName, desiredName);
+    if (!(component.equals("red") || component.equals("green") || component.equals("blue")
+            || component.equals("value") || component.equals("intensity") || component.equals("luma"))) {
+      throw new IllegalArgumentException("The given component is invalid.");
     }
-
-    Pixel[][] image = loadMap.get(imageName);
-    Pixel[][] greyscale = new Pixel[image.length][image[0].length];
-    for (int row = 0; row < image.length; row++) {
-      for (int col = 0; col < image[0].length; col++) {
-        greyscale[row][col] = image[row][col].displayComponent(component);
-      }
-    }
-    loadMap.put(desiredName, greyscale);
+    Pixel[][] greyscale = loadMap.get(imageName).displayGreyscale(component);
+    this.loadMap.put(desiredName, new PixelImage(greyscale));
   }
 
-//  @Override
-//  public Pixel getPixelAt(int row, int col) {
-//    if (row > image.length || row < 0 || col > image[0].length || col < 0) {
-//      throw new IllegalArgumentException("Invalid coordinate. ");
-//    }
-//    return image[row][col];
-//  }
+  /**
+   * @param axis        the axis that the image will be flipped across.
+   * @param imageName
+   * @param desiredName
+   * @throws IllegalArgumentException
+   */
+  public void flipImage(String axis, String imageName, String desiredName) throws IllegalArgumentException {
+    validNames(imageName, desiredName);
+    if (!(axis.equals("horizontal") || axis.equals("vertical"))) {
+      throw new IllegalArgumentException("The axis must be vertical or horizontal");
+    }
 
-  public void flipImage(String axis, String imageName, String desiredName) {
-    if (inputHelper(imageName, desiredName)) {
-      throw new IllegalArgumentException("The given parameters are invalid.");
-    }
-    Pixel[][] image = loadMap.get(imageName);
-    Pixel[][] flippedImage = new Pixel[image.length][image[0].length];
-    switch (axis) {
-      case "vertical":
-        for (int row = 0; row < image.length; row++) {
-          for (int col = 0; col < image[0].length; col++) {
-            flippedImage[row][col] = image[row][image[0].length - 1 - col];
-          }
-        }
-        break;
-      case "horizontal":
-        for (int row = 0; row < image.length; row++) {
-          for (int col = 0; col < image[0].length; col++) {
-            flippedImage[row][col] = image[image.length - 1 - row][col];
-          }
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("The given axis is not valid");
-    }
-    loadMap.put(desiredName, flippedImage);
+    Pixel[][] flippedImage = loadMap.get(imageName).flipImage(axis);
+    loadMap.put(desiredName, new PixelImage(flippedImage));
   }
 
-  private boolean inputHelper(String imageName, String desiredImage) {
-    if(imageName == null || desiredImage == null) {
-      return false;
+  /**
+   * @param imageName
+   * @param desiredImage
+   * @throws IllegalArgumentException
+   */
+  private void validNames(String imageName, String desiredImage) throws IllegalArgumentException {
+    if (imageName == null || desiredImage == null) {
+      throw new IllegalArgumentException("The given image name and/or desired image name are null.");
     }
-    if(!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
-      return false;
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("The given image name isn't associated with an image.");
     }
-    return true;
   }
 }
 

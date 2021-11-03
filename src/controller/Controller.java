@@ -51,15 +51,15 @@ public class Controller implements ImageProcessingController {
     knownCommands = new HashMap<>();
     knownCommands.put("load", s -> new Load(s.next(), s.next()));
     knownCommands.put("save", s -> new Save(s.next(), s.next()));
-    knownCommands.put("brighten", s -> new Brighten(s.nextInt()));
-    knownCommands.put("horizontal-flip", s -> new Flip("horizontal"));
-    knownCommands.put("vertical-flip", s -> new Flip("vertical"));
-    knownCommands.put("value-component", s -> new Component("value"));
-    knownCommands.put("intensity-component", s -> new Component("intensity"));
-    knownCommands.put("luma-component", s -> new Component("luma"));
-    knownCommands.put("red-component", s -> new Component("red"));
-    knownCommands.put("green-component", s -> new Component("green"));
-    knownCommands.put("blue-component", s -> new Component("blue"));
+    knownCommands.put("brighten", s -> new Brighten(s.nextInt(), s.next(), s.next()));
+    knownCommands.put("horizontal-flip", s -> new Flip("horizontal", s.next(), s.next()));
+    knownCommands.put("vertical-flip", s -> new Flip("vertical", s.next(), s.next()));
+    knownCommands.put("value-component", s -> new Component("value", s.next(), s.next()));
+    knownCommands.put("intensity-component", s -> new Component("intensity", s.next(), s.next()));
+    knownCommands.put("luma-component", s -> new Component("luma", s.next(), s.next()));
+    knownCommands.put("red-component", s -> new Component("red", s.next(), s.next()));
+    knownCommands.put("green-component", s -> new Component("green", s.next(), s.next()));
+    knownCommands.put("blue-component", s -> new Component("blue", s.next(), s.next()));
 
     while(scan.hasNext()) {
       ImageProcessingCommand c;

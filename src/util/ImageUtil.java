@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
+
+import model.image.Image;
+import model.image.PixelImage;
 import model.pixel.Pixel;
 import model.pixel.PixelImpl;
 
@@ -21,7 +24,7 @@ public class ImageUtil {
    *
    * @param filename the path of the file.
    */
-  public static PixelImpl[][] readPPM(String filename) {
+  public static Image readPPM(String filename) {
     Scanner sc;
     PixelImpl[][] pixelMatrix = null;
 
@@ -69,7 +72,7 @@ public class ImageUtil {
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File " + filename + " not found!");
     }
-    return pixelMatrix;
+    return new PixelImage(pixelMatrix);
   }
 
   //demo main
@@ -85,7 +88,7 @@ public class ImageUtil {
     ImageUtil.readPPM(filename);
   }
 
-  public static void writePPM(String filepath, Pixel[][] image) {
+  public static void writePPM(String filepath, Image image) {
     if (filepath == null || image == null) {
       throw new IllegalArgumentException("filepath and/or given image are invalid");
     }
@@ -98,15 +101,15 @@ public class ImageUtil {
 
       StringBuilder sb = new StringBuilder();
 
-      sb.append(image.length + " ");
-      sb.append(image[0].length + " ");
+      sb.append(image.getHeight() + " ");
+      sb.append(image.getWidth() + " ");
       sb.append("255 ");
 
-      for (int j = 0; j < image.length; j++) {
-        for (int i = 0; i < image[0].length; i++) {
-          int r = image[j][i].getRed();
-          int g = image[j][i].getGreen();
-          int b = image[j][i].getBlue();
+      for (int j = 0; j < image.getHeight(); j++) {
+        for (int i = 0; i < image.getWidth(); i++) {
+          int r = image.getImage()[j][i].getRed();
+          int g = image.getImage()[j][i].getGreen();
+          int b = image.getImage()[j][i].getBlue();
           sb.append(String.format("%d %d %d ", r, g, b));
         }
       }
