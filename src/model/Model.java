@@ -1,59 +1,40 @@
 package model;
 
-import util.Image;
-import util.ImageImpl;
 import util.ImageUtil;
 import model.pixel.Pixel;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO decide on consistent return types for methods that deal with the Pixel matrix
-
 /**
  * Represents an ImageProcessor for an image, along with its height and width.
  */
 public class Model implements ImageProcessingModel {
-  private static Map<String, Pixel[][]> loadMap;
-  private Pixel[][] image;
 
+  private static Map<String, Pixel[][]> loadMap;
 
   /**
-   * Given a the file path of an image, creates the model of the image processor where that image
+   * Given the file path of an image, creates the model of the image processor where that image
    * can be altered.
-   *
-   * @param  filePath string that represents the name of an image.
-   * @throws NullPointerException if the image name is null.
-   * @throws IllegalArgumentException if an image with the give image name doesn't exist.
    */
-  public Model(String filePath, String imageName) throws NullPointerException, IllegalArgumentException {
-    if (filePath.equals(null)) {
-      throw new NullPointerException("The imageName cannot be null");
-    }
-
-    if (!(loadMap.containsKey(filePath)) || loadMap.get(filePath) == null)  {
-      throw new IllegalArgumentException ("The given imageName doesn't correspond to an image");
-    }
-
-    this.image = ImageUtil.readPPM(filePath);
-
-    loadMap = new HashMap<String, Pixel[][]>();
-    loadMap.put(imageName, this.image);
+  public Model() {
+    loadMap = new HashMap<>();
   }
 
   @Override
-  public Pixel[][] getImage() {
-    return this.image;
+  public Pixel[][] getImage(String imageName) {
+    if (!(loadMap.containsKey(imageName))) {
+      throw new IllegalArgumentException("Image name does not exist.");
+    }
+    return loadMap.get(imageName);
   }
 
   @Override
-  //TODO finish load method implementation
   public void load(String filePath, String imageName) {
-    //this.loadMap.put(imageName, new ImageImpl(filename));
+    this.loadMap.put(imageName, ImageUtil.readPPM(filePath));
   }
 
   @Override
-  //TODO finish save method implementation
   public void save(String filePath, String imageName)throws IllegalArgumentException {
     if(!(filePath.contains(imageName))) {
       throw new IllegalArgumentException("specified path does not include imageName");
@@ -65,16 +46,6 @@ public class Model implements ImageProcessingModel {
   }
 
   @Override
-  public int getHeight() {
-    return image.length;
-  }
-
-  @Override
-  public int getWidth() {
-    return image[0].length;
-  }
-
-  @Override
   public Pixel[][] brightenImage(int increment) {
     Pixel[][] brightened = new Pixel[image.length][image[0].length];
     for (int row = 0; row < image.length; row++) {
@@ -82,6 +53,7 @@ public class Model implements ImageProcessingModel {
         brightened[row][col] = image[row][col].adjustBrightness(increment);
       }
     }
+    //loadMap.put(imageName, brightened);
     return brightened;
   }
 

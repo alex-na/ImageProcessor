@@ -1,5 +1,4 @@
 package model;
-import util.Image;
 import model.pixel.Pixel;
 
 /**
@@ -12,7 +11,7 @@ public interface ImageProcessingModel {
    *
    * @return a 2D array of pixels that represents an image.
    */
-  Pixel[][] getImage();
+  Pixel[][] getImage(String imageName);
 
   /**
    *
@@ -38,10 +37,10 @@ public interface ImageProcessingModel {
 
   /**
    *
-   * @param filename
+   * @param filePath
    * @param imageName
    */
-  void save(String filename, String imageName);
+  void save(String filePath, String imageName);
 
   /**
    *

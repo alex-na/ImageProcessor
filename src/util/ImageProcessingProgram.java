@@ -24,7 +24,7 @@ public final class ImageProcessingProgram {
     Appendable appendable = new StringBuilder();
 
     //TODO fix filePath to find the input.
-    ImageProcessingModel model =  new Model("");
+    ImageProcessingModel model =  new Model();
     ImageProcessingView view = new View(appendable);
     ImageProcessingController controller = new Controller(model, view, readable);
 
