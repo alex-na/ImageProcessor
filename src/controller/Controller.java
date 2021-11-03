@@ -49,7 +49,7 @@ public class Controller implements ImageProcessingController {
     Scanner scan = new Scanner(this.input);
 
     knownCommands = new HashMap<>();
-    knownCommands.put("load", s -> new Load(s.next()));
+    knownCommands.put("load", s -> new Load(s.next(), s.next()));
     knownCommands.put("save", s -> new Save(s.next(), s.next()));
     knownCommands.put("brighten", s -> new Brighten(s.nextInt()));
     knownCommands.put("horizontal-flip", s -> new Flip("horizontal"));

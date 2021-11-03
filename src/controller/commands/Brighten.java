@@ -13,6 +13,6 @@ public class Brighten implements ImageProcessingCommand {
 
   @Override
   public void go(ImageProcessingModel model, ImageProcessingView view) {
-    model.adjustImage("brighten", this.increment);
+    model.brightenImage(this.increment);
   }
 }

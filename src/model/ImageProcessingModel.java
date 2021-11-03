@@ -17,14 +17,14 @@ public interface ImageProcessingModel {
    *
    * @param increment
    */
-  Pixel[][] brightenImage(int increment);
+  void brightenImage(int increment, String imageName, String desiredName);
 
   /**
    *
    * @param component
    * @return
    */
-  Pixel[][] displayGreyscale(String component);
+  void displayGreyscale(String component, String imageName, String desiredName);
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.
@@ -33,7 +33,7 @@ public interface ImageProcessingModel {
    * @throws IllegalArgumentException when the given String is not
    *                                  a valid axis to flip the image across.
    */
-  Pixel[][] flipImage(String axis);
+  void flipImage(String axis, String imageName, String desiredName);
 
   /**
    *
@@ -56,17 +56,5 @@ public interface ImageProcessingModel {
    * @return
    */
   Pixel getPixelAt(int row, int col);
-
-  /**
-   *
-   * @return
-   */
-  int getHeight();
-
-  /**
-   *
-   * @return
-   */
-  int getWidth();
 
 }
