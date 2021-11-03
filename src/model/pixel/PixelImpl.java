@@ -7,9 +7,9 @@ import java.util.Objects;
  * RBG values of a color
  */
 public class PixelImpl implements Pixel {
-  private int red;
-  private int green;
-  private int blue;
+  private final int red;
+  private final int green;
+  private final int blue;
 
   /**
    * @param red   the red component of a pixel's rgb color.
@@ -28,23 +28,22 @@ public class PixelImpl implements Pixel {
 
   @Override
   public int getRed() {
-    return this.getRed();
+    return this.red;
   }
 
   @Override
   public int getGreen() {
-    return this.getGreen();
+    return this.green;
   }
 
   @Override
   public int getBlue() {
-    return this.getBlue();
+    return this.blue;
   }
 
-  // displaying greyscale components
-  private Pixel showGreyscaleComponent(String type) {
-    String in = type;
-    switch (in) {
+
+  private Pixel showGreyscaleComponent(String type) throws IllegalArgumentException {
+    switch (type) {
       case "value" :
         int max = Math.max(this.red, Math.max(this.blue, this.green));
         return new PixelImpl(max,max,max);
@@ -60,10 +59,8 @@ public class PixelImpl implements Pixel {
     }
   }
 
-  // displaying color components
-  private Pixel showColorComponent(String type) {
-    String in = type;
-    switch (in) {
+  private Pixel showColorComponent(String type) throws IllegalArgumentException {
+    switch (type) {
       case "red" :
         return new PixelImpl(this.red, this.red, this.red);
       case "green" :
@@ -75,9 +72,8 @@ public class PixelImpl implements Pixel {
   }
 
   @Override
-  public Pixel displayComponent(String type) {
-    String in = type;
-    switch(in) {
+  public Pixel displayComponent(String type) throws IllegalArgumentException {
+    switch(type) {
       case "value":
         return showGreyscaleComponent("value");
       case "intensity":
@@ -96,14 +92,13 @@ public class PixelImpl implements Pixel {
 
   @Override
   public Pixel adjustBrightness(int increment) throws IllegalArgumentException {
-    int r = this.red + increment;
-    int g = this.green + increment;
-    int b = this.blue + increment;
 
-    if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) {
+    if (this.red + increment > 255 || this.red + increment < 0
+        || this.green + increment > 255 || this.green < 0
+        || this.blue + increment> 255 || this.blue + increment < 0) {
       throw new IllegalArgumentException("Invalid increment.");
     } else {
-      return new PixelImpl(r,g,b);
+      return new PixelImpl(red + increment, green + increment, blue + increment);
     }
   }
 

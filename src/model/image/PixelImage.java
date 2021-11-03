@@ -6,9 +6,9 @@ import model.pixel.Pixel;
  * Represents an image in the form of a 2D array of Pixels.
  */
 public class PixelImage implements Image {
-  private Pixel[][] image;
-  private int height;
-  private int width;
+  private final Pixel[][] image;
+  private final int height;
+  private final int width;
 
   /**
    * Given a 2D array of pixels, constructs a PixelImage object that contains the Pixel matrix,
@@ -43,7 +43,7 @@ public class PixelImage implements Image {
   }
 
   @Override
-  public Pixel[][] brightenImage(int increment) throws IllegalArgumentException{
+  public Pixel[][] brightenImage(int increment) throws IllegalArgumentException {
     Pixel[][] brightened = new Pixel[this.height][this.width];
     for (int row = 0; row < brightened.length; row++) {
       for (int col = 0; col < brightened[0].length; col++) {
@@ -54,7 +54,7 @@ public class PixelImage implements Image {
   }
 
   @Override
-  public Pixel[][] displayGreyscale(String component) {
+  public Pixel[][] displayGreyscale(String component) throws IllegalArgumentException {
     Pixel[][] greyscale = new Pixel[this.height][this.width];
     for (int row = 0; row < greyscale.length; row++) {
       for (int col = 0; col < greyscale[0].length; col++) {
@@ -65,7 +65,7 @@ public class PixelImage implements Image {
   }
 
   @Override
-  public Pixel[][] flipImage(String axis) {
+  public Pixel[][] flipImage(String axis) throws IllegalArgumentException {
     Pixel[][] flippedImage = new Pixel[this.height][this.width];
     switch (axis) {
       case "vertical":

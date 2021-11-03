@@ -9,13 +9,11 @@ import java.io.FileInputStream;
 
 import model.image.Image;
 import model.image.PixelImage;
-import model.pixel.Pixel;
 import model.pixel.PixelImpl;
 
-
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change this method
- * as required.
+ * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change
+ * this method as required.
  */
 public class ImageUtil {
 
@@ -23,7 +21,6 @@ public class ImageUtil {
    * Read an image file in the PPM format and print the colors.
    *
    * @param filename the path of the file.
-   *
    * @throws IllegalArgumentException when the given filename is an invalid path to an image file.
    */
   public static Image readPPM(String filename) throws IllegalArgumentException {
@@ -94,7 +91,7 @@ public class ImageUtil {
    * Writing a 2D array of Pixels to a PPM file.
    *
    * @param filepath the file path of the image
-   * @param image the image to be written
+   * @param image    the image to be written
    * @throws IllegalArgumentException if inputs are null
    */
   public static void writePPM(String filepath, Image image) throws IllegalArgumentException {
@@ -117,19 +114,19 @@ public class ImageUtil {
       for (int j = 0; j < image.getHeight(); j++) {
         for (int i = 0; i < image.getWidth(); i++) {
           sb.append(String.format("%d %d %d ",
-                  image.getImage()[j][i].getRed(),
-                  image.getImage()[j][i].getGreen(),
-                  image.getImage()[j][i].getBlue()));
+              image.getImage()[j][i].getRed(),
+              image.getImage()[j][i].getGreen(),
+              image.getImage()[j][i].getBlue()));
         }
       }
+
       byte[] strToBytes = sb.toString().stripTrailing().getBytes();
 
       try {
         saveFileOutputStream.write(strToBytes);
-      }  catch (IOException e) {
+      } catch (IOException e) {
         throw new IllegalStateException("Cannot write to file.");
       }
-
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File " + filepath + " not found!");
     }
