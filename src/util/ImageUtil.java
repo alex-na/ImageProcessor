@@ -107,8 +107,9 @@ public class ImageUtil {
 
       StringBuilder sb = new StringBuilder();
 
-      sb.append(image.getHeight() + " ");
+      sb.append("P3 ");
       sb.append(image.getWidth() + " ");
+      sb.append(image.getHeight() + " ");
       sb.append("255 ");
 
       for (int j = 0; j < image.getHeight(); j++) {
