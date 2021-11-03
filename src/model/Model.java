@@ -1,7 +1,7 @@
 package model;
 
+import model.pixel.Pixel;
 import util.ImageUtil;
-import util.Pixel;
 
 import java.io.File;
 import java.io.FileNotFoundException;

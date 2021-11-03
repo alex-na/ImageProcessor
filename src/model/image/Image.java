@@ -39,7 +39,7 @@ public interface Image {
    * @param col
    * @return
    */
-  Pixel[][] getPixelAt(int row, int col);
+  Pixel getPixelAt(int row, int col);
 
   /**
    *
