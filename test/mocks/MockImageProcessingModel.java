@@ -1,6 +1,9 @@
 package mocks;
 
+import java.util.Map;
+
 import model.ImageProcessingModel;
+import model.image.Image;
 
 public class MockImageProcessingModel implements ImageProcessingModel {
 
@@ -8,6 +11,14 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   public MockImageProcessingModel(StringBuilder log) {
     this.log = log;
+  }
+
+  /**
+   * Retrieves the images with associated names.
+   */
+  @Override
+  public Map<String, Image> getLoadMap() {
+    return null;
   }
 
   @Override
