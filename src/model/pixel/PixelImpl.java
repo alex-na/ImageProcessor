@@ -91,14 +91,27 @@ public class PixelImpl implements Pixel {
   }
 
   @Override
-  public Pixel adjustBrightness(int increment) throws IllegalArgumentException {
+  public Pixel adjustBrightness(int increment) {
+    int r = this.red + increment;
+    int g = this.green + increment;
+    int b = this.blue + increment;
 
-    if (this.red + increment > 255 || this.red + increment < 0
-        || this.green + increment > 255 || this.green < 0
-        || this.blue + increment> 255 || this.blue + increment < 0) {
-      throw new IllegalArgumentException("Invalid increment.");
-    } else {
-      return new PixelImpl(red + increment, green + increment, blue + increment);
+    r = componentWithinRange(r);
+    g = componentWithinRange(g);
+    b = componentWithinRange(b);
+
+    return new PixelImpl(r, g, b);
+  }
+
+  private int componentWithinRange(int component) {
+    if (component < 0) {
+      return 0;
+    }
+    else if (component > 255) {
+      return 255;
+    }
+    else  {
+      return component;
     }
   }
 

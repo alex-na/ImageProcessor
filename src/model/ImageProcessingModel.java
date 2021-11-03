@@ -1,10 +1,19 @@
 package model;
 
+import java.util.Map;
+
+import model.image.Image;
+
 /**
  * Representing the model of an ImageProcessor, utilized for performing operations on an image
  * and storing said operations for future use.
  */
 public interface ImageProcessingModel {
+
+  /**
+   * Retrieves the images with associated names.
+   */
+  Map<String, Image> getLoadMap();
 
   /**
    * Brighten an image based on an increment.

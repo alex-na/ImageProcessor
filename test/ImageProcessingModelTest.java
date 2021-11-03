@@ -1,115 +1,68 @@
-//import model.ImageProcessingModel;
-//import model.Model;
-//import util.Pixel;
-//
-//import org.junit.Before;
-//import org.junit.Test;
-//
-//import static org.junit.Assert.assertEquals;
-//
-///**
-// *
-// */
-//public class ImageProcessingModelTest {
-//  ImageProcessingModel KoalaModel;
-//
-//  @Before
-//  public void init() {
-//    KoalaModel =
-//        new Model("/Users/ryankii/Downloads/image_processing-main/images/Koala.ppm");
-//  }
-//
-//  @Test (expected = NullPointerException.class)
-//  public void nullFileName() {
-//    new Model(null);
-//  }
-//
-//  @Test (expected = IllegalArgumentException.class)
-//  public void fileNameDoesntExist() {
-//    new Model("koala");
-//  }
-//
-//  // Tests for greyscale method
-//  @Test
-//  public void redGreyscaleImage() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.adjustGreyscale("Red").image, KoalaModel.getImage());
+import controller.commands.Brighten;
+import model.ImageProcessingModel;
+import model.Model;
+import model.image.Image;
+import model.image.PixelImage;
+import model.pixel.Pixel;
+import model.pixel.PixelImpl;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ *
+ */
+public class ImageProcessingModelTest {
+  ImageProcessingModel KoalaModel;
+  ImageProcessingModel testModel;
+
+  @Before
+  public void init() {
+
+    testModel = new Model();
+    Pixel[][] dumbyPicture = {{new PixelImpl(0, 0, 0)},
+            {new PixelImpl(5, 5, 5)},
+            {new PixelImpl(100, 200, 300)},
+            {new PixelImpl(250, 250, 250)},
+            {new PixelImpl(255, 255, 255)}};
+    testModel.getLoadMap().put("dumbyPicture", new PixelImage(dumbyPicture));
+  }
+
+  @Test
+  public void createModel() {
+    Model newModel = new Model();
+    assertEquals(newModel.getLoadMap(), new HashMap<String, Image>());
+  }
+
+  @Test
+  public void brighten10() {
+    KoalaModel.brightenImage(10, "Koala", "Koala-Brighten");
+
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+//    for (int row = 0; row < KoalaBrighten.getHeight(); row++) {
+//      for (int col = 0; col < KoalaBrighten.getWidth(); col++) {
+//        sb1.append(KoalaBrighten.getImage()[row][col].getRed());
+//        sb1.append(KoalaBrighten.getImage()[row][col].getGreen());
+//        sb1.append(KoalaBrighten.getImage()[row][col].getBlue());
 //      }
 //    }
-//  }
 //
-//  // Tests for greyscale method
-//  @Test
-//  public void greenGreyscaleImage() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.adjustGreyscale("Green").image, KoalaModel.getImage());
+//    for (int row = 0; row < Koala.getHeight(); row++) {
+//      for (int col = 0; col < KoalaBrighten.getWidth(); col++) {
+//        sb1.append(KoalaBrighten.getImage()[row][col].getRed());
+//        sb1.append(KoalaBrighten.getImage()[row][col].getGreen());
+//        sb1.append(KoalaBrighten.getImage()[row][col].getBlue());
 //      }
 //    }
-//  }
-//
-//  // Tests for greyscale method
-//  @Test
-//  public void blueGreyscaleImage() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.adjustGreyscale("Blue").image, KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//
-//  // Tests for greyscale method
-//  @Test
-//  public void brightenImage() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.brightenImage(10).image, KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//   Tests for flip method
-//  @Test
-//  public void flipHorizontally() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//
-//        assertEquals(KoalaModel.flipImage("vertically").image, KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//  // Tests for flip method
-//  @Test
-//  public void flipVertically() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.flipImage("vertically").image, KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//  // Tests for flip method
-//  @Test
-//  public void flipHorizontallyVertically() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.flipImage("vertically")..image, KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//  // Tests for flip method
-//  @Test
-//  public void flipVerticallyHorizontally() {
-//    for (int row = 0; row < KoalaModel.getHeight(); row++) {
-//      for (int col = 0; col < KoalaModel.getWidth(); col++) {
-//        assertEquals(KoalaModel.flipImage("vertically").flipImage("vertically"), KoalaModel.getImage());
-//      }
-//    }
-//  }
-//
-//
-//}
+
+    BufferedImage image1 =
+    assertEquals(sb1, sb2);
+  }
+
+}

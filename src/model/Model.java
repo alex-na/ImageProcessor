@@ -24,6 +24,10 @@ public class Model implements ImageProcessingModel {
     this.loadMap = new HashMap<String, Image>();
   }
 
+  public Map<String, Image> getLoadMap() {
+    return this.loadMap;
+  }
+
   @Override
   public void load(String filePath, String imageName) throws IllegalArgumentException {
     if (filePath == null || imageName == null) {
