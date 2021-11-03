@@ -74,19 +74,6 @@ public class ImageUtil {
     return new PixelImage(pixelMatrix);
   }
 
-//  //demo main
-//  public static void main(String[] args) {
-//    String filename;
-//
-//    if (args.length > 0) {
-//      filename = args[0];
-//    } else {
-//      filename = "images/Koala.ppm";
-//    }
-//
-//    ImageUtil.readPPM(filename);
-//  }
-
   /**
    * Writing a 2D array of Pixels to a PPM file.
    *
@@ -107,14 +94,14 @@ public class ImageUtil {
 
       StringBuilder sb = new StringBuilder();
 
-      sb.append(image.getWidth() + "P3 ");
+      sb.append("P3\n");
       sb.append(image.getWidth() + " ");
-      sb.append(image.getHeight() + " ");
-      sb.append("255 ");
+      sb.append(image.getHeight() + "\n");
+      sb.append("255\n");
 
       for (int j = 0; j < image.getHeight(); j++) {
         for (int i = 0; i < image.getWidth(); i++) {
-          sb.append(String.format("%d %d %d ",
+          sb.append(String.format("%d\n%d\n%d\n",
               image.getImage()[j][i].getRed(),
               image.getImage()[j][i].getGreen(),
               image.getImage()[j][i].getBlue()));

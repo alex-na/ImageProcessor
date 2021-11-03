@@ -68,14 +68,14 @@ public class PixelImage implements Image {
   public Pixel[][] flipImage(String axis) throws IllegalArgumentException {
     Pixel[][] flippedImage = new Pixel[this.height][this.width];
     switch (axis) {
-      case "vertical":
+      case "horizontal":
         for (int row = 0; row < image.length; row++) {
           for (int col = 0; col < image[0].length; col++) {
             flippedImage[row][col] = image[row][image[0].length - 1 - col];
           }
         }
         break;
-      case "horizontal":
+      case "vertical":
         for (int row = 0; row < image.length; row++) {
           for (int col = 0; col < image[0].length; col++) {
             flippedImage[row][col] = image[image.length - 1 - row][col];
