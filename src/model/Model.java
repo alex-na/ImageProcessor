@@ -8,7 +8,6 @@ import util.ImageUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Representing an ImageProcessingModel that contains the versions
  * of an Image and their supporting operations.

@@ -47,10 +47,10 @@ public interface ImageProcessingModel {
   /**
    * Saves an image within the desired file location.
    *
-   * @param filename the desired location of the image
+   * @param filePath the desired location of the image
    * @param imageName the name of the image that is to be saved
    */
-  void save(String filename, String imageName) throws IllegalArgumentException;
+  void save(String filePath, String imageName) throws IllegalArgumentException;
 
   /**
    * Load an image from a file path to be used internally within the model.
