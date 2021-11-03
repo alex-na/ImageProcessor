@@ -23,8 +23,10 @@ public class ImageUtil {
    * Read an image file in the PPM format and print the colors.
    *
    * @param filename the path of the file.
+   *
+   * @throws IllegalArgumentException when the given filename is an invalid path to an image file.
    */
-  public static Image readPPM(String filename) {
+  public static Image readPPM(String filename) throws IllegalArgumentException {
     Scanner sc;
     PixelImpl[][] pixelMatrix = null;
 
@@ -88,7 +90,13 @@ public class ImageUtil {
     ImageUtil.readPPM(filename);
   }
 
-  public static void writePPM(String filepath, Image image) {
+  /**
+   *
+   * @param filepath
+   * @param image
+   * @throws IllegalArgumentException
+   */
+  public static void writePPM(String filepath, Image image) throws IllegalArgumentException{
     if (filepath == null || image == null) {
       throw new IllegalArgumentException("filepath and/or given image are invalid");
     }
@@ -107,10 +115,10 @@ public class ImageUtil {
 
       for (int j = 0; j < image.getHeight(); j++) {
         for (int i = 0; i < image.getWidth(); i++) {
-          int r = image.getImage()[j][i].getRed();
-          int g = image.getImage()[j][i].getGreen();
-          int b = image.getImage()[j][i].getBlue();
-          sb.append(String.format("%d %d %d ", r, g, b));
+          sb.append(String.format("%d %d %d ",
+                  image.getImage()[j][i].getRed(),
+                  image.getImage()[j][i].getGreen(),
+                  image.getImage()[j][i].getBlue()));
         }
       }
       byte[] strToBytes = sb.toString().stripTrailing().getBytes();
