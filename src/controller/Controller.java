@@ -14,21 +14,22 @@ import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
 /**
- *
+ * Representing an implementation of the ImageProcessorController interface,
+ * utilized for delegating operations to the model/view based on user input.
  */
 public class Controller implements ImageProcessingController {
 
   private final ImageProcessingModel model;
   private final ImageProcessingView view;
   private final Readable input;
-  Map<String, Function<Scanner, ImageProcessingCommand>> knownCommands;
+  private Map<String, Function<Scanner, ImageProcessingCommand>> knownCommands;
 
   /**
-   *
-   * @param model
-   * @param view
-   * @param input
-   * @throws IllegalArgumentException
+   * Constructs a Controller object
+   * @param model ImageProcessingModel
+   * @param view ImageProcessingView
+   * @param input Readable
+   * @throws IllegalArgumentException if any fields are null.
    */
   public Controller(ImageProcessingModel model, ImageProcessingView view, Readable input)
       throws IllegalArgumentException {

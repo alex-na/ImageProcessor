@@ -27,45 +27,22 @@ public class PixelImage implements Image {
     this.width = image[0].length;
   }
 
-  /**
-   * Gets the image stored in this PixelImage object.
-   *
-   * @return the Pixel matrix stored in this PixelImage object.
-   */
+  @Override
   public Pixel[][] getImage() {
     return this.image;
   }
 
-  /**
-   * Gets the height of the image stored in this PixelImage object.
-   *
-   * @return an int that represents the PixelImage's height.
-   */
   @Override
   public int getHeight() {
     return this.height;
   }
 
-  /**
-   * Gets the width of the image stored in this PixelImage object.
-   *
-   * @return an int that represents the PixelImage's width.
-   */
   @Override
   public int getWidth() {
     return this.width;
   }
 
-  /**
-   * Creates a new matrix of pixels that represents
-   * the brightened version of an image and returns it.
-   *
-   * @param increment the value that the user wants to change the brightness by.
-   *
-   * @return a Pixel[][] that represents the brightened version of this image.
-   *
-   * @throws IllegalArgumentException when this image cannot be brightened by the given value.
-   */
+  @Override
   public Pixel[][] brightenImage(int increment) throws IllegalArgumentException{
     Pixel[][] brightened = new Pixel[this.height][this.width];
     for (int row = 0; row < brightened.length; row++) {
@@ -76,16 +53,7 @@ public class PixelImage implements Image {
     return brightened;
   }
 
-
-  /**
-   * Creates a new matrix of pixels that represents
-   * the greyscale version of this image and returns it.
-   *
-   * @param component the method that should be employed to create a greyscale version of an image.
-   *                  Valid methods include red, blue, green, value, intensity and luma.
-   * @return a 2D array of pixels that represents the greyscale version of this image.
-   * @throws IllegalArgumentException when the given component is invalid.
-   */
+  @Override
   public Pixel[][] displayGreyscale(String component) {
     Pixel[][] greyscale = new Pixel[this.height][this.width];
     for (int row = 0; row < greyscale.length; row++) {
@@ -96,6 +64,7 @@ public class PixelImage implements Image {
     return greyscale;
   }
 
+  @Override
   public Pixel[][] flipImage(String axis) {
     Pixel[][] flippedImage = new Pixel[this.height][this.width];
     switch (axis) {

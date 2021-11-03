@@ -5,11 +5,9 @@ import model.image.PixelImage;
 import model.pixel.Pixel;
 import util.ImageUtil;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO decide on consistent return types for methods that deal with the Pixel matrix
 
 /**
  * Represents an ImageProcessor for an image, along with its height and width.
@@ -25,12 +23,7 @@ public class Model implements ImageProcessingModel {
     this.loadMap = new HashMap<String, Image>();
   }
 
-  /**
-   *
-   * @param filePath
-   * @param imageName
-   * @throws IllegalArgumentException
-   */
+  @Override
   public void load(String filePath, String imageName) throws IllegalArgumentException {
     if (filePath == null || imageName == null) {
       throw new IllegalArgumentException("Given parameters are invalid.");
@@ -38,12 +31,7 @@ public class Model implements ImageProcessingModel {
     this.loadMap.put(imageName, ImageUtil.readPPM(filePath));
   }
 
-  /**
-   *
-   * @param filePath
-   * @param imageName
-   * @throws IllegalArgumentException
-   */
+  @Override
   public void save(String filePath, String imageName) throws IllegalArgumentException {
     if (!(filePath.contains(imageName))) {
       throw new IllegalArgumentException("Specified path does not include imageName");
@@ -54,13 +42,17 @@ public class Model implements ImageProcessingModel {
     ImageUtil.writePPM(filePath, this.loadMap.get(imageName));
   }
 
-  /**
-   *
-   * @param increment
-   * @param imageName
-   * @param desiredName
-   * @throws IllegalArgumentException
-   */
+  // Helper method for verifying image names within the loadMap
+  private void validNames(String imageName, String desiredImage) throws IllegalArgumentException {
+    if (imageName == null || desiredImage == null) {
+      throw new IllegalArgumentException("The given image name and/or desired image name are null.");
+    }
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("The given image name isn't associated with an image.");
+    }
+  }
+
+  @Override
   public void brightenImage(int increment, String imageName, String desiredName) throws IllegalArgumentException {
     validNames(imageName, desiredName);
 
@@ -68,13 +60,6 @@ public class Model implements ImageProcessingModel {
     this.loadMap.put(desiredName, new PixelImage(brightened));
   }
 
-  /**
-   *
-   * @param component
-   * @param imageName
-   * @param desiredName
-   * @throws IllegalArgumentException
-   */
   @Override
   public void displayGreyscale(String component, String imageName, String desiredName) throws IllegalArgumentException {
     validNames(imageName, desiredName);
@@ -86,12 +71,7 @@ public class Model implements ImageProcessingModel {
     this.loadMap.put(desiredName, new PixelImage(greyscale));
   }
 
-  /**
-   * @param axis        the axis that the image will be flipped across.
-   * @param imageName
-   * @param desiredName
-   * @throws IllegalArgumentException
-   */
+  @Override
   public void flipImage(String axis, String imageName, String desiredName) throws IllegalArgumentException {
     validNames(imageName, desiredName);
     if (!(axis.equals("horizontal") || axis.equals("vertical"))) {
@@ -100,20 +80,6 @@ public class Model implements ImageProcessingModel {
 
     Pixel[][] flippedImage = loadMap.get(imageName).flipImage(axis);
     loadMap.put(desiredName, new PixelImage(flippedImage));
-  }
-
-  /**
-   * @param imageName
-   * @param desiredImage
-   * @throws IllegalArgumentException
-   */
-  private void validNames(String imageName, String desiredImage) throws IllegalArgumentException {
-    if (imageName == null || desiredImage == null) {
-      throw new IllegalArgumentException("The given image name and/or desired image name are null.");
-    }
-    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
-      throw new IllegalArgumentException("The given image name isn't associated with an image.");
-    }
   }
 }
 

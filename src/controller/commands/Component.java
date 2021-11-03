@@ -3,12 +3,23 @@ package controller.commands;
 import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
+/**
+ * Command class used for methods pertaining to a "component" input,
+ * where a user visualizes a certain component of an image.
+ */
 public class Component implements ImageProcessingCommand {
 
   private String type;
   private String imageName;
   private String desiredName;
 
+  /**
+   * Constructs a Component object.
+   * @param type String of the component type
+   * @param imageName name of the image user would like to visualize a component of
+   * @param desiredName desired name of the visualized image
+   * @throws IllegalArgumentException if any fields are null.
+   */
   public Component(String type, String imageName, String desiredName) throws IllegalArgumentException {
     if (type == null) {
       throw new IllegalArgumentException("Type cannot be null.");

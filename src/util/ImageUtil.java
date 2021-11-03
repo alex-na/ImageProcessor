@@ -77,18 +77,18 @@ public class ImageUtil {
     return new PixelImage(pixelMatrix);
   }
 
-  //demo main
-  public static void main(String[] args) {
-    String filename;
-
-    if (args.length > 0) {
-      filename = args[0];
-    } else {
-      filename = "images/Koala.ppm";
-    }
-
-    ImageUtil.readPPM(filename);
-  }
+//  //demo main
+//  public static void main(String[] args) {
+//    String filename;
+//
+//    if (args.length > 0) {
+//      filename = args[0];
+//    } else {
+//      filename = "images/Koala.ppm";
+//    }
+//
+//    ImageUtil.readPPM(filename);
+//  }
 
   /**
    *
@@ -96,7 +96,7 @@ public class ImageUtil {
    * @param image
    * @throws IllegalArgumentException
    */
-  public static void writePPM(String filepath, Image image) throws IllegalArgumentException{
+  public static void writePPM(String filepath, Image image) throws IllegalArgumentException {
     if (filepath == null || image == null) {
       throw new IllegalArgumentException("filepath and/or given image are invalid");
     }
