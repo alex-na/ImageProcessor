@@ -7,13 +7,6 @@ import util.Pixel;
 public interface ImageProcessingModel {
 
   /**
-   * Returns the image that is contained within this model.
-   *
-   * @return a 2D array of pixels that represents an image.
-   */
-  Pixel[][] getImage();
-
-  /**
    *
    * @param increment
    */
@@ -48,13 +41,5 @@ public interface ImageProcessingModel {
    * @param imageName
    */
   void load(String filePath, String imageName);
-
-  /**
-   *
-   * @param row
-   * @param col
-   * @return
-   */
-  Pixel getPixelAt(int row, int col);
 
 }
