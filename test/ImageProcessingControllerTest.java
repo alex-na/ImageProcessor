@@ -16,13 +16,13 @@ import view.View;
  */
 public class ImageProcessingControllerTest {
 
-    ImageProcessingModel model = new Model();
-    Appendable appendable =  new StringBuilder();
-    ImageProcessingView view = new View(appendable);
-    Readable readable = new StringReader("");
-    ImageProcessingController controller = new Controller(model, view, readable);
-    ImageProcessingModel mockModel = new MockImageProcessingModel(new StringBuilder());
-    ImageProcessingView mockView = new MockImageProcessingView(new StringBuilder());
+  ImageProcessingModel model = new Model();
+  Appendable appendable = new StringBuilder();
+  ImageProcessingView view = new View(appendable);
+  Readable readable = new StringReader("");
+  ImageProcessingController controller = new Controller(model, view, readable);
+  ImageProcessingModel mockModel = new MockImageProcessingModel(new StringBuilder());
+  ImageProcessingView mockView = new MockImageProcessingView(new StringBuilder());
 
   // Testing invalid constructors
   @Test(expected = IllegalArgumentException.class)
@@ -39,9 +39,19 @@ public class ImageProcessingControllerTest {
   public void testConst3() {
     ImageProcessingController c = new Controller(model, null, readable);
   }
-  @Test
-  public void testConst4() {
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidCommand1() {
+    Readable read = new StringReader("loading Koala.ppm koala");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidCommand2() {
+    Readable read = new StringReader("Koala.ppm koala load");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
   }
 
   // Testing load command
@@ -173,6 +183,7 @@ public class ImageProcessingControllerTest {
 
     assertEquals(message, mLog.toString());
   }
+
   // Testing red-component command
   @Test
   public void testRedComponent() {
@@ -189,6 +200,7 @@ public class ImageProcessingControllerTest {
     assertEquals(message, mLog.toString());
 
   }
+
   // Testing green-component command
   @Test
   public void testGreenComponent() {
