@@ -19,10 +19,10 @@ public class Flip implements ImageProcessingCommand {
     String in = this.type;
     switch (in) {
       case "horizontal" :
-        model.flipImage("horizontally");
+        model.flipImage("horizontal");
         break;
       case "vertical" :
-        model.flipImage("vertically");
+        model.flipImage("vertical");
         break;
       default: throw new IllegalArgumentException("Invalid type entered.");
     }

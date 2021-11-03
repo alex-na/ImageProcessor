@@ -73,8 +73,6 @@ public class Controller implements ImageProcessingController {
         c = cmd.apply(scan);
         c.go(this.model, this.view);
       }
-
     }
-
   }
 }

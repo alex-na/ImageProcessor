@@ -1,5 +1,5 @@
 package model;
-import util.Pixel;
+import model.pixel.Pixel;
 
 /**
  *

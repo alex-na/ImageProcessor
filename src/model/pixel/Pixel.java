@@ -1,6 +1,4 @@
-package util;
-
-import java.util.Objects;
+package model.pixel;
 
 public interface Pixel {
 
