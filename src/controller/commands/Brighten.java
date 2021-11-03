@@ -4,7 +4,7 @@ import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
 /**
- *
+ * Command class used for brightening an image.
  */
 public class Brighten implements ImageProcessingCommand {
 
@@ -13,10 +13,11 @@ public class Brighten implements ImageProcessingCommand {
   private String desiredName;
 
   /**
+   * Constructs a Brighten object.
    *
-   * @param increment
-   * @param imageName
-   * @param desiredName
+   * @param increment the increment by which an image is brightened/darkened
+   * @param imageName the name of the image
+   * @param desiredName the desired name of the image
    * @throws IllegalArgumentException
    */
   public Brighten(int increment, String imageName, String desiredName) throws IllegalArgumentException {

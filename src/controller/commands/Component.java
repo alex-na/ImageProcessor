@@ -15,6 +15,7 @@ public class Component implements ImageProcessingCommand {
 
   /**
    * Constructs a Component object.
+   *
    * @param type String of the component type
    * @param imageName name of the image user would like to visualize a component of
    * @param desiredName desired name of the visualized image
@@ -35,7 +36,6 @@ public class Component implements ImageProcessingCommand {
     this.imageName = imageName;
     this.desiredName = desiredName;
   }
-
 
   @Override
   public void go(ImageProcessingModel model, ImageProcessingView view) {

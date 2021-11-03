@@ -10,7 +10,8 @@ import java.util.Map;
 
 
 /**
- * Represents an ImageProcessor for an image, along with its height and width.
+ * Representing an ImageProcessingModel that contains the versions
+ * of an Image and their supporting operations.
  */
 public class Model implements ImageProcessingModel {
   private Map<String, Image> loadMap;

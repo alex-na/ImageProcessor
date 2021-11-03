@@ -45,7 +45,7 @@ public class Controller implements ImageProcessingController {
   }
 
   @Override
-  public void processImage() throws IllegalStateException {
+  public void processImage() throws IllegalArgumentException {
 
     Scanner scan = new Scanner(this.input);
 

@@ -6,7 +6,7 @@ import view.ImageProcessingView;
 import view.View;
 
 /**
- *
+ * Class utilized for testing the ImageProcessingView.
  */
 public class ImageProcessingViewTest {
 

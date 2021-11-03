@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Represeting the model of an ImageProcessor, utilized for performing operations on an image
+ * Representing the model of an ImageProcessor, utilized for performing operations on an image
  * and storing said operations for future use.
  */
 public interface ImageProcessingModel {
@@ -23,13 +23,6 @@ public interface ImageProcessingModel {
    * @param desiredName desired name of the image
    */
   void displayGreyscale(String component, String imageName, String desiredName);
-
-  /**
-   *
-   *
-   * @param axis
-   * @throws IllegalArgumentException
-   */
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.

@@ -91,10 +91,11 @@ public class ImageUtil {
 //  }
 
   /**
+   * Writing a 2D array of Pixels to a PPM file.
    *
-   * @param filepath
-   * @param image
-   * @throws IllegalArgumentException
+   * @param filepath the file path of the image
+   * @param image the image to be written
+   * @throws IllegalArgumentException if inputs are null
    */
   public static void writePPM(String filepath, Image image) throws IllegalArgumentException {
     if (filepath == null || image == null) {

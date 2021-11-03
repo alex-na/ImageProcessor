@@ -3,12 +3,23 @@ package controller.commands;
 import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
+/**
+ * Command class used to execute flip operations
+ */
 public class Flip implements ImageProcessingCommand {
 
   private String type;
   private String imageName;
   private String desiredName;
 
+  /**
+   * Constructs a Flip object.
+   *
+   * @param type flip type (vertical or horizontal)
+   * @param imageName the name of the image
+   * @param desiredName the desired name of the image
+   * @throws IllegalArgumentException
+   */
   public Flip(String type, String imageName, String desiredName) throws IllegalArgumentException {
     if (type == null) {
       throw new IllegalArgumentException("Type cannot be null.");

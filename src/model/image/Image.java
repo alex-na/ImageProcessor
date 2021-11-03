@@ -2,6 +2,9 @@ package model.image;
 
 import model.pixel.Pixel;
 
+/**
+ * Representing an Image as a 2D array of Pixels and their supporting operations.
+ */
 public interface Image {
 
   /**

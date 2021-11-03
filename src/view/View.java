@@ -3,16 +3,16 @@ package view;
 import java.io.IOException;
 
 /**
- *
+ * View class utilized for displaying Images and messages within the program.
  */
 public class View implements ImageProcessingView {
 
   private Appendable appendable;
 
   /**
-   *
-   * @param appendable
-   * @throws IllegalArgumentException
+   * Constructs a View object.
+   * @param appendable an Appendable object that carries Strings.
+   * @throws IllegalArgumentException if the input is null.
    */
   public View(Appendable appendable) throws IllegalArgumentException {
     if (appendable == null) {
@@ -22,10 +22,9 @@ public class View implements ImageProcessingView {
   }
 
   /**
-   *
-   * @throws IllegalArgumentException
+   * Constructs a View object and defaults the Appendable to System.out.
    */
-  public View() throws IllegalArgumentException {
+  public View() {
     this.appendable = System.out;
   }
 

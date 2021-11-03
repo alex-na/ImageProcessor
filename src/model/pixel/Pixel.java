@@ -1,5 +1,8 @@
 package model.pixel;
 
+/**
+ * Representing a single Pixel in an Image and its supporting operations.
+ */
 public interface Pixel {
 
   /**
