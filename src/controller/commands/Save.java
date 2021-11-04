@@ -18,7 +18,7 @@ public class Save implements ImageProcessingCommand {
    * @param imageName the name of the file to be saved.
    */
   public Save(String fileName, String imageName) {
-    if (fileName.equals(null) || imageName.equals(null)) {
+    if (fileName == null || imageName == null) {
       throw new IllegalArgumentException("File name and image name cannot be null.");
     }
     this.fileName = fileName;
@@ -26,7 +26,7 @@ public class Save implements ImageProcessingCommand {
   }
 
   @Override
-  public void go(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model, ImageProcessingView view) {
     model.save(this.fileName, this.imageName);
   }
 }

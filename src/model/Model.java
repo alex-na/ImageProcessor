@@ -10,11 +10,11 @@ import java.util.Map;
 
 
 /**
- * Representing an ImageProcessingModel that contains the versions
- * of an Image and their supporting operations.
- *
+ * Representing an ImageProcessingModel that contains the
+ * versions of an Image and their supporting operations.
  */
 public class Model implements ImageProcessingModel {
+
   private Map<String, Image> loadMap;
 
   /**
@@ -49,9 +49,11 @@ public class Model implements ImageProcessingModel {
   }
 
   // Helper method for verifying image names within the loadMap
-  private void validNames(String imageName, String desiredImage) throws IllegalArgumentException {
+  private void validNames(String imageName, String desiredImage)
+      throws IllegalArgumentException {
     if (imageName == null || desiredImage == null) {
-      throw new IllegalArgumentException("The given image name and/or desired image name are null.");
+      throw new
+          IllegalArgumentException("The given image name and/or desired image name are null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
@@ -59,7 +61,8 @@ public class Model implements ImageProcessingModel {
   }
 
   @Override
-  public void brightenImage(int increment, String imageName, String desiredName) throws IllegalArgumentException {
+  public void brightenImage(int increment, String imageName, String desiredName)
+      throws IllegalArgumentException {
     validNames(imageName, desiredName);
 
     Pixel[][] brightened = loadMap.get(imageName).brightenImage(increment);
@@ -67,10 +70,13 @@ public class Model implements ImageProcessingModel {
   }
 
   @Override
-  public void displayGreyscale(String component, String imageName, String desiredName) throws IllegalArgumentException {
+  public void displayGreyscale(String component, String imageName, String desiredName)
+      throws IllegalArgumentException {
     validNames(imageName, desiredName);
-    if (!(component.equals("red") || component.equals("green") || component.equals("blue")
-            || component.equals("value") || component.equals("intensity") || component.equals("luma"))) {
+    if (!(component.equals("red") || component.equals("green")
+        || component.equals("blue")
+        || component.equals("value") || component.equals("intensity")
+        || component.equals("luma"))) {
       throw new IllegalArgumentException("The given component is invalid.");
     }
     Pixel[][] greyscale = loadMap.get(imageName).displayGreyscale(component);
@@ -78,14 +84,18 @@ public class Model implements ImageProcessingModel {
   }
 
   @Override
-  public void flipImage(String axis, String imageName, String desiredName) throws IllegalArgumentException {
+  public void flipImage(String axis, String imageName, String desiredName)
+      throws IllegalArgumentException {
     validNames(imageName, desiredName);
     if (!(axis.equals("horizontal") || axis.equals("vertical"))) {
       throw new IllegalArgumentException("The axis must be vertical or horizontal");
     }
-
-    Pixel[][] flippedImage = loadMap.get(imageName).flipImage(axis);
-    loadMap.put(desiredName, new PixelImage(flippedImage));
+    try {
+      Pixel[][] flippedImage = loadMap.get(imageName).flipImage(axis);
+      loadMap.put(desiredName, new PixelImage(flippedImage));
+    } catch (NullPointerException e) {
+      throw new IllegalArgumentException("The axis was null.");
+    }
   }
 }
 

@@ -12,8 +12,7 @@ import model.image.PixelImage;
 import model.pixel.PixelImpl;
 
 /**
- * This class contains utility methods to read a PPM image from file and simply print its contents. Feel free to change
- * this method as required.
+ * This class contains utility methods to read and write to a PPM image from file.
  */
 public class ImageUtil {
 

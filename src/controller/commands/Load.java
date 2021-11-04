@@ -27,7 +27,7 @@ public class Load implements ImageProcessingCommand {
   }
 
   @Override
-  public void go(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model, ImageProcessingView view) {
     model.load(fileName, imageName);
   }
 }

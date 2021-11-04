@@ -8,21 +8,21 @@ import model.pixel.Pixel;
 public interface Image {
 
   /**
-   * gets the image represented in the image object.
+   * Gets the image represented in the image object.
    *
    * @return a 2D array of pixels that represents an image.
    */
   Pixel[][] getImage();
 
   /**
-   * Gets the height of an Image;
+   * Gets the height of an Image.
    *
    * @return an int that represents the height of this image.
    */
   int getHeight();
 
   /**
-   * Gets the width of an Image;
+   * Gets the width of an Image.
    *
    * @return an int that represents the width of this image.
    */

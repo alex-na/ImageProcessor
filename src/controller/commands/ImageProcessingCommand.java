@@ -15,6 +15,6 @@ public interface ImageProcessingCommand {
    * @param model ImageProcessingModel
    * @param view ImageProcessingView
    */
-  void go(ImageProcessingModel model, ImageProcessingView view) throws IllegalArgumentException;
+  void apply(ImageProcessingModel model, ImageProcessingView view) throws IllegalArgumentException;
 
 }

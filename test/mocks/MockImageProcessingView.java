@@ -3,10 +3,17 @@ package mocks;
 import java.io.IOException;
 import view.ImageProcessingView;
 
+/**
+ * Mock View utilized for testing.
+ */
 public class MockImageProcessingView implements ImageProcessingView {
 
   private StringBuilder log;
 
+  /**
+   * Constructing a MockImageProcessingView object.
+   * @param log StringBuilder
+   */
   public MockImageProcessingView(StringBuilder log) {
     this.log = log;
   }

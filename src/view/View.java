@@ -11,6 +11,7 @@ public class View implements ImageProcessingView {
 
   /**
    * Constructs a View object.
+   *
    * @param appendable an Appendable object that carries Strings.
    * @throws IllegalArgumentException if the input is null.
    */
@@ -30,7 +31,7 @@ public class View implements ImageProcessingView {
 
   @Override
   public void displayImage() {
-
+    // NOT NEEDED YET
   }
 
   @Override

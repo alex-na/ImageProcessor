@@ -18,9 +18,10 @@ public class Brighten implements ImageProcessingCommand {
    * @param increment the increment by which an image is brightened/darkened
    * @param imageName the name of the image
    * @param desiredName the desired name of the image
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if fields are null
    */
-  public Brighten(int increment, String imageName, String desiredName) throws IllegalArgumentException {
+  public Brighten(int increment, String imageName, String desiredName)
+      throws IllegalArgumentException {
     if (imageName == null || desiredName == null) {
       throw new IllegalArgumentException("imageName and/or desired name are null");
     }
@@ -30,7 +31,7 @@ public class Brighten implements ImageProcessingCommand {
   }
 
   @Override
-  public void go(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model, ImageProcessingView view) {
     model.brightenImage(this.increment, this.imageName, this.desiredName);
   }
 }

@@ -16,12 +16,13 @@ public class Component implements ImageProcessingCommand {
   /**
    * Constructs a Component object.
    *
-   * @param type String of the component type
-   * @param imageName name of the image user would like to visualize a component of
+   * @param type        String of the component type
+   * @param imageName   name of the image user would like to visualize a component of
    * @param desiredName desired name of the visualized image
    * @throws IllegalArgumentException if any fields are null.
    */
-  public Component(String type, String imageName, String desiredName) throws IllegalArgumentException {
+  public Component(String type, String imageName, String desiredName)
+      throws IllegalArgumentException {
     if (type == null) {
       throw new IllegalArgumentException("Type cannot be null.");
     }
@@ -38,12 +39,12 @@ public class Component implements ImageProcessingCommand {
   }
 
   @Override
-  public void go(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model, ImageProcessingView view) {
 
     switch (this.type) {
       case "value":
-          model.displayGreyscale("value", imageName, desiredName);
-          break;
+        model.displayGreyscale("value", imageName, desiredName);
+        break;
       case "intensity":
         model.displayGreyscale("intensity", imageName, desiredName);
         break;
@@ -59,7 +60,8 @@ public class Component implements ImageProcessingCommand {
       case "blue":
         model.displayGreyscale("blue", imageName, desiredName);
         break;
-      default : throw new IllegalArgumentException("Invalid input.");
+      default:
+        throw new IllegalArgumentException("Invalid input.");
     }
   }
 }

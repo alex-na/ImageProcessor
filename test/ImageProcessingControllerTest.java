@@ -81,7 +81,8 @@ public class ImageProcessingControllerTest {
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
-    String message = "save method called with parameters: images/koala-brighten.ppm, koala-brighten";
+    String message =
+        "save method called with parameters: images/koala-brighten.ppm, koala-brighten";
 
     assertEquals(message, mLog.toString());
 
@@ -162,7 +163,8 @@ public class ImageProcessingControllerTest {
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
-    String message = "displayGreyscale method called with parameters: intensity, koala, koala-intensity";
+    String message =
+        "displayGreyscale method called with parameters: intensity, koala, koala-intensity";
 
     assertEquals(message, mLog.toString());
 

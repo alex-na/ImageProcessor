@@ -22,10 +22,11 @@ public class Controller implements ImageProcessingController {
   private final ImageProcessingModel model;
   private final ImageProcessingView view;
   private final Readable input;
-  private Map<String, Function<Scanner, ImageProcessingCommand>> knownCommands;
+
 
   /**
-   * Constructs a Controller object
+   * Constructs a Controller object.
+   *
    * @param model ImageProcessingModel
    * @param view ImageProcessingView
    * @param input Readable
@@ -49,6 +50,8 @@ public class Controller implements ImageProcessingController {
 
     Scanner scan = new Scanner(this.input);
 
+    Map<String, Function<Scanner, ImageProcessingCommand>> knownCommands;
+
     knownCommands = new HashMap<>();
     knownCommands.put("load", s -> new Load(s.next(), s.next()));
     knownCommands.put("save", s -> new Save(s.next(), s.next()));
@@ -62,7 +65,7 @@ public class Controller implements ImageProcessingController {
     knownCommands.put("green-component", s -> new Component("green", s.next(), s.next()));
     knownCommands.put("blue-component", s -> new Component("blue", s.next(), s.next()));
 
-    while(scan.hasNext()) {
+    while (scan.hasNext()) {
       ImageProcessingCommand c;
       String in = scan.next();
       Function<Scanner, ImageProcessingCommand> cmd =
@@ -72,7 +75,7 @@ public class Controller implements ImageProcessingController {
         throw new IllegalArgumentException("Invalid command entered.");
       } else {
         c = cmd.apply(scan);
-        c.go(this.model, this.view);
+        c.apply(this.model, this.view);
       }
     }
   }

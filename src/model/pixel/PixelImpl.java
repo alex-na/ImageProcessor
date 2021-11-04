@@ -3,8 +3,8 @@ package model.pixel;
 import java.util.Objects;
 
 /**
- * Represents a singular pixel of an image that contains three integer components that equate to the
- * RBG values of a color
+ * Represents a singular pixel of an image that contains
+ * three integer components that equate to the RBG values of a color.
  */
 public class PixelImpl implements Pixel {
   private final int red;
@@ -12,6 +12,7 @@ public class PixelImpl implements Pixel {
   private final int blue;
 
   /**
+   * Constructs a PixelImpl object.
    * @param red   the red component of a pixel's rgb color.
    * @param green the green component of a pixel's rgb color.
    * @param blue  the blue component of a pixel's rgb color.
@@ -73,7 +74,7 @@ public class PixelImpl implements Pixel {
 
   @Override
   public Pixel displayComponent(String type) throws IllegalArgumentException {
-    switch(type) {
+    switch (type) {
       case "value":
         return showGreyscaleComponent("value");
       case "intensity":

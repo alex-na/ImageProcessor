@@ -18,7 +18,7 @@ public class PixelImage implements Image {
    *
    * @throws IllegalArgumentException when the given Pixel matrix is null.
    */
-  public PixelImage(Pixel[][] image) throws IllegalArgumentException{
+  public PixelImage(Pixel[][] image) throws IllegalArgumentException {
     if (image == null) {
       throw new IllegalArgumentException("The given image is null.");
     }

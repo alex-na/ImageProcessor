@@ -22,7 +22,8 @@ public interface ImageProcessingModel {
    * @param imageName name of the image
    * @param desiredName desired name of the image
    */
-  void brightenImage(int increment, String imageName, String desiredName) throws IllegalArgumentException;
+  void brightenImage(int increment, String imageName, String desiredName)
+      throws IllegalArgumentException;
 
   /**
    * Display the component of an image based on user input.
@@ -31,7 +32,8 @@ public interface ImageProcessingModel {
    * @param imageName name of the image
    * @param desiredName desired name of the image
    */
-  void displayGreyscale(String component, String imageName, String desiredName) throws IllegalArgumentException;
+  void displayGreyscale(String component, String imageName, String desiredName)
+      throws IllegalArgumentException;
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.
@@ -40,9 +42,10 @@ public interface ImageProcessingModel {
    * @param imageName the name of the image
    * @param desiredName the desired name of the image
    * @throws IllegalArgumentException when the given String is not
-   *    *                             a valid axis to flip the image across.
+   *                                  a valid axis to flip the image across.
    */
-  void flipImage(String axis, String imageName, String desiredName) throws IllegalArgumentException;
+  void flipImage(String axis, String imageName, String desiredName)
+      throws IllegalArgumentException;
 
   /**
    * Saves an image within the desired file location.

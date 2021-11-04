@@ -4,7 +4,7 @@ import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
 /**
- * Command class used to execute flip operations
+ * Command class used to execute flip operations.
  */
 public class Flip implements ImageProcessingCommand {
 
@@ -18,7 +18,7 @@ public class Flip implements ImageProcessingCommand {
    * @param type flip type (vertical or horizontal)
    * @param imageName the name of the image
    * @param desiredName the desired name of the image
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if fields are null
    */
   public Flip(String type, String imageName, String desiredName) throws IllegalArgumentException {
     if (type == null) {
@@ -30,7 +30,7 @@ public class Flip implements ImageProcessingCommand {
   }
 
   @Override
-  public void go(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model, ImageProcessingView view) {
     String in = this.type;
     switch (in) {
       case "horizontal" :
