@@ -97,5 +97,17 @@ public class Model implements ImageProcessingModel {
       throw new IllegalArgumentException("The axis was null.");
     }
   }
+
+  @Override
+  public void filerImage(String type, String imageName, String desiredName)
+      throws IllegalArgumentException {
+
+  }
+
+  @Override
+  public void transformImage(String type, String imageName, String desiredName)
+      throws IllegalArgumentException {
+
+  }
 }
 
