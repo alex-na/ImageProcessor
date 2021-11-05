@@ -87,4 +87,14 @@ public class PixelImage implements Image {
     }
     return flippedImage;
   }
+
+  @Override
+  public Pixel[][] filterImage(String type) throws IllegalArgumentException {
+    return new Pixel[0][];
+  }
+
+  @Override
+  public Pixel[][] transformImage(String type) throws IllegalArgumentException {
+    return new Pixel[0][];
+  }
 }
