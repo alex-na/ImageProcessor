@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+import javax.imageio.ImageIO;
 import model.image.Image;
 import model.image.PixelImage;
 import model.pixel.PixelImpl;
@@ -15,6 +17,33 @@ import model.pixel.PixelImpl;
  * This class contains utility methods to read and write to a PPM image from file.
  */
 public class ImageUtil {
+
+  /**
+   * Reading any file into the program.
+   *
+   * @param filePath the location of the file
+   * @return a BufferedImage reading the filePath
+   * @throws IOException if the file could not be read
+   */
+  public static BufferedImage readFile(File filePath) throws IOException {
+    try {
+      BufferedImage image = ImageIO.read(filePath);
+      return image;
+    }
+    catch (IOException e) {
+      throw new IOException("File was not able to be read.");
+    }
+  }
+
+  /**
+   * Writing an Image to a file.
+   *
+   * @param image the iamge to be written
+   * @param filePath the desired file path to store this image.
+   */
+  public static void writeFile(BufferedImage image, String filePath) {
+    File file = new File(filePath);
+  }
 
   /**
    * Read an image file in the PPM format and print the colors.
