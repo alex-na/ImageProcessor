@@ -16,6 +16,22 @@ public interface ImageProcessingModel {
   Map<String, Image> getLoadMap();
 
   /**
+   * Load an image from a file path to be used internally within the model.
+   *
+   * @param filePath the location of the image
+   * @param imageName the name by which this image will be referred to within the program
+   */
+  void load(String filePath, String imageName) throws IllegalArgumentException;
+
+  /**
+   * Saves an image within the desired file location.
+   *
+   * @param filePath the desired location of the image
+   * @param imageName the name of the image that is to be saved
+   */
+  void save(String filePath, String imageName) throws IllegalArgumentException;
+
+  /**
    * Brighten an image based on an increment.
    *
    * @param increment increment to brighten/darken an image by
@@ -48,19 +64,25 @@ public interface ImageProcessingModel {
       throws IllegalArgumentException;
 
   /**
-   * Saves an image within the desired file location.
+   * Filtering an image based on the user input.
    *
-   * @param filePath the desired location of the image
-   * @param imageName the name of the image that is to be saved
+   * @param type type of filter to be added
+   * @param imageName name of the image
+   * @param desiredName desired name of the image
+   * @throws IllegalArgumentException if any arguments are null
    */
-  void save(String filePath, String imageName) throws IllegalArgumentException;
+  void filerImage(String type, String imageName, String desiredName)
+      throws IllegalArgumentException;
 
   /**
-   * Load an image from a file path to be used internally within the model.
+   * Transforming an image based on the user input.
    *
-   * @param filePath the location of the image
-   * @param imageName the name by which this image will be referred to within the program
+   * @param type type of transformation to be performed
+   * @param imageName name of the image
+   * @param desiredName desired name of the image
+   * @throws IllegalArgumentException if any arguments are null
    */
-  void load(String filePath, String imageName) throws IllegalArgumentException;
+  void transformImage(String type, String imageName, String desiredName)
+      throws IllegalArgumentException;
 
 }
