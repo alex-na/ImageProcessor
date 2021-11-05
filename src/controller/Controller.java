@@ -2,10 +2,12 @@ package controller;
 
 import controller.commands.Brighten;
 import controller.commands.Component;
+import controller.commands.Filter;
 import controller.commands.Flip;
 import controller.commands.ImageProcessingCommand;
 import controller.commands.Load;
 import controller.commands.Save;
+import controller.commands.Transformation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -64,6 +66,10 @@ public class Controller implements ImageProcessingController {
     knownCommands.put("red-component", s -> new Component("red", s.next(), s.next()));
     knownCommands.put("green-component", s -> new Component("green", s.next(), s.next()));
     knownCommands.put("blue-component", s -> new Component("blue", s.next(), s.next()));
+    knownCommands.put("blur", s -> new Filter("blur", s.next(), s.next()));
+    knownCommands.put("sharpen", s -> new Filter("sharpen", s.next(), s.next()));
+    knownCommands.put("greyscale", s -> new Transformation("greyscale", s.next(), s.next()));
+    knownCommands.put("sepia", s -> new Transformation("sepia", s.next(), s.next()));
 
     while (scan.hasNext()) {
       ImageProcessingCommand c;
