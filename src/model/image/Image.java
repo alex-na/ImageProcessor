@@ -57,6 +57,23 @@ public interface Image {
    * @throws IllegalArgumentException when the given String is not
    *                                  a valid axis to flip the image across.
    */
-  Pixel[][] flipImage(String axis);
+  Pixel[][] flipImage(String axis) throws IllegalArgumentException;
 
+  /**
+   * Filtering an image based on the input.
+   *
+   * @param type type of filter to be executed
+   * @return new Pixel array with updated array to reflect filtration
+   * @throws IllegalArgumentException if the input is null or invalid
+   */
+  Pixel[][] filterImage(String type) throws IllegalArgumentException;
+
+  /**
+   * Transforming an image based on the input.
+   *
+   * @param type type of transformation to be performed
+   * @return new Pixel array with updated array to reflect transformation
+   * @throws IllegalArgumentException if the input is null or invalid
+   */
+  Pixel[][] transformImage(String type) throws IllegalArgumentException;
 }
