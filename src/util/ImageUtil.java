@@ -1,7 +1,6 @@
 package util;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,42 +8,13 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
-import javax.imageio.ImageIO;
 import model.image.Image;
 import model.image.PixelImage;
-import model.pixel.PixelImpl;
 
 /**
  * This class contains utility methods to read and write to a PPM image from file.
  */
 public class ImageUtil {
-
-  /**
-   * Reading any file into the program.
-   *
-   * @param filePath the location of the file
-   * @return a BufferedImage reading the filePath
-   * @throws IOException if the file could not be read
-   */
-  public static BufferedImage readFile(File filePath) throws IOException {
-    try {
-      BufferedImage image = ImageIO.read(filePath);
-      return image;
-    }
-    catch (IOException e) {
-      throw new IOException("File was not able to be read.");
-    }
-  }
-
-  /**
-   * Writing an Image to a file.
-   *
-   * @param image the iamge to be written
-   * @param filePath the desired file path to store this image.
-   */
-  public static void writeFile(BufferedImage image, String filePath) {
-    File file = new File(filePath);
-  }
 
   /**
    * Read an image file in the PPM format and print the colors.
@@ -54,7 +24,7 @@ public class ImageUtil {
    */
   public static Image readPPM(String filename) throws IllegalArgumentException {
     Scanner sc;
-    PixelImpl[][] pixelMatrix = null;
+    Color[][] pixelMatrix = null;
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -83,7 +53,7 @@ public class ImageUtil {
       //System.out.println("Height of image: " + height);
       int maxValue = sc.nextInt();
 
-      pixelMatrix = new PixelImpl[height][width];
+      pixelMatrix = new Color[height][width];
 
       //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
       for (int j = 0; j < height; j++) {
@@ -92,7 +62,7 @@ public class ImageUtil {
           int r = sc.nextInt();
           int g = sc.nextInt();
           int b = sc.nextInt();
-          pixelMatrix[j][i] = new PixelImpl(r, g, b);
+          pixelMatrix[j][i] = new Color(r, g, b);
 
           //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
         }
@@ -124,16 +94,16 @@ public class ImageUtil {
       StringBuilder sb = new StringBuilder();
 
       sb.append("P3\n");
-      sb.append(image.getWidth() + " ");
-      sb.append(image.getHeight() + "\n");
+      sb.append(image.getImageWidth() + " ");
+      sb.append(image.getImageHeight() + "\n");
       sb.append("255\n");
 
-      for (int j = 0; j < image.getHeight(); j++) {
-        for (int i = 0; i < image.getWidth(); i++) {
+      for (int j = 0; j < image.getImageHeight(); j++) {
+        for (int i = 0; i < image.getImageWidth(); i++) {
           sb.append(String.format("%d\n%d\n%d\n",
-              image.getImage()[j][i].getRed(),
-              image.getImage()[j][i].getGreen(),
-              image.getImage()[j][i].getBlue()));
+                  image.getPixelAt(j, i).getRed(),
+                  image.getPixelAt(j, i).getGreen(),
+                  image.getPixelAt(j, i).getBlue()));
         }
       }
 

@@ -2,9 +2,9 @@ package model;
 
 import model.image.Image;
 import model.image.PixelImage;
-import model.pixel.Pixel;
 import util.ImageUtil;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +22,7 @@ public class Model implements ImageProcessingModel {
    * Images can be retrieved by their names.
    */
   public Model() {
-    this.loadMap = new HashMap<String, Image>();
-  }
-
-  public Map<String, Image> getLoadMap() {
-    return this.loadMap;
+    this.loadMap = new HashMap<>();
   }
 
   @Override
@@ -42,18 +38,15 @@ public class Model implements ImageProcessingModel {
     if (!(filePath.contains(imageName))) {
       throw new IllegalArgumentException("Specified path does not include imageName");
     }
-    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
-      throw new IllegalArgumentException("Image name is not associated with an image.");
-    }
     ImageUtil.writePPM(filePath, this.loadMap.get(imageName));
   }
 
   // Helper method for verifying image names within the loadMap
   private void validNames(String imageName, String desiredImage)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (imageName == null || desiredImage == null) {
       throw new
-          IllegalArgumentException("The given image name and/or desired image name are null.");
+              IllegalArgumentException("The given image name and/or desired image name are null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
@@ -62,52 +55,62 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
 
-    Pixel[][] brightened = loadMap.get(imageName).brightenImage(increment);
+    Color[][] brightened = loadMap.get(imageName).brightenImage(increment);
     this.loadMap.put(desiredName, new PixelImage(brightened));
   }
 
   @Override
   public void displayGreyscale(String component, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
     if (!(component.equals("red") || component.equals("green")
-        || component.equals("blue")
-        || component.equals("value") || component.equals("intensity")
-        || component.equals("luma"))) {
+            || component.equals("blue")
+            || component.equals("value") || component.equals("intensity")
+            || component.equals("luma"))) {
       throw new IllegalArgumentException("The given component is invalid.");
     }
-    Pixel[][] greyscale = loadMap.get(imageName).displayGreyscale(component);
+    Color[][] greyscale = getImage(imageName).displayGreyscale(component);
     this.loadMap.put(desiredName, new PixelImage(greyscale));
   }
 
   @Override
   public void flipImage(String axis, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
     if (!(axis.equals("horizontal") || axis.equals("vertical"))) {
       throw new IllegalArgumentException("The axis must be vertical or horizontal");
     }
     try {
-      Pixel[][] flippedImage = loadMap.get(imageName).flipImage(axis);
+      Color[][] flippedImage = getImage(imageName).flipImage(axis);
       loadMap.put(desiredName, new PixelImage(flippedImage));
     } catch (NullPointerException e) {
       throw new IllegalArgumentException("The axis was null.");
     }
   }
 
-  @Override
-  public void filerImage(String type, String imageName, String desiredName)
-      throws IllegalArgumentException {
-
+  public Image getImage(String imageName) throws IllegalArgumentException {
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("Image name is not associated with an image.");
+    }
+    return loadMap.get(imageName);
   }
 
   @Override
-  public void transformImage(String type, String imageName, String desiredName)
-      throws IllegalArgumentException {
+  public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
+    return getImage(imageName).getPixelAt(row, col);
+  }
 
+  @Override
+  public int getImageHeight(String imageName) throws IllegalArgumentException {
+    return getImage(imageName).getImageHeight();
+  }
+
+  @Override
+  public int getImageWidth(String imageName) throws IllegalArgumentException {
+    return getImage(imageName).getImageWidth();
   }
 }
 

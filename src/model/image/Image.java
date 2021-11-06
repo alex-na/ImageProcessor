@@ -1,32 +1,10 @@
 package model.image;
-
-import model.pixel.Pixel;
+import java.awt.*;
 
 /**
  * Representing an Image as a 2D array of Pixels and their supporting operations.
  */
-public interface Image {
-
-  /**
-   * Gets the image represented in the image object.
-   *
-   * @return a 2D array of pixels that represents an image.
-   */
-  Pixel[][] getImage();
-
-  /**
-   * Gets the height of an Image.
-   *
-   * @return an int that represents the height of this image.
-   */
-  int getHeight();
-
-  /**
-   * Gets the width of an Image.
-   *
-   * @return an int that represents the width of this image.
-   */
-  int getWidth();
+public interface Image extends ImageState {
 
   /**
    * Creates a new matrix of pixels that represents
@@ -37,7 +15,7 @@ public interface Image {
    * @return a 2D array of pixels that represents the brightened version of this image.
    * @throws IllegalArgumentException when the given increment value is invalid.
    */
-  Pixel[][] brightenImage(int increment) throws IllegalArgumentException;
+  Color[][] brightenImage(int increment) throws IllegalArgumentException;
 
   /**
    * Creates a new matrix of pixels that represents
@@ -48,7 +26,7 @@ public interface Image {
    * @return a 2D array of pixels that represents the greyscale version of this image.
    * @throws IllegalArgumentException when the given component is invalid.
    */
-  Pixel[][] displayGreyscale(String component) throws IllegalArgumentException;
+  Color[][] displayGreyscale(String component) throws IllegalArgumentException;
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.
@@ -57,23 +35,6 @@ public interface Image {
    * @throws IllegalArgumentException when the given String is not
    *                                  a valid axis to flip the image across.
    */
-  Pixel[][] flipImage(String axis) throws IllegalArgumentException;
+  Color[][] flipImage(String axis);
 
-  /**
-   * Filtering an image based on the input.
-   *
-   * @param type type of filter to be executed
-   * @return new Pixel array with updated array to reflect filtration
-   * @throws IllegalArgumentException if the input is null or invalid
-   */
-  Pixel[][] filterImage(String type) throws IllegalArgumentException;
-
-  /**
-   * Transforming an image based on the input.
-   *
-   * @param type type of transformation to be performed
-   * @return new Pixel array with updated array to reflect transformation
-   * @throws IllegalArgumentException if the input is null or invalid
-   */
-  Pixel[][] transformImage(String type) throws IllegalArgumentException;
 }

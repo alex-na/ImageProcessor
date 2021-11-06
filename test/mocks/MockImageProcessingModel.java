@@ -1,5 +1,6 @@
 package mocks;
 
+import java.awt.*;
 import java.util.Map;
 
 import model.ImageProcessingModel;
@@ -18,14 +19,6 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    */
   public MockImageProcessingModel(StringBuilder log) {
     this.log = log;
-  }
-
-  /**
-   * Retrieves the images with associated names.
-   */
-  @Override
-  public Map<String, Image> getLoadMap() {
-    return null;
   }
 
   @Override
@@ -60,5 +53,39 @@ public class MockImageProcessingModel implements ImageProcessingModel {
     log.append(String.format("load method called with parameters: %s, %s",
         filePath, imageName));
 
+  }
+
+  @Override
+  public Image getImage(String imageName) throws IllegalArgumentException {
+    return null;
+  }
+
+  @Override
+  public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
+    return null;
+  }
+
+  /**
+   * Gets the height of an image associated with the given imageName.
+   *
+   * @param imageName
+   * @return an int that represents the height of an image.
+   * @throws IllegalArgumentException when the given imageName is not associated with an image.
+   */
+  @Override
+  public int getImageHeight(String imageName) throws IllegalArgumentException {
+    return 0;
+  }
+
+  /**
+   * Gets the width of an image associated with the given imageName.
+   *
+   * @param imageName
+   * @return an int that represents the width of an image.
+   * @throws IllegalArgumentException when the given imageName is not associated with an image.
+   */
+  @Override
+  public int getImageWidth(String imageName) throws IllegalArgumentException {
+    return 0;
   }
 }
