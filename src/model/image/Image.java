@@ -1,5 +1,6 @@
 package model.image;
 import java.awt.*;
+import java.util.StringTokenizer;
 
 /**
  * Representing an Image as a 2D array of Pixels and their supporting operations.
@@ -35,6 +36,22 @@ public interface Image extends ImageState {
    * @throws IllegalArgumentException when the given String is not
    *                                  a valid axis to flip the image across.
    */
-  Color[][] flipImage(String axis);
+  Color[][] flipImage(String axis) throws IllegalArgumentException;
 
+
+  /**
+   *
+   * @param type
+   * @return
+   * @throws IllegalArgumentException
+   */
+  Color[][] transformImage(String type) throws IllegalArgumentException;
+
+  /**
+   *
+   * @param type
+   * @return
+   * @throws IllegalArgumentException
+   */
+  Color[][] filterImage(String type) throws IllegalArgumentException;
 }

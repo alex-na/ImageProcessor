@@ -3,6 +3,9 @@ package model.image;
 import java.awt.*;
 import java.util.Objects;
 
+import model.kernel.ImageKernel;
+import model.kernel.Kernel;
+
 /**
  * Represents an image in the form of a 2D array of Pixels.
  */
@@ -66,11 +69,9 @@ public class PixelImage implements Image {
   private int componentWithinRange(int component, int increment) {
     if (component + increment < 0) {
       return 0;
-    }
-    else if (component + increment > 255) {
+    } else if (component + increment > 255) {
       return 255;
-    }
-    else  {
+    } else {
       return component + increment;
     }
   }
@@ -79,7 +80,7 @@ public class PixelImage implements Image {
   public Color[][] displayGreyscale(String component) throws IllegalArgumentException {
     Color[][] greyscale = new Color[this.height][this.width];
     Color tempColor;
-    int colorValue;
+    float colorValue;
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
@@ -91,12 +92,12 @@ public class PixelImage implements Image {
                     Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
-            colorValue = (tempColor.getRed() + tempColor.getGreen()+ tempColor.getBlue()) / 3;
+            colorValue = (tempColor.getRed() + tempColor.getGreen() + tempColor.getBlue()) / 3;
             break;
           case "luma":
-            colorValue = (int) (Math.round(tempColor.getRed() * 0.2126)
-                    + Math.round(tempColor.getGreen() * 0.7152)
-                    + Math.round(tempColor.getBlue() * 0.0722));
+            colorValue = (float) (tempColor.getRed() * 0.2126
+                                + tempColor.getGreen() * 0.7152
+                                + tempColor.getBlue() * 0.0722);
             break;
           case "red":
             colorValue = tempColor.getRed();
@@ -141,6 +142,65 @@ public class PixelImage implements Image {
   }
 
   @Override
+  public Color[][] transformImage(String type) throws IllegalArgumentException {
+    Color[][] transformed = new Color[this.height][this.width];
+    Kernel transformationMatrix;
+
+    double[][] sepiaMatrix = {
+            {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131}};
+
+    double[][] greyscaleMatrix = {
+            {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131}};
+
+    switch (type) {
+      case "sepia":
+        transformationMatrix = new ImageKernel(sepiaMatrix);
+        break;
+      case "greyscale":
+        transformationMatrix = new ImageKernel(greyscaleMatrix);
+        break;
+      default:
+        throw new IllegalArgumentException("The given type was invalid.");
+    }
+
+    for (int row = 0; row < transformationMatrix.getHeight(); row++) {
+      for (int col = 0; col < transformationMatrix.getWidth(); col++) {
+        transformed[row][col] = transformationHelper(transformationMatrix, image[row][col]);
+      }
+    }
+    return transformed;
+
+  }
+
+  private Color transformationHelper(Kernel transformationMatrix, Color color) {
+    float redPrime = 0;
+    float greenPrime = 0;
+    float bluePrime = 0;
+
+    for (int row = 0; row < transformationMatrix.getHeight(); row++) {
+      for (int col = 0; col < transformationMatrix.getWidth(); col++) {
+        if (row == 0) {
+          redPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getRed();
+        } else if (row == 1) {
+          greenPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getGreen();
+        } else if (row == 2) {
+          bluePrime += transformationMatrix.getValueAt(row, col) * image[row][col].getBlue();
+        }
+      }
+    }
+    return new Color(redPrime, greenPrime, bluePrime);
+  }
+
+
+  public Color[][] filterImage(String type) throws IllegalArgumentException {
+    return new Color[0][];
+  }
+
+  @Override
   public boolean equals(Object o) {
     // Fast path for pointer equality:
     if (this == o) {
@@ -148,7 +208,7 @@ public class PixelImage implements Image {
     }
 
     // If o isn't the right class then it can't be equal:
-    if (! (o instanceof PixelImage)) {
+    if (!(o instanceof PixelImage)) {
       return false;
     }
 
