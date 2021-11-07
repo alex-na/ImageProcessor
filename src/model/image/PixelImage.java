@@ -7,9 +7,10 @@ import model.kernel.ImageKernel;
 import model.kernel.Kernel;
 
 /**
- * Represents an image in the form of a 2D array of Pixels.
+ * Represents an image in the form of a 2D array of Colors.
  */
 public class PixelImage implements Image {
+
   private final Color[][] image;
   private final int height;
   private final int width;
@@ -30,18 +31,20 @@ public class PixelImage implements Image {
     this.width = image[0].length;
   }
 
+  @Override
   public Color getPixelAt(int row, int col) throws IllegalArgumentException {
     if (row < 0 || row > getImageHeight() || col < 0 || col > getImageWidth()) {
-      throw new IllegalArgumentException("The given row and/or col is not within the bounds of the" +
-              "image's height/width.");
+      throw new IllegalArgumentException("Pixel is out of bounds.");
     }
     return image[row][col];
   }
 
+  @Override
   public int getImageHeight() {
     return this.height;
   }
 
+  @Override
   public int getImageWidth() {
     return this.width;
   }
@@ -66,6 +69,7 @@ public class PixelImage implements Image {
     return brightened;
   }
 
+  //
   private int componentWithinRange(int component, int increment) {
     if (component + increment < 0) {
       return 0;
@@ -89,15 +93,17 @@ public class PixelImage implements Image {
         switch (component) {
           case "value":
             colorValue = Math.max(tempColor.getRed(),
-                    Math.max(tempColor.getGreen(), tempColor.getBlue()));
+                Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
-            colorValue = (tempColor.getRed() + tempColor.getGreen() + tempColor.getBlue()) / 3;
+            colorValue = (float) ((tempColor.getRed()
+                + tempColor.getGreen()
+                + tempColor.getBlue()) / 3);
             break;
           case "luma":
             colorValue = (float) (tempColor.getRed() * 0.2126
-                                + tempColor.getGreen() * 0.7152
-                                + tempColor.getBlue() * 0.0722);
+                + tempColor.getGreen() * 0.7152
+                + tempColor.getBlue() * 0.0722);
             break;
           case "red":
             colorValue = tempColor.getRed();
@@ -147,14 +153,14 @@ public class PixelImage implements Image {
     Kernel transformationMatrix;
 
     double[][] sepiaMatrix = {
-            {0.393, 0.769, 0.189},
-            {0.349, 0.686, 0.168},
-            {0.272, 0.534, 0.131}};
+        {0.393, 0.769, 0.189},
+        {0.349, 0.686, 0.168},
+        {0.272, 0.534, 0.131}};
 
     double[][] greyscaleMatrix = {
-            {0.393, 0.769, 0.189},
-            {0.349, 0.686, 0.168},
-            {0.272, 0.534, 0.131}};
+        {0.393, 0.769, 0.189},
+        {0.349, 0.686, 0.168},
+        {0.272, 0.534, 0.131}};
 
     switch (type) {
       case "sepia":
@@ -169,14 +175,14 @@ public class PixelImage implements Image {
 
     for (int row = 0; row < transformationMatrix.getHeight(); row++) {
       for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        transformed[row][col] = transformationHelper(transformationMatrix, image[row][col]);
+        transformed[row][col] = transformColor(transformationMatrix);
       }
     }
     return transformed;
-
   }
 
-  private Color transformationHelper(Kernel transformationMatrix, Color color) {
+  // Transforming a single color based on the matrix
+  private Color transformColor(Kernel transformationMatrix) {
     float redPrime = 0;
     float greenPrime = 0;
     float bluePrime = 0;
@@ -195,7 +201,7 @@ public class PixelImage implements Image {
     return new Color(redPrime, greenPrime, bluePrime);
   }
 
-
+  @Override
   public Color[][] filterImage(String type) throws IllegalArgumentException {
     return new Color[0][];
   }
