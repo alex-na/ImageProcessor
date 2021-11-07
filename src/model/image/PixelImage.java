@@ -197,6 +197,9 @@ public class PixelImage implements Image {
 
 
   public Color[][] filterImage(String type) throws IllegalArgumentException {
+    int centerHeight; // getHeight / 2
+    int centerWidth;  // getWidth / 2
+
     return new Color[0][];
   }
 
