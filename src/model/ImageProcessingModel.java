@@ -1,57 +1,80 @@
 package model;
 
 /**
- * Representing the model of an ImageProcessor, utilized for performing operations on an image
- * and storing said operations for future use.
+ * Representing the model of an ImageProcessor, utilized for performing operations on an image and
+ * storing said operations for future use.
  */
 public interface ImageProcessingModel extends ImageProcessingModelState {
 
   /**
-   * Brighten an image based on an increment.
+   * Load an image from a file path to be used internally within the model.
    *
-   * @param increment increment to brighten/darken an image by
-   * @param imageName name of the image
-   * @param desiredName desired name of the image
+   * @param filePath  the location of the image
+   * @param imageName the name by which this image will be referred to within the program
    */
-  void brightenImage(int increment, String imageName, String desiredName)
-          throws IllegalArgumentException;
-
-  /**
-   * Display the component of an image based on user input.
-   *
-   * @param component the name of the component
-   * @param imageName name of the image
-   * @param desiredName desired name of the image
-   */
-  void displayGreyscale(String component, String imageName, String desiredName)
-          throws IllegalArgumentException;
-
-  /**
-   * Rearranges the pixels of an image to flip them over a given axis.
-   *
-   * @param axis the axis that the image will be flipped across.
-   * @param imageName the name of the image
-   * @param desiredName the desired name of the image
-   * @throws IllegalArgumentException when the given String is not
-   *                                  a valid axis to flip the image across.
-   */
-  void flipImage(String axis, String imageName, String desiredName)
-          throws IllegalArgumentException;
+  void load(String filePath, String imageName) throws IllegalArgumentException;
 
   /**
    * Saves an image within the desired file location.
    *
-   * @param filePath the desired location of the image
+   * @param filePath  the desired location of the image
    * @param imageName the name of the image that is to be saved
    */
   void save(String filePath, String imageName) throws IllegalArgumentException;
 
   /**
-   * Load an image from a file path to be used internally within the model.
+   * Brighten an image based on an increment.
    *
-   * @param filePath the location of the image
-   * @param imageName the name by which this image will be referred to within the program
+   * @param increment   increment to brighten/darken an image by
+   * @param imageName   name of the image
+   * @param desiredName desired name of the image
    */
-  void load(String filePath, String imageName) throws IllegalArgumentException;
+  void brightenImage(int increment, String imageName, String desiredName)
+      throws IllegalArgumentException;
+
+  /**
+   * Display the component of an image based on user input.
+   *
+   * @param component   the name of the component
+   * @param imageName   name of the image
+   * @param desiredName desired name of the image
+   */
+  void displayGreyscale(String component, String imageName, String desiredName)
+      throws IllegalArgumentException;
+
+  /**
+   * Rearranges the pixels of an image to flip them over a given axis.
+   *
+   * @param axis        the axis that the image will be flipped across.
+   * @param imageName   the name of the image
+   * @param desiredName the desired name of the image
+   * @throws IllegalArgumentException when the given String is not a valid axis to flip the image
+   *                                  across.
+   */
+  void flipImage(String axis, String imageName, String desiredName)
+      throws IllegalArgumentException;
+
+  /**
+   * Filters an image based on user input.
+   *
+   * @param filterType the type of filter to be applied to the image
+   * @param imageName the name of the image
+   * @param desiredName the desired name of the image
+   * @throws IllegalArgumentException if an invalid filterType is entered
+   */
+  void filterImage(String filterType, String imageName, String desiredName)
+      throws IllegalArgumentException;
+
+  /**
+   * Transforms an image based on user input.
+   *
+   * @param transformType the type of transformation to be applied to the image
+   * @param imageName the name of the image
+   * @param desiredName the desired name of the image
+   * @throws IllegalArgumentException if an invalid transformType is entered
+   */
+  void transformImage(String transformType, String imageName, String desiredName)
+      throws IllegalArgumentException;
+
 
 }
