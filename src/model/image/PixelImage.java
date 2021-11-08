@@ -6,6 +6,7 @@ import java.util.Objects;
 import model.kernel.ImageKernel;
 import model.kernel.Kernel;
 
+//TODO abstract common functionality into helpers
 /**
  * Represents an image in the form of a 2D array of Colors.
  */
