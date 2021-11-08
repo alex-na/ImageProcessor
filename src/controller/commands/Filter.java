@@ -36,10 +36,10 @@ public class Filter implements ImageProcessingCommand {
       throws IllegalArgumentException {
     switch (this.type) {
       case "blur":
-        // model.filterImage("blur", imageName, desiredName);
+        model.filterImage("blur", imageName, desiredName);
         break;
       case "sharpen":
-        // model.filterImage("sharpen", imageName, desiredName);
+        model.filterImage("sharpen", imageName, desiredName);
         break;
       default:
         throw new IllegalArgumentException("Invalid command.");

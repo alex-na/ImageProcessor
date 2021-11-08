@@ -33,10 +33,10 @@ public class Transformation implements ImageProcessingCommand {
 
     switch (this.type) {
       case "greyscale" :
-        // model.transformImage("greyscale", imageName, desiredName);
+        model.transformImage("greyscale", imageName, desiredName);
         break;
       case "sepia" :
-        // model.transformImage("greyscale", imageName, desiredName);
+        model.transformImage("sepia", imageName, desiredName);
         break;
       default: throw new IllegalArgumentException("Invalid command.");
     }
