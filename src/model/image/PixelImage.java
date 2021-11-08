@@ -69,7 +69,7 @@ public class PixelImage implements Image {
     return brightened;
   }
 
-  //
+  // Checking component + increment to ensure proper values are used
   private int componentWithinRange(int component, int increment) {
     if (component + increment < 0) {
       return 0;
@@ -203,22 +203,79 @@ public class PixelImage implements Image {
 
   @Override
   public Color[][] filterImage(String type) throws IllegalArgumentException {
-    return new Color[0][];
+    Color[][] filtered = new Color[this.height][this.width];
+    Kernel filterMatrix;
+
+    double[][] blurMatrix = {
+        {0.0625, 0.125, 0.0625},
+        {0.125, 0.25, 0.125},
+        {0.0625, 0.125, 0.0625}};
+
+    double[][] sharpenMatrix = {
+        {-0.125, -0.125, -0.125, -0.125, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+        {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+        {-0.125, -0.125, -0.125, -0.125, -0.125}};
+
+    switch (type) {
+      case "blur":
+        filterMatrix = new ImageKernel(blurMatrix);
+        break;
+      case "sharpen":
+        filterMatrix = new ImageKernel(sharpenMatrix);
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid type.");
+    }
+
+    for (int row = 0; row < filtered.length; row++) {
+      for (int col = 0; col < filtered[0].length; col++) {
+        filtered[row][col] = applyFilter(filterMatrix);
+      }
+    }
+
+    return filtered;
   }
+
+  // Applying the filter to a single pixel
+  private Color applyFilter(Kernel matrix) {
+
+    float red = 0;
+    float green = 0;
+    float blue = 0;
+
+    int rowInc = (matrix.getHeight() - (matrix.getHeight() / 2)) - 1;
+    int colInc = (matrix.getWidth() - (matrix.getWidth() / 2)) - 1;
+
+    for (int r = -rowInc; r < rowInc; r++) {
+      for (int c = -colInc; c < colInc; c++) {
+        try {
+          red += this.getPixelAt(r, c).getRed() * matrix.getValueAt(r, c);
+          green += this.getPixelAt(r, c).getGreen() * matrix.getValueAt(r, c);
+          blue += this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c);
+        } catch (ArrayIndexOutOfBoundsException ignore) {
+          continue;
+        }
+      }
+    }
+    return new Color(red, green, blue);
+  }
+
 
   @Override
   public boolean equals(Object o) {
-    // Fast path for pointer equality:
+    // Fast path for pointer equality
     if (this == o) {
       return true;
     }
 
-    // If o isn't the right class then it can't be equal:
+    // If o isn't the right class then it can't be equal
     if (!(o instanceof PixelImage)) {
       return false;
     }
 
-    // The successful instanceof check means our cast will succeed:
+    // The successful instanceof check means our cast will succeed
     PixelImage that = (PixelImage) o;
     return (this.height == that.height && this.width == that.width && this.image == that.image);
   }
