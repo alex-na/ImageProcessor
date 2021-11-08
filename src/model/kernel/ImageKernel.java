@@ -25,6 +25,7 @@ public class ImageKernel implements Kernel {
     return matrix[0].length;
   }
 
+
   @Override
   public double getValueAt(int row, int col) {
     return this.matrix[row][col];
