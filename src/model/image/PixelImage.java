@@ -91,6 +91,15 @@ public class PixelImage implements Image {
         tempColor = getPixelAt(row, col);
 
         switch (component) {
+          case "red":
+            colorValue = tempColor.getRed();
+            break;
+          case "green":
+            colorValue = tempColor.getGreen();
+            break;
+          case "blue":
+            colorValue = tempColor.getBlue();
+            break;
           case "value":
             colorValue = Math.max(tempColor.getRed(),
                 Math.max(tempColor.getGreen(), tempColor.getBlue()));
@@ -104,15 +113,6 @@ public class PixelImage implements Image {
             colorValue = (float) (tempColor.getRed() * 0.2126
                 + tempColor.getGreen() * 0.7152
                 + tempColor.getBlue() * 0.0722);
-            break;
-          case "red":
-            colorValue = tempColor.getRed();
-            break;
-          case "green":
-            colorValue = tempColor.getGreen();
-            break;
-          case "blue":
-            colorValue = tempColor.getBlue();
             break;
           default:
             throw new IllegalArgumentException("Invalid input.");
@@ -245,8 +245,8 @@ public class PixelImage implements Image {
     float green = 0;
     float blue = 0;
 
-    int rowInc = (matrix.getHeight() - (matrix.getHeight() / 2)) - 1;
-    int colInc = (matrix.getWidth() - (matrix.getWidth() / 2)) - 1;
+    int rowInc = matrix.getHeight() - (matrix.getHeight() / 2);
+    int colInc = matrix.getWidth() - (matrix.getWidth() / 2);
 
     for (int r = -rowInc; r < rowInc; r++) {
       for (int c = -colInc; c < colInc; c++) {
