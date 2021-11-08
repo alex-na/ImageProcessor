@@ -28,3 +28,5 @@ public class ImageKernel implements Kernel {
     return this.matrix[row][col];
   }
 }
+
+
