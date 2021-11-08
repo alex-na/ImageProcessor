@@ -3,12 +3,10 @@ package model.kernel;
 import java.awt.*;
 
 public class ImageKernel implements Kernel {
+
   private double[][] matrix;
 
   public ImageKernel(double[][] matrix) {
-    if (matrix.length < 0 || matrix[0].length < 0) {
-      throw new IllegalArgumentException("Dimensions cannot be negative.");
-    }
     if (matrix.length % 2 != 1 || matrix[0].length % 2 != 1) {
       throw new IllegalArgumentException("Dimensions must be odd.");
     }
@@ -24,7 +22,6 @@ public class ImageKernel implements Kernel {
   public int getWidth() {
     return matrix[0].length;
   }
-
 
   @Override
   public double getValueAt(int row, int col) {
