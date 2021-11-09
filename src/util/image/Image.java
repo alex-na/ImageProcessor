@@ -1,6 +1,5 @@
-package model.image;
+package util.image;
 import java.awt.*;
-import java.util.StringTokenizer;
 
 /**
  * Representing an Image as a 2D array of Pixels and their supporting operations.
@@ -41,17 +40,17 @@ public interface Image extends ImageState {
 
   /**
    *
-   * @param type
-   * @return
-   * @throws IllegalArgumentException
+   * @param type the methods that will be used to transform the image.
+   * @return an image that reflects a post-filtered image.
+   * @throws IllegalArgumentException if the transformation type is invalid.
    */
   Color[][] transformImage(String type) throws IllegalArgumentException;
 
   /**
    *
-   * @param type
-   * @return
-   * @throws IllegalArgumentException
+   * @param type the filtering methods that will be applied to the image.
+   * @return an image that reflects a post-filtered image.
+   * @throws IllegalArgumentException if the filter type is invalid.
    */
   Color[][] filterImage(String type) throws IllegalArgumentException;
 }

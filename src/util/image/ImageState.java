@@ -1,4 +1,4 @@
-package model.image;
+package util.image;
 import java.awt.*;
 
 /**

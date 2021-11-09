@@ -1,7 +1,6 @@
 package model;
 import java.awt.*;
-
-import model.image.Image;
+import util.image.Image;
 
 /**
  * This interface represents operations that can be used to monitor the state of an

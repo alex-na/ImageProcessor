@@ -1,10 +1,9 @@
 package mocks;
 
 import java.awt.*;
-import java.util.Map;
 
 import model.ImageProcessingModel;
-import model.image.Image;
+import util.image.Image;
 
 /**
  * Mock model class utilized for testing.

@@ -1,6 +1,6 @@
 package util;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
-import model.image.Image;
-import model.image.PixelImage;
+import util.image.Image;
+import util.image.PixelImage;
 
 /**
  * This class contains utility methods to read and write to a PPM image from file.

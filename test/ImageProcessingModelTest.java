@@ -3,9 +3,9 @@ import java.io.IOException;
 
 import model.ImageProcessingModel;
 import model.Model;
-import model.image.Image;
-import model.image.ImageState;
-import model.image.PixelImage;
+import util.image.ImageState;
+import util.image.Image;
+import util.image.PixelImage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +22,7 @@ public class ImageProcessingModelTest {
   public void init() throws IOException {
     this.testModel = new Model();
     this.testModel.load("images/dumby.ppm", "dumby");
+    this.testModel.load("images/dumby.png", "dumbyPNG");
     this.testModel.load("images/bunny.jpeg", "bunny");
   }
 
@@ -75,12 +76,6 @@ public class ImageProcessingModelTest {
         sb1.append(dumbyBrighten.getPixelAt(row, col).getBlue()).append(" ");
       }
     }
-
-    sb2.append("0 0 0 255 255 255 255 255 255 "
-            + "5 5 5 250 250 250 250 250 250 "
-            + "100 100 100 100 100 100 100 100 100 "
-            + "250 250 250 5 5 5 5 5 5 "
-            + "255 255 255 0 0 0 0 0 0 ");
     assertEquals(testModel.getImage("bunnyBrighten"),
             testModel.getImage("bunny"));
   }
@@ -111,6 +106,30 @@ public class ImageProcessingModelTest {
 
 
   @Test
+  public void MaximumRBGComponentIs255PNG() {
+    this.testModel.brightenImage(40, "dumbyPNG", "dumbyPNGBrighten");
+    Image dumbyPNGBrighten = this.testModel.getImage("dumbyPNGBrighten");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < dumbyPNGBrighten.getImageHeight(); row++) {
+      for (int col = 0; col < dumbyPNGBrighten.getImageWidth(); col++) {
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("40 40 40 255 255 255 255 255 255 "
+            + "45 45 45 255 255 255 255 255 255 "
+            + "140 140 140 140 140 140 140 140 140 "
+            + "255 255 255 45 45 45 45 45 45 "
+            + "255 255 255 40 40 40 40 40 40 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
   public void MinimumRBGComponentIs0() {
     this.testModel.brightenImage(-40, "dumby", "dumbyDarken");
     Image dumbyDarken = this.testModel.getImage("dumbyDarken");
@@ -130,6 +149,30 @@ public class ImageProcessingModelTest {
             + " 60 60 60 60 60 60 60 60 60"
             + " 210 210 210 0 0 0 0 0 0"
             + " 215 215 215 0 0 0 0 0 0 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void MinimumRBGComponentIs255PNG() {
+    this.testModel.brightenImage(-1000, "dumbyPNG", "dumbyPNGBrighten");
+    Image dumbyPNGBrighten = this.testModel.getImage("dumbyPNGBrighten");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < dumbyPNGBrighten.getImageHeight(); row++) {
+      for (int col = 0; col < dumbyPNGBrighten.getImageWidth(); col++) {
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(dumbyPNGBrighten.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("0 0 0 0 0 0 0 0 0 "
+            + "0 0 0 0 0 0 0 0 0 "
+            + "0 0 0 0 0 0 0 0 0 "
+            + "0 0 0 0 0 0 0 0 0 "
+            + "0 0 0 0 0 0 0 0 0 ");
 
     assertEquals(sb1.toString(), sb2.toString());
   }
@@ -508,4 +551,48 @@ public class ImageProcessingModelTest {
     }
     assertEquals(sb1.toString(), sb2.toString());
   }
+
+  // Tests for sepia
+  @Test(expected = IllegalArgumentException.class)
+  public void imageNameNotInMapTransformation() {
+    this.testModel.transformImage("sepia", "notAnImage", "notAnImage2");
+  }
+
+
+  @Test(expected = IllegalArgumentException.class)
+  public void ImageInMapIsNullTransformation() {
+    this.testModel.transformImage("sepia", "nullImage", "nullImage2");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidTransformationType() {
+    this.testModel.transformImage("invalid", "nullImage", "nullImage2");
+  }
+
+  @Test
+  public void sepiaFilter() {
+    this.testModel.transformImage("sepia", "dumbyPNG", "dumbyPNGSepia");
+    Image dumbyPNGSepia = this.testModel.getImage("dumbyPNGSepia");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < dumbyPNGSepia.getImageHeight(); row++) {
+      for (int col = 0; col < dumbyPNGSepia.getImageWidth(); col++) {
+        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("40 40 40 255 255 255 255 255 255 "
+            + "45 45 45 255 255 255 255 255 255 "
+            + "140 140 140 140 140 140 140 140 140 "
+            + "255 255 255 45 45 45 45 45 45 "
+            + "255 255 255 40 40 40 40 40 40 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+
+  }
+
+
 }

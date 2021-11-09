@@ -1,11 +1,11 @@
-package model.image;
+package util.image;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-import model.kernel.ImageKernel;
-import model.kernel.Kernel;
+import util.kernel.Kernel;
+import util.kernel.ImageKernel;
 
 //TODO abstract common functionality into helpers
 
@@ -178,26 +178,31 @@ public class PixelImage implements Image {
 
     for (int row = 0; row < transformationMatrix.getHeight(); row++) {
       for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        transformed[row][col] = transformColor(transformationMatrix);
+        transformed[row][col] = transformColor(transformationMatrix, row, col);
       }
     }
     return transformed;
   }
 
   // Transforming a single color based on the matrix
-  private Color transformColor(Kernel transformationMatrix) {
+  private Color transformColor(Kernel transformationMatrix, int cRow, int cCol) {
     float redPrime = 0;
     float greenPrime = 0;
     float bluePrime = 0;
 
     for (int row = 0; row < transformationMatrix.getHeight(); row++) {
       for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        if (row == 0) {
-          redPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getRed();
-        } else if (row == 1) {
-          greenPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getGreen();
-        } else if (row == 2) {
-          bluePrime += transformationMatrix.getValueAt(row, col) * image[row][col].getBlue();
+//        if (row == 0) {
+//          tempValue +=
+//          redPrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getRed();
+//        } else if (row == 1) {
+//          greenPrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getGreen();
+//        } else if (row == 2) {
+//          bluePrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getBlue();
+//        }
+        switch (row) {
+          case 1:
+            
         }
       }
     }
