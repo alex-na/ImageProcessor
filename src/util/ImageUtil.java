@@ -1,6 +1,7 @@
 package util;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 
+import javax.imageio.ImageIO;
 import model.image.Image;
 import model.image.PixelImage;
 
@@ -15,6 +17,43 @@ import model.image.PixelImage;
  * This class contains utility methods to read and write to a PPM image from file.
  */
 public class ImageUtil {
+
+  /**
+   * Reading an image into the program.
+   *
+   * @param filePath the file path of the image
+   * @return a BufferedImage object
+   * @throws IOException if the image could not be loaded
+   */
+  public static BufferedImage readFile(String filePath) throws IOException {
+   BufferedImage image = null;
+
+    try {
+      image = ImageIO.read(new File(filePath));
+    } catch (IOException e) {
+      throw new IOException("Image could not be loaded.");
+    }
+
+    return image;
+  }
+
+  /**
+   * Writing an image to a file and saving it locally.
+   *
+   * @param filePath the filePath in which to store this image
+   * @param imageName the name of the image
+   */
+  public static void writeFile(String filePath, String formatName, BufferedImage imageName)
+      throws IOException {
+
+    File file = new File(filePath);
+
+    try {
+      ImageIO.write(imageName, formatName, file);
+    } catch (IOException e) {
+      throw new IOException("Could not write the given file.");
+    }
+  }
 
   /**
    * Read an image file in the PPM format and print the colors.
@@ -82,7 +121,7 @@ public class ImageUtil {
    */
   public static void writePPM(String filepath, Image image) throws IllegalArgumentException {
     if (filepath == null || image == null) {
-      throw new IllegalArgumentException("filepath and/or given image are invalid");
+      throw new IllegalArgumentException("filepath and/or given cannot be null.");
     }
 
     File saveFile = new File(filepath);
