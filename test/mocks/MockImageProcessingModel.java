@@ -15,6 +15,7 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   /**
    * Constructing a MockImageProcessingModel object.
+   *
    * @param log StringBuilder
    */
   public MockImageProcessingModel(StringBuilder log) {
@@ -43,6 +44,18 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
+  public void filterImage(String filterType, String imageName, String desiredName)
+      throws IllegalArgumentException {
+
+  }
+
+  @Override
+  public void transformImage(String transformType, String imageName, String desiredName)
+      throws IllegalArgumentException {
+
+  }
+
+  @Override
   public void save(String filePath, String imageName) throws IllegalArgumentException {
     log.append(String.format("save method called with parameters: %s, %s",
         filePath, imageName));
@@ -65,25 +78,11 @@ public class MockImageProcessingModel implements ImageProcessingModel {
     return null;
   }
 
-  /**
-   * Gets the height of an image associated with the given imageName.
-   *
-   * @param imageName
-   * @return an int that represents the height of an image.
-   * @throws IllegalArgumentException when the given imageName is not associated with an image.
-   */
   @Override
   public int getImageHeight(String imageName) throws IllegalArgumentException {
     return 0;
   }
 
-  /**
-   * Gets the width of an image associated with the given imageName.
-   *
-   * @param imageName
-   * @return an int that represents the width of an image.
-   * @throws IllegalArgumentException when the given imageName is not associated with an image.
-   */
   @Override
   public int getImageWidth(String imageName) throws IllegalArgumentException {
     return 0;

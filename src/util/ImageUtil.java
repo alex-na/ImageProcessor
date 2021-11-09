@@ -26,14 +26,12 @@ public class ImageUtil {
    * @throws IOException if the image could not be loaded
    */
   public static BufferedImage readFile(String filePath) throws IOException {
-   BufferedImage image = null;
-
+   BufferedImage image;
     try {
       image = ImageIO.read(new File(filePath));
     } catch (IOException e) {
       throw new IOException("Image could not be loaded.");
     }
-
     return image;
   }
 
@@ -45,9 +43,7 @@ public class ImageUtil {
    */
   public static void writeFile(String filePath, String formatName, BufferedImage imageName)
       throws IOException {
-
     File file = new File(filePath);
-
     try {
       ImageIO.write(imageName, formatName, file);
     } catch (IOException e) {
@@ -63,7 +59,7 @@ public class ImageUtil {
    */
   public static Image readPPM(String filename) throws IllegalArgumentException {
     Scanner sc;
-    Color[][] pixelMatrix = null;
+    Color[][] pixelMatrix;
 
     try {
       sc = new Scanner(new FileInputStream(filename));
@@ -87,23 +83,17 @@ public class ImageUtil {
         System.out.println("Invalid PPM file: plain RAW file should begin with P3");
       }
       int width = sc.nextInt();
-      //System.out.println("Width of image: " + width);
       int height = sc.nextInt();
-      //System.out.println("Height of image: " + height);
       int maxValue = sc.nextInt();
 
       pixelMatrix = new Color[height][width];
 
-      //System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
-      for (int j = 0; j < height; j++) {
-        for (int i = 0; i < width; i++) {
-
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
           int r = sc.nextInt();
           int g = sc.nextInt();
           int b = sc.nextInt();
-          pixelMatrix[j][i] = new Color(r, g, b);
-
-          //System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
+          pixelMatrix[i][j] = new Color(r, g, b);
         }
       }
     } catch (FileNotFoundException e) {
@@ -137,12 +127,12 @@ public class ImageUtil {
       sb.append(image.getImageHeight() + "\n");
       sb.append("255\n");
 
-      for (int j = 0; j < image.getImageHeight(); j++) {
-        for (int i = 0; i < image.getImageWidth(); i++) {
+      for (int i = 0; i < image.getImageHeight(); i++) {
+        for (int j = 0; j < image.getImageWidth(); j++) {
           sb.append(String.format("%d\n%d\n%d\n",
-                  image.getPixelAt(j, i).getRed(),
-                  image.getPixelAt(j, i).getGreen(),
-                  image.getPixelAt(j, i).getBlue()));
+                  image.getPixelAt(i, j).getRed(),
+                  image.getPixelAt(i, j).getGreen(),
+                  image.getPixelAt(i, j).getBlue()));
         }
       }
 

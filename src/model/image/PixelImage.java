@@ -57,7 +57,6 @@ public class PixelImage implements Image {
     int r;
     int g;
     int b;
-
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         tempColor = getPixelAt(row, col);
@@ -252,17 +251,18 @@ public class PixelImage implements Image {
     for (int r = -rowInc; r < rowInc; r++) {
       for (int c = -colInc; c < colInc; c++) {
         try {
-          red += this.getPixelAt(r, c).getRed() * matrix.getValueAt(r, c);
-          green += this.getPixelAt(r, c).getGreen() * matrix.getValueAt(r, c);
-          blue += this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c);
+          red = (float) (this.getPixelAt(r, c).getRed() * matrix.getValueAt(r, c));
+          green = (float) (this.getPixelAt(r, c).getGreen() * matrix.getValueAt(r, c));
+          blue = (float) (this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c));
         } catch (ArrayIndexOutOfBoundsException ignore) {
+          continue;
+        } catch (IllegalArgumentException ignore) {
           continue;
         }
       }
     }
     return new Color(red, green, blue);
   }
-
 
   @Override
   public boolean equals(Object o) {
