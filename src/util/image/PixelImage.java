@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.Objects;
 
-import util.kernel.Kernel;
 import util.kernel.ImageKernel;
+import util.kernel.Kernel;
 
 //TODO abstract common functionality into helpers
 
@@ -59,13 +59,12 @@ public class PixelImage implements Image {
     int r;
     int g;
     int b;
-
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         tempColor = getPixelAt(row, col);
-        r = componentWithinRange(tempColor.getRed(), increment);
-        g = componentWithinRange(tempColor.getGreen(), increment);
-        b = componentWithinRange(tempColor.getBlue(), increment);
+        r = setRange(tempColor.getRed() + increment);
+        g = setRange(tempColor.getGreen() + increment);
+        b = setRange(tempColor.getBlue() + increment);
         brightened[row][col] = new Color(r, g, b);
       }
     }
@@ -73,13 +72,13 @@ public class PixelImage implements Image {
   }
 
   // Checking component + increment to ensure proper values are used
-  private int componentWithinRange(int component, int increment) {
-    if (component + increment < 0) {
+  private int setRange(int component) {
+    if (component < 0) {
       return 0;
-    } else if (component + increment > 255) {
+    } else if (component > 255) {
       return 255;
     } else {
-      return component + increment;
+      return component;
     }
   }
 
@@ -105,17 +104,17 @@ public class PixelImage implements Image {
             break;
           case "value":
             colorValue = Math.max(tempColor.getRed(),
-                    Math.max(tempColor.getGreen(), tempColor.getBlue()));
+                Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
             colorValue = (float) ((tempColor.getRed()
-                    + tempColor.getGreen()
-                    + tempColor.getBlue()) / 3);
+                + tempColor.getGreen()
+                + tempColor.getBlue()) / 3);
             break;
           case "luma":
             colorValue = (float) (tempColor.getRed() * 0.2126
-                    + tempColor.getGreen() * 0.7152
-                    + tempColor.getBlue() * 0.0722);
+                + tempColor.getGreen() * 0.7152
+                + tempColor.getBlue() * 0.0722);
             break;
           default:
             throw new IllegalArgumentException("Invalid input.");
@@ -156,14 +155,14 @@ public class PixelImage implements Image {
     Kernel transformationMatrix;
 
     double[][] sepiaMatrix = {
-            {0.393, 0.769, 0.189},
-            {0.349, 0.686, 0.168},
-            {0.272, 0.534, 0.131}};
+        {0.393, 0.769, 0.189},
+        {0.349, 0.686, 0.168},
+        {0.272, 0.534, 0.131}};
 
     double[][] greyscaleMatrix = {
-            {0.393, 0.769, 0.189},
-            {0.349, 0.686, 0.168},
-            {0.272, 0.534, 0.131}};
+        {0.393, 0.769, 0.189},
+        {0.349, 0.686, 0.168},
+        {0.272, 0.534, 0.131}};
 
     switch (type) {
       case "sepia":
@@ -178,35 +177,38 @@ public class PixelImage implements Image {
 
     for (int row = 0; row < transformationMatrix.getHeight(); row++) {
       for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        transformed[row][col] = transformColor(transformationMatrix, row, col);
+        transformed[row][col] = transformColor(transformationMatrix, this.image);
       }
     }
     return transformed;
   }
 
   // Transforming a single color based on the matrix
-  private Color transformColor(Kernel transformationMatrix, int cRow, int cCol) {
+  private Color transformColor(Kernel matrix, Color[][] image) {
     float redPrime = 0;
     float greenPrime = 0;
     float bluePrime = 0;
 
-    for (int row = 0; row < transformationMatrix.getHeight(); row++) {
-      for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-//        if (row == 0) {
-//          tempValue +=
-//          redPrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getRed();
-//        } else if (row == 1) {
-//          greenPrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getGreen();
-//        } else if (row == 2) {
-//          bluePrime += transformationMatrix.getValueAt(row, col) * image[cRow][cCol].getBlue();
-//        }
-        switch (row) {
-          case 1:
-            
+    for (int row = 0; row < matrix.getHeight(); row++) {
+      for (int col = 0; col < matrix.getWidth(); col++) {
+        if (row == 0) {
+          redPrime = Math.round(matrix.getValueAt(0, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(0, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(0, 2) * image[row][col].getBlue());
+
+        } else if (row == 1) {
+          greenPrime = Math.round(matrix.getValueAt(1, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(1, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(1, 2) * image[row][col].getBlue());
+
+        } else if (row == 2) {
+          bluePrime = Math.round(matrix.getValueAt(2, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(2, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(2, 2) * image[row][col].getBlue());
         }
       }
     }
-    return new Color(redPrime, greenPrime, bluePrime);
+    return new Color(setRange((int) redPrime), setRange((int) greenPrime), setRange((int) bluePrime));
   }
 
   @Override
@@ -215,16 +217,16 @@ public class PixelImage implements Image {
     Kernel filterMatrix;
 
     double[][] blurMatrix = {
-            {0.0625, 0.125, 0.0625},
-            {0.125, 0.25, 0.125},
-            {0.0625, 0.125, 0.0625}};
+        {0.0625, 0.125, 0.0625},
+        {0.125, 0.25, 0.125},
+        {0.0625, 0.125, 0.0625}};
 
     double[][] sharpenMatrix = {
-            {-0.125, -0.125, -0.125, -0.125, -0.125},
-            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-            {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
-            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-            {-0.125, -0.125, -0.125, -0.125, -0.125}};
+        {-0.125, -0.125, -0.125, -0.125, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+        {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+        {-0.125, -0.125, -0.125, -0.125, -0.125}};
 
     switch (type) {
       case "blur":
@@ -259,17 +261,18 @@ public class PixelImage implements Image {
     for (int r = -rowInc; r < rowInc; r++) {
       for (int c = -colInc; c < colInc; c++) {
         try {
-          red += this.getPixelAt(r, c).getRed() * matrix.getValueAt(r, c);
-          green += this.getPixelAt(r, c).getGreen() * matrix.getValueAt(r, c);
-          blue += this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c);
+          red = (float) (this.getPixelAt(r, c).getRed() * matrix.getValueAt(r, c));
+          green = (float) (this.getPixelAt(r, c).getGreen() * matrix.getValueAt(r, c));
+          blue = (float) (this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c));
         } catch (ArrayIndexOutOfBoundsException ignore) {
+          continue;
+        } catch (IllegalArgumentException ignore) {
           continue;
         }
       }
     }
     return new Color(red, green, blue);
   }
-
 
   @Override
   public boolean equals(Object o) {
@@ -286,8 +289,8 @@ public class PixelImage implements Image {
     // The successful instanceof check means our cast will succeed
     PixelImage that = (PixelImage) o;
     return (this.height == that.height
-            && this.width == that.width
-            && Arrays.deepEquals(this.image, that.image));
+        && this.width == that.width
+        && Arrays.deepEquals(this.image, that.image));
   }
 
   @Override
