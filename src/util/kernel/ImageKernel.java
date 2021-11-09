@@ -1,6 +1,4 @@
-package model.kernel;
-
-import java.awt.*;
+package util.kernel;
 
 public class ImageKernel implements Kernel {
 

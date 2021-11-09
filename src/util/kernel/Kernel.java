@@ -1,4 +1,4 @@
-package model.kernel;
+package util.kernel;
 
 public interface Kernel {
   int getHeight();

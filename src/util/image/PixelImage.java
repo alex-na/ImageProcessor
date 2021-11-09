@@ -1,11 +1,11 @@
-package model.image;
+package util.image;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
 
-import model.kernel.ImageKernel;
-import model.kernel.Kernel;
+import util.kernel.ImageKernel;
+import util.kernel.Kernel;
 
 //TODO abstract common functionality into helpers
 
