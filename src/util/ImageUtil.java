@@ -115,7 +115,7 @@ public class ImageUtil {
     }
 
     File saveFile = new File(filepath);
-    FileOutputStream saveFileOutputStream = null;
+    FileOutputStream saveFileOutputStream;
 
     try {
       saveFileOutputStream = new FileOutputStream(saveFile);
@@ -123,8 +123,8 @@ public class ImageUtil {
       StringBuilder sb = new StringBuilder();
 
       sb.append("P3\n");
-      sb.append(image.getImageWidth() + " ");
-      sb.append(image.getImageHeight() + "\n");
+      sb.append(image.getImageWidth()).append(" ");
+      sb.append(image.getImageHeight()).append("\n");
       sb.append("255\n");
 
       for (int i = 0; i < image.getImageHeight(); i++) {

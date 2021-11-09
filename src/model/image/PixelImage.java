@@ -1,12 +1,14 @@
 package model.image;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 import model.kernel.ImageKernel;
 import model.kernel.Kernel;
 
 //TODO abstract common functionality into helpers
+
 /**
  * Represents an image in the form of a 2D array of Colors.
  */
@@ -60,9 +62,9 @@ public class PixelImage implements Image {
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         tempColor = getPixelAt(row, col);
-        r = componentWithinRange(tempColor.getRed(), increment);
-        g = componentWithinRange(tempColor.getGreen(), increment);
-        b = componentWithinRange(tempColor.getBlue(), increment);
+        r = setRange(tempColor.getRed() + increment);
+        g = setRange(tempColor.getGreen() + increment);
+        b = setRange(tempColor.getBlue() + increment);
         brightened[row][col] = new Color(r, g, b);
       }
     }
@@ -70,13 +72,13 @@ public class PixelImage implements Image {
   }
 
   // Checking component + increment to ensure proper values are used
-  private int componentWithinRange(int component, int increment) {
-    if (component + increment < 0) {
+  private int setRange(int component) {
+    if (component < 0) {
       return 0;
-    } else if (component + increment > 255) {
+    } else if (component > 255) {
       return 255;
     } else {
-      return component + increment;
+      return component;
     }
   }
 
@@ -128,16 +130,16 @@ public class PixelImage implements Image {
     Color[][] flippedImage = new Color[this.height][this.width];
     switch (axis) {
       case "horizontal":
-        for (int row = 0; row < height; row++) {
-          for (int col = 0; col < width; col++) {
-            flippedImage[row][col] = getPixelAt(row, width - 1 - col);
+        for (int row = 0; row < image.length; row++) {
+          for (int col = 0; col < image[0].length; col++) {
+            flippedImage[row][col] = getPixelAt(height - 1 - row, col);
           }
         }
         break;
       case "vertical":
-        for (int row = 0; row < image.length; row++) {
-          for (int col = 0; col < image[0].length; col++) {
-            flippedImage[row][col] = getPixelAt(height - 1 - row, col);
+        for (int row = 0; row < height; row++) {
+          for (int col = 0; col < width; col++) {
+            flippedImage[row][col] = getPixelAt(row, width - 1 - col);
           }
         }
         break;
@@ -175,30 +177,38 @@ public class PixelImage implements Image {
 
     for (int row = 0; row < transformationMatrix.getHeight(); row++) {
       for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        transformed[row][col] = transformColor(transformationMatrix);
+        transformed[row][col] = transformColor(transformationMatrix, this.image);
       }
     }
     return transformed;
   }
 
   // Transforming a single color based on the matrix
-  private Color transformColor(Kernel transformationMatrix) {
+  private Color transformColor(Kernel matrix, Color[][] image) {
     float redPrime = 0;
     float greenPrime = 0;
     float bluePrime = 0;
 
-    for (int row = 0; row < transformationMatrix.getHeight(); row++) {
-      for (int col = 0; col < transformationMatrix.getWidth(); col++) {
+    for (int row = 0; row < matrix.getHeight(); row++) {
+      for (int col = 0; col < matrix.getWidth(); col++) {
         if (row == 0) {
-          redPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getRed();
+          redPrime = Math.round(matrix.getValueAt(0, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(0, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(0, 2) * image[row][col].getBlue());
+
         } else if (row == 1) {
-          greenPrime += transformationMatrix.getValueAt(row, col) * image[row][col].getGreen();
+          greenPrime = Math.round(matrix.getValueAt(1, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(1, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(1, 2) * image[row][col].getBlue());
+
         } else if (row == 2) {
-          bluePrime += transformationMatrix.getValueAt(row, col) * image[row][col].getBlue();
+          bluePrime = Math.round(matrix.getValueAt(2, 0) * image[row][col].getRed())
+              + Math.round(matrix.getValueAt(2, 1) * image[row][col].getGreen())
+              + Math.round(matrix.getValueAt(2, 2) * image[row][col].getBlue());
         }
       }
     }
-    return new Color(redPrime, greenPrime, bluePrime);
+    return new Color(setRange((int) redPrime), setRange((int) greenPrime), setRange((int) bluePrime));
   }
 
   @Override
@@ -278,7 +288,9 @@ public class PixelImage implements Image {
 
     // The successful instanceof check means our cast will succeed
     PixelImage that = (PixelImage) o;
-    return (this.height == that.height && this.width == that.width && this.image == that.image);
+    return (this.height == that.height
+        && this.width == that.width
+        && Arrays.deepEquals(this.image, that.image));
   }
 
   @Override
@@ -286,3 +298,5 @@ public class PixelImage implements Image {
     return Objects.hash(image, height, width);
   }
 }
+// TODO
+// change 2d Array of pixels to be buffered images.

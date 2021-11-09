@@ -44,14 +44,12 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
-  public void filterImage(String filterType, String imageName, String desiredName)
-      throws IllegalArgumentException {
+  public void filterImage(String filterType, String imageName, String desiredName) throws IllegalArgumentException {
 
   }
 
   @Override
-  public void transformImage(String transformType, String imageName, String desiredName)
-      throws IllegalArgumentException {
+  public void transformImage(String transformType, String imageName, String desiredName) throws IllegalArgumentException {
 
   }
 
@@ -65,7 +63,6 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   public void load(String filePath, String imageName) throws IllegalArgumentException {
     log.append(String.format("load method called with parameters: %s, %s",
         filePath, imageName));
-
   }
 
   @Override

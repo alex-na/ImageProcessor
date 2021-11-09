@@ -1,5 +1,8 @@
 package controller.commands;
 
+import java.io.File;
+import java.io.IOException;
+
 import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
@@ -28,6 +31,11 @@ public class Load implements ImageProcessingCommand {
 
   @Override
   public void apply(ImageProcessingModel model, ImageProcessingView view) {
-    model.load(fileName, imageName);
+    try {
+
+      model.load(fileName, imageName);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

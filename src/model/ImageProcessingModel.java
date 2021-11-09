@@ -1,5 +1,7 @@
 package model;
 
+import java.io.IOException;
+
 /**
  * Representing the model of an ImageProcessor, utilized for performing operations on an image and
  * storing said operations for future use.
@@ -12,7 +14,7 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    * @param filePath  the location of the image
    * @param imageName the name by which this image will be referred to within the program
    */
-  void load(String filePath, String imageName) throws IllegalArgumentException;
+  void load(String filePath, String imageName) throws IllegalArgumentException, IOException;
 
   /**
    * Saves an image within the desired file location.

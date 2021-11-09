@@ -40,6 +40,5 @@ public class Transformation implements ImageProcessingCommand {
         break;
       default: throw new IllegalArgumentException("Invalid command.");
     }
-
   }
 }
