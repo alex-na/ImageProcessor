@@ -1,5 +1,5 @@
 package util.image;
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Representing an Image as a 2D array of Pixels and their supporting operations.

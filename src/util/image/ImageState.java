@@ -1,5 +1,5 @@
 package util.image;
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * This interface represents operations that can be used to monitor the state of an Image,
