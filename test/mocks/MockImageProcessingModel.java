@@ -42,6 +42,32 @@ public class MockImageProcessingModel implements ImageProcessingModel {
         axis, imageName, desiredName));
   }
 
+  /**
+   * Filters an image based on user input.
+   *
+   * @param filterType  the type of filter to be applied to the image
+   * @param imageName   the name of the image
+   * @param desiredName the desired name of the image
+   * @throws IllegalArgumentException if an invalid filterType is entered
+   */
+  @Override
+  public void filterImage(String filterType, String imageName, String desiredName) throws IllegalArgumentException {
+
+  }
+
+  /**
+   * Transforms an image based on user input.
+   *
+   * @param transformType the type of transformation to be applied to the image
+   * @param imageName     the name of the image
+   * @param desiredName   the desired name of the image
+   * @throws IllegalArgumentException if an invalid transformType is entered
+   */
+  @Override
+  public void transformImage(String transformType, String imageName, String desiredName) throws IllegalArgumentException {
+
+  }
+
   @Override
   public void save(String filePath, String imageName) throws IllegalArgumentException {
     log.append(String.format("save method called with parameters: %s, %s",

@@ -1,12 +1,14 @@
 package model.image;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 import model.kernel.ImageKernel;
 import model.kernel.Kernel;
 
 //TODO abstract common functionality into helpers
+
 /**
  * Represents an image in the form of a 2D array of Colors.
  */
@@ -103,17 +105,17 @@ public class PixelImage implements Image {
             break;
           case "value":
             colorValue = Math.max(tempColor.getRed(),
-                Math.max(tempColor.getGreen(), tempColor.getBlue()));
+                    Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
             colorValue = (float) ((tempColor.getRed()
-                + tempColor.getGreen()
-                + tempColor.getBlue()) / 3);
+                    + tempColor.getGreen()
+                    + tempColor.getBlue()) / 3);
             break;
           case "luma":
             colorValue = (float) (tempColor.getRed() * 0.2126
-                + tempColor.getGreen() * 0.7152
-                + tempColor.getBlue() * 0.0722);
+                    + tempColor.getGreen() * 0.7152
+                    + tempColor.getBlue() * 0.0722);
             break;
           default:
             throw new IllegalArgumentException("Invalid input.");
@@ -129,16 +131,16 @@ public class PixelImage implements Image {
     Color[][] flippedImage = new Color[this.height][this.width];
     switch (axis) {
       case "horizontal":
-        for (int row = 0; row < height; row++) {
-          for (int col = 0; col < width; col++) {
-            flippedImage[row][col] = getPixelAt(row, width - 1 - col);
+        for (int row = 0; row < image.length; row++) {
+          for (int col = 0; col < image[0].length; col++) {
+            flippedImage[row][col] = getPixelAt(height - 1 - row, col);
           }
         }
         break;
       case "vertical":
-        for (int row = 0; row < image.length; row++) {
-          for (int col = 0; col < image[0].length; col++) {
-            flippedImage[row][col] = getPixelAt(height - 1 - row, col);
+        for (int row = 0; row < height; row++) {
+          for (int col = 0; col < width; col++) {
+            flippedImage[row][col] = getPixelAt(row, width - 1 - col);
           }
         }
         break;
@@ -154,14 +156,14 @@ public class PixelImage implements Image {
     Kernel transformationMatrix;
 
     double[][] sepiaMatrix = {
-        {0.393, 0.769, 0.189},
-        {0.349, 0.686, 0.168},
-        {0.272, 0.534, 0.131}};
+            {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131}};
 
     double[][] greyscaleMatrix = {
-        {0.393, 0.769, 0.189},
-        {0.349, 0.686, 0.168},
-        {0.272, 0.534, 0.131}};
+            {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131}};
 
     switch (type) {
       case "sepia":
@@ -208,16 +210,16 @@ public class PixelImage implements Image {
     Kernel filterMatrix;
 
     double[][] blurMatrix = {
-        {0.0625, 0.125, 0.0625},
-        {0.125, 0.25, 0.125},
-        {0.0625, 0.125, 0.0625}};
+            {0.0625, 0.125, 0.0625},
+            {0.125, 0.25, 0.125},
+            {0.0625, 0.125, 0.0625}};
 
     double[][] sharpenMatrix = {
-        {-0.125, -0.125, -0.125, -0.125, -0.125},
-        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-        {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
-        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-        {-0.125, -0.125, -0.125, -0.125, -0.125}};
+            {-0.125, -0.125, -0.125, -0.125, -0.125},
+            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+            {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
+            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+            {-0.125, -0.125, -0.125, -0.125, -0.125}};
 
     switch (type) {
       case "blur":
@@ -278,7 +280,9 @@ public class PixelImage implements Image {
 
     // The successful instanceof check means our cast will succeed
     PixelImage that = (PixelImage) o;
-    return (this.height == that.height && this.width == that.width && this.image == that.image);
+    return (this.height == that.height
+            && this.width == that.width
+            && Arrays.deepEquals(this.image, that.image));
   }
 
   @Override
@@ -286,3 +290,5 @@ public class PixelImage implements Image {
     return Objects.hash(image, height, width);
   }
 }
+// TODO
+// change 2d Array of pixels to be buffered images.
