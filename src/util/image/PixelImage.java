@@ -86,7 +86,7 @@ public class PixelImage implements Image {
   public Color[][] displayGreyscale(String component) throws IllegalArgumentException {
     Color[][] greyscale = new Color[this.height][this.width];
     Color tempColor;
-    float colorValue;
+    int colorValue;
 
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
@@ -107,14 +107,14 @@ public class PixelImage implements Image {
                 Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
-            colorValue = (float) ((tempColor.getRed()
+            colorValue = ((tempColor.getRed()
                 + tempColor.getGreen()
                 + tempColor.getBlue()) / 3);
             break;
           case "luma":
-            colorValue = (float) (tempColor.getRed() * 0.2126
-                + tempColor.getGreen() * 0.7152
-                + tempColor.getBlue() * 0.0722);
+            colorValue = (int) (Math.round(tempColor.getRed() * 0.2126)
+                + Math.round(tempColor.getGreen() * 0.7152)
+                + Math.round(tempColor.getBlue() * 0.0722));
             break;
           default:
             throw new IllegalArgumentException("Invalid input.");
@@ -185,30 +185,30 @@ public class PixelImage implements Image {
 
   // Transforming a single color based on the matrix
   private Color transformColor(Kernel matrix, Color[][] image) {
-    float redPrime = 0;
-    float greenPrime = 0;
-    float bluePrime = 0;
+    int redPrime = 0;
+    int greenPrime = 0;
+    int bluePrime = 0;
 
     for (int row = 0; row < matrix.getHeight(); row++) {
       for (int col = 0; col < matrix.getWidth(); col++) {
         if (row == 0) {
-          redPrime = Math.round(matrix.getValueAt(0, 0) * image[row][col].getRed())
+          redPrime = (int) (Math.round(matrix.getValueAt(0, 0) * image[row][col].getRed())
               + Math.round(matrix.getValueAt(0, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(0, 2) * image[row][col].getBlue());
+              + Math.round(matrix.getValueAt(0, 2) * image[row][col].getBlue()));
 
         } else if (row == 1) {
-          greenPrime = Math.round(matrix.getValueAt(1, 0) * image[row][col].getRed())
+          greenPrime = (int) (Math.round(matrix.getValueAt(1, 0) * image[row][col].getRed())
               + Math.round(matrix.getValueAt(1, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(1, 2) * image[row][col].getBlue());
+              + Math.round(matrix.getValueAt(1, 2) * image[row][col].getBlue()));
 
         } else if (row == 2) {
-          bluePrime = Math.round(matrix.getValueAt(2, 0) * image[row][col].getRed())
+          bluePrime = (int) (Math.round(matrix.getValueAt(2, 0) * image[row][col].getRed())
               + Math.round(matrix.getValueAt(2, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(2, 2) * image[row][col].getBlue());
+              + Math.round(matrix.getValueAt(2, 2) * image[row][col].getBlue()));
         }
       }
     }
-    return new Color(setRange((int) redPrime), setRange((int) greenPrime), setRange((int) bluePrime));
+    return new Color(setRange(redPrime), setRange(greenPrime), setRange(bluePrime));
   }
 
   @Override
@@ -241,19 +241,37 @@ public class PixelImage implements Image {
 
     for (int row = 0; row < filtered.length; row++) {
       for (int col = 0; col < filtered[0].length; col++) {
-        filtered[row][col] = applyFilter(filterMatrix);
+
+        int x = row - (filterMatrix.getHeight() / 2); // center x
+        int y = col - (filterMatrix.getWidth() / 2); // center y
+
+        for (int i = 0; i < filterMatrix.getHeight(); i++) {
+          for (int j = 0; j < filterMatrix.getWidth(); j++) {
+            if (x + i < 0 || x + i >= filtered.length || y + j < 0 || y + j >= filtered[0].length) {
+              continue;
+            }
+            else {
+              //filtered[x][y] += filterMatrix.getValueAt(i, j) * this.image[i+x][j+y];
+            }
+          }
+        }
       }
     }
-
     return filtered;
   }
 
   // Applying the filter to a single pixel
-  private Color applyFilter(Kernel matrix) {
+  private Color applyFilter(Kernel matrix, Image image) {
 
     float red = 0;
     float green = 0;
     float blue = 0;
+
+    for (int row = 0; row < image.getImageHeight(); row++) {
+      for (int col = 0; col < image.getImageWidth(); col++) {
+
+      }
+    }
 
     int rowInc = matrix.getHeight() - (matrix.getHeight() / 2);
     int colInc = matrix.getWidth() - (matrix.getWidth() / 2);

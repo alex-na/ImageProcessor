@@ -30,8 +30,6 @@ public class Save implements ImageProcessingCommand {
     }
     this.fileName = fileName;
     this.imageName = imageName;
-
-
   }
 
   @Override
@@ -54,14 +52,14 @@ public class Save implements ImageProcessingCommand {
       try {
         int height = model.getImageHeight(imageName);
         int width = model.getImageWidth(imageName);
-        BufferedImage savedImage = new BufferedImage(height, width, BufferedImage.TYPE_INT_RGB);
+        BufferedImage savedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for (int row = 0; row < height; row++) {
-          for (int col = 0; col < width; col++) {
-            int pixel = (model.getPixelAt(imageName, row, col).getRed() << 16)
-                    | (model.getPixelAt(imageName, row, col).getGreen() << 8)
-                    | (model.getPixelAt(imageName, row, col).getBlue());
-            savedImage.setRGB(row, col, pixel);
+        for (int i = 0; i < width; i++) {
+          for (int j = 0; j < height; j++) {
+            int pixel = (model.getPixelAt(imageName, j, i).getRed() << 16)
+                    | (model.getPixelAt(imageName, j, i).getGreen() << 8)
+                    | (model.getPixelAt(imageName, j, i).getBlue() << 0);
+            savedImage.setRGB(i, j, pixel);
           }
         }
 

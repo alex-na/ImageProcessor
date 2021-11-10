@@ -2,6 +2,7 @@ package mocks;
 
 import java.awt.*;
 
+import java.io.IOException;
 import model.ImageProcessingModel;
 import util.image.Image;
 
@@ -19,6 +20,12 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    */
   public MockImageProcessingModel(StringBuilder log) {
     this.log = log;
+  }
+
+  @Override
+  public void load(String imageName, Image image) throws IllegalArgumentException, IOException {
+    log.append(String.format("load method called with parameters: %s, Image",
+        imageName));
   }
 
   @Override
@@ -52,17 +59,11 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   }
 
-  @Override
-  public void save(String filePath, String imageName) throws IllegalArgumentException {
-    log.append(String.format("save method called with parameters: %s, %s",
-        filePath, imageName));
-  }
-
-  @Override
-  public void load(String filePath, String imageName) throws IllegalArgumentException {
-    log.append(String.format("load method called with parameters: %s, %s",
-        filePath, imageName));
-  }
+//  @Override
+//  public void save(String filePath, String imageName) throws IllegalArgumentException {
+//    log.append(String.format("save method called with parameters: %s, %s",
+//        filePath, imageName));
+//  }
 
   @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
