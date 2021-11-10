@@ -71,7 +71,7 @@ public class PixelImage implements Image {
     return brightened;
   }
 
-  // Checking component + increment to ensure proper values are used
+  // Checking component to ensure proper values are used
   private int setRange(int component) {
     if (component < 0) {
       return 0;

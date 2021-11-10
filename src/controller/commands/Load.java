@@ -82,7 +82,7 @@ public class Load implements ImageProcessingCommand {
     model.load(imageName, image);
   }
 }
-//create a new command create a load command in your test and apply to the model
+// create a new command create a load command in your test and apply to the model
 // not doing IO on files to get images for testing - construct an image based on an array of pixel
 
-//save export the file and reimport it to see if they have the smae height and width
+//save export the file and reimport it to see if they have the same height and width

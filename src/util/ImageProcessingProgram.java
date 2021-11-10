@@ -3,6 +3,9 @@ package util;
 import controller.Controller;
 import controller.ImageProcessingController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 
 import model.ImageProcessingModel;
@@ -16,18 +19,30 @@ import view.View;
 public final class ImageProcessingProgram {
 
   /**
-   * Main method used to instantiate the class objects and run the controller's
-   * processImage() method.
+   * Main method used to instantiate the class objects and run the controller's processImage()
+   * method.
    *
    * @param args user inputs
    */
   public static void main(String[] args) {
-    Readable readable = new InputStreamReader(System.in);
+
+    Readable read = null;
+
+    if (args.length == 2) {
+      try {
+        read = new FileReader(args[1]);
+      } catch (FileNotFoundException e) {
+        System.out.printf("Invalid file. Please re-enter.");
+      }
+    } else {
+      read = new InputStreamReader(System.in);
+    }
+
     Appendable appendable = new StringBuilder();
 
     ImageProcessingModel model = new Model();
     ImageProcessingView view = new View(appendable);
-    ImageProcessingController controller = new Controller(model, view, readable);
+    ImageProcessingController controller = new Controller(model, view, read);
 
     controller.processImage();
   }
