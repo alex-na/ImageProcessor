@@ -397,10 +397,10 @@ public class ImageProcessingModelTest {
     testModel.displayGreyscale("invalid", "dumby", "dumbyGreyscale");
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void nullComponent() {
-    testModel.displayGreyscale(null, "dumby", "dumbyGreyscale");
-  }
+//  @Test(expected = IllegalArgumentException.class)
+//  public void nullComponent() {
+//    testModel.displayGreyscale(null, "dumby", "dumbyGreyscale");
+//  }
 
 
   // Load tests
@@ -427,7 +427,7 @@ public class ImageProcessingModelTest {
   }
 
   @Test
-  public void loadDumby() throws IOException {
+  public void loadDumby() {
     //in init(), the image "dumbyImage" has not yet been loaded into the model.
     Color[][] dumbyImageColor = {
             {new Color(11, 55, 223),
