@@ -685,51 +685,51 @@ public class ImageProcessingModelTest {
     this.testModel.transformImage("invalid", "colorful", "colorfulBlur");
   }
 
-//  @Test
-//  public void blurFilter() {
-//    this.testModel.filterImage("blur", "colorful", "colorfulBlur");
-//    Image colorfulBlur = this.testModel.getImage("colorfulBlur");
-//    StringBuilder sb1 = new StringBuilder();
-//    StringBuilder sb2 = new StringBuilder();
-//
-//    for (int row = 0; row < colorfulBlur.getImageHeight(); row++) {
-//      for (int col = 0; col < colorfulBlur.getImageWidth(); col++) {
-//        sb1.append(colorfulBlur.getPixelAt(row, col).getRed()).append(" ");
-//        sb1.append(colorfulBlur.getPixelAt(row, col).getGreen()).append(" ");
-//        sb1.append(colorfulBlur.getPixelAt(row, col).getBlue()).append(" ");
-//      }
-//    }
-//
-//    sb2.append("123 110 85 214 190 149 246 220 170 "
-//            + "26 23 18 203 181 142 93 83 65 "
-//            + "75 67 52 163 146 113 198 177 138 "
-//            + "100 89 69 196 175 136 63 56 44 "
-//            + "107 96 75 85 76 59 65 59 46 ");
-//    assertEquals(sb1.toString(), sb2.toString());
-//  }
-//
-//  @Test
-//  public void sharpenFilter() {
-//    this.testModel.filterImage("sharpen", "colorful", "colorfulSharpen");
-//    Image colorfulSharpen = this.testModel.getImage("colorfulSharpen");
-//    StringBuilder sb1 = new StringBuilder();
-//    StringBuilder sb2 = new StringBuilder();
-//
-//    for (int row = 0; row < colorfulSharpen.getImageHeight(); row++) {
-//      for (int col = 0; col < colorfulSharpen.getImageWidth(); col++) {
-//        sb1.append(colorfulSharpen.getPixelAt(row, col).getRed()).append(" ");
-//        sb1.append(colorfulSharpen.getPixelAt(row, col).getGreen()).append(" ");
-//        sb1.append(colorfulSharpen.getPixelAt(row, col).getBlue()).append(" ");
-//      }
-//    }
-//
-//    sb2.append("94 94 94 174 174 174 195 195 195 "
-//            + "24 24 24 184 184 184 58 58 58 "
-//            + "42 42 42 147 147 147 178 178 178 "
-//            + "54 54 54 182 182 182 41 41 41 "
-//            + "78 78 78 64 64 64 38 38 38 ");
-//    assertEquals(sb1.toString(), sb2.toString());
-//  }
+  @Test
+  public void blurFilter() {
+    this.testModel.filterImage("blur", "colorful", "colorfulBlur");
+    Image colorfulBlur = this.testModel.getImage("colorfulBlur");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulBlur.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulBlur.getImageWidth(); col++) {
+        sb1.append(colorfulBlur.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulBlur.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulBlur.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("34 70 35 49 129 79 60 100 65 "
+            + "32 81 36 37 160 83 36 127 92 "
+            + "62 65 30 43 153 45 22 126 50 "
+            + "85 62 38 74 123 30 46 88 21 "
+            + "46 47 49 58 63 37 47 32 26 ");
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void sharpenFilter() {
+    this.testModel.filterImage("sharpen", "colorful", "colorfulSharpen");
+    Image colorfulSharpen = this.testModel.getImage("colorfulSharpen");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulSharpen.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulSharpen.getImageWidth(); col++) {
+        sb1.append(colorfulSharpen.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulSharpen.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulSharpen.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("83 129 33 98 255 255 194 255 125 "
+            + "0 131 59 85 255 216 12 255 255 "
+            + "95 79 11 77 255 62 0 255 51 255 "
+            + "80 22 171 255 80 115 164 0 50 "
+            + "107 162 196 101 55 84 37 57 ");
+    assertEquals(sb1.toString(), sb2.toString());
+  }
 
 
 }

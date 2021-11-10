@@ -74,6 +74,22 @@ public class ImageProcessingControllerTest {
     assertEquals(message, mLog.toString());
   }
 
+  // Testing load command
+  @Test
+  public void testLoadJPEG() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("load bunny.jpeg bunny");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String message = "The given image: bunny.jpeg, bunny";
+
+    assertEquals(message, mLog.toString());
+  }
+
   // Testing save command
   @Test
   public void testSave() {
@@ -239,4 +255,6 @@ public class ImageProcessingControllerTest {
     assertEquals(message, mLog.toString());
 
   }
+
+
 }

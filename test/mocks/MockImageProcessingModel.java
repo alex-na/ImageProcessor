@@ -30,7 +30,9 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    */
   @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
-
+    log.append(String.format("The image was processed in the controller, " +
+                    "and the following imageName and image were passed to the model: %s, %s",
+            imageName, image));
   }
 
   @Override
