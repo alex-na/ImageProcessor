@@ -19,7 +19,7 @@ public class ImageProcessingModelTest {
   ImageProcessingModel testModel;
 
   @Before
-  public void init() throws IOException {
+  public void init() {
     this.testModel = new Model();
     Color[][] dumbyImage = {
             {new Color(0, 0, 0),
