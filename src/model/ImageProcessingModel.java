@@ -73,4 +73,5 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
           throws IllegalArgumentException;
 
 
+//  void save(String s, String colorful);
 }

@@ -3,6 +3,7 @@ import static org.junit.Assert.assertEquals;
 import controller.Controller;
 import controller.ImageProcessingController;
 
+import java.awt.*;
 import java.io.StringReader;
 
 import mocks.MockImageProcessingModel;
@@ -70,6 +71,32 @@ public class ImageProcessingControllerTest {
     c.processImage();
 
     String message = "load method called with parameters: Koala.ppm, koala";
+
+    assertEquals(message, mLog.toString());
+  }
+
+  // Testing load command
+  @Test
+  public void testLoadJPEG() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("load colorful.jpeg colorful");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+
+
+    String message = "The image was processed in the controller," +
+            " and the following imageName: colorful " +
+            "was passed to the model, along with an Image that contains the following " +
+            "color mapping:\n"
+            + "47 108 75 137 198 165 157 173 170 "
+            + "0 52 19 94 155 122 61 77 74 "
+            + "0 110 0 58 177 33 112 186 71 "
+            + "6 125 0 79 198 54 12 86 0 "
+            + "87 70 114 67 50 94 95 31 105 ";
 
     assertEquals(message, mLog.toString());
   }
@@ -239,4 +266,6 @@ public class ImageProcessingControllerTest {
     assertEquals(message, mLog.toString());
 
   }
+
+
 }

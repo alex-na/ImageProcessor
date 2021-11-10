@@ -30,8 +30,25 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    */
   @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
-
+    log.append(String.format("The image was processed in the controller, " +
+                    "and the following imageName: %s was passed to the model, " +
+                    "along with an Image that contains the following color mapping:\n", imageName));
+    for (int row = 0; row < image.getImageHeight(); row++) {
+      for (int col = 0; col < image.getImageWidth(); col++) {
+        Color pixel = image.getPixelAt(row, col);
+        log.append(pixel.getRed()).append(" ");
+        log.append(pixel.getGreen()).append(" ");
+        log.append(pixel.getBlue()).append(" ");
+      }
+    }
   }
+
+  public void save(String imageName, Image image) throws IllegalArgumentException {
+    log.append(String.format("The image was processed in the controller, " +
+                    "and the following imageName and image were passed to the model: %s, %s",
+            imageName, image));
+  }
+
 
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
@@ -63,18 +80,6 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   public void transformImage(String transformType, String imageName, String desiredName) throws IllegalArgumentException {
 
   }
-
-//  @Override
-//  public void save(String filePath, String imageName) throws IllegalArgumentException {
-//    log.append(String.format("save method called with parameters: %s, %s",
-//        filePath, imageName));
-//  }
-//
-//  @Override
-//  public void load(String filePath, String imageName) throws IllegalArgumentException {
-//    log.append(String.format("load method called with parameters: %s, %s",
-//        filePath, imageName));
-//  }
 
   @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
