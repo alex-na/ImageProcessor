@@ -13,7 +13,7 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    *
    * @param imageName the name of the image
    * @param image     the image will be stored in the model.
-   * @throws IllegalArgumentException if the given parameters are null.
+   * @throws IllegalArgumentException if the given parameters are null
    */
   void load(String imageName, Image image) throws IllegalArgumentException;
 

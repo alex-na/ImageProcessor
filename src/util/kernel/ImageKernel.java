@@ -22,7 +22,10 @@ public class ImageKernel implements Kernel {
   }
 
   @Override
-  public double getValueAt(int row, int col) {
+  public double getValueAt(int row, int col) throws IllegalArgumentException {
+    if (row > matrix.length || row < 0 || col > matrix[0].length || col < 0) {
+      throw new IllegalArgumentException("The given row and/or col are out of bounds.");
+    }
     return this.matrix[row][col];
   }
 }
