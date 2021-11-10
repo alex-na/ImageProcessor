@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.io.IOException;
 
 import model.ImageProcessingModel;
 import model.Model;
