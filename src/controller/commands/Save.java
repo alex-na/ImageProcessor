@@ -49,16 +49,18 @@ public class Save implements ImageProcessingCommand {
       ImageUtil.writePPM(fileName, model.getImage(imageName));
     }
     else {
+      int i = 0;
+      int j = 0;
       try {
         int height = model.getImageHeight(imageName);
         int width = model.getImageWidth(imageName);
         BufferedImage savedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for (int i = 0; i < width; i++) {
-          for (int j = 0; j < height; j++) {
+        for (i = 0; i < width; i++) {
+          for (j = 0; j < height; j++) {
             int pixel = (model.getPixelAt(imageName, j, i).getRed() << 16)
                     | (model.getPixelAt(imageName, j, i).getGreen() << 8)
-                    | (model.getPixelAt(imageName, j, i).getBlue() << 0);
+                    | (model.getPixelAt(imageName, j, i).getBlue());
             savedImage.setRGB(i, j, pixel);
           }
         }
@@ -67,6 +69,9 @@ public class Save implements ImageProcessingCommand {
         ImageIO.write(savedImage, splitAtPeriods[indexOfType], newFile);
       } catch (IOException e) {
         throw new IllegalArgumentException(e);
+      } catch (NullPointerException e) {
+        System.out.println(i + "  "+ j);
+
       }
     }
   }

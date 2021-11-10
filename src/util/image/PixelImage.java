@@ -175,16 +175,16 @@ public class PixelImage implements Image {
         throw new IllegalArgumentException("The given type was invalid.");
     }
 
-    for (int row = 0; row < transformationMatrix.getHeight(); row++) {
-      for (int col = 0; col < transformationMatrix.getWidth(); col++) {
-        transformed[row][col] = transformColor(transformationMatrix, this.image);
+    for (int row = 0; row < transformed.length; row++) {
+      for (int col = 0; col < transformed[0].length; col++) {
+        transformed[row][col] = transformColor(transformationMatrix, this.image, row, col);
       }
     }
     return transformed;
   }
 
   // Transforming a single color based on the matrix
-  private Color transformColor(Kernel matrix, Color[][] image) {
+  private Color transformColor(Kernel matrix, Color[][] image, int imageRow, int imageCol) {
     int redPrime = 0;
     int greenPrime = 0;
     int bluePrime = 0;
@@ -192,19 +192,19 @@ public class PixelImage implements Image {
     for (int row = 0; row < matrix.getHeight(); row++) {
       for (int col = 0; col < matrix.getWidth(); col++) {
         if (row == 0) {
-          redPrime = (int) (Math.round(matrix.getValueAt(0, 0) * image[row][col].getRed())
-              + Math.round(matrix.getValueAt(0, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(0, 2) * image[row][col].getBlue()));
+          redPrime = (int) (Math.round(matrix.getValueAt(0, 0) * image[imageRow][imageCol].getRed())
+              + Math.round(matrix.getValueAt(0, 1) * image[imageRow][imageCol].getGreen())
+              + Math.round(matrix.getValueAt(0, 2) * image[imageRow][imageCol].getBlue()));
 
         } else if (row == 1) {
-          greenPrime = (int) (Math.round(matrix.getValueAt(1, 0) * image[row][col].getRed())
-              + Math.round(matrix.getValueAt(1, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(1, 2) * image[row][col].getBlue()));
+          greenPrime = (int) (Math.round(matrix.getValueAt(1, 0) * image[imageRow][imageCol].getRed())
+              + Math.round(matrix.getValueAt(1, 1) * image[imageRow][imageCol].getGreen())
+              + Math.round(matrix.getValueAt(1, 2) * image[imageRow][imageCol].getBlue()));
 
         } else if (row == 2) {
-          bluePrime = (int) (Math.round(matrix.getValueAt(2, 0) * image[row][col].getRed())
-              + Math.round(matrix.getValueAt(2, 1) * image[row][col].getGreen())
-              + Math.round(matrix.getValueAt(2, 2) * image[row][col].getBlue()));
+          bluePrime = (int) (Math.round(matrix.getValueAt(2, 0) * image[imageRow][imageCol].getRed())
+              + Math.round(matrix.getValueAt(2, 1) * image[imageRow][imageCol].getGreen())
+              + Math.round(matrix.getValueAt(2, 2) * image[imageRow][imageCol].getBlue()));
         }
       }
     }

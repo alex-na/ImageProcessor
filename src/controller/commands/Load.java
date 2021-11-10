@@ -63,11 +63,7 @@ public class Load implements ImageProcessingCommand {
 
     @Override
     public void apply(ImageProcessingModel model, ImageProcessingView view) {
-      try {
-        model.load(imageName, image);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      model.load(imageName, image);
     }
 }
 //create a new command create a load command in your test and apply to the model
