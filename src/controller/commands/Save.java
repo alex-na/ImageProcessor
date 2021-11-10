@@ -47,7 +47,8 @@ public class Save implements ImageProcessingCommand {
 
     if (splitAtPeriods[indexOfType].equals("ppm")) {
       ImageUtil.writePPM(fileName, model.getImage(imageName));
-    } else {
+    }
+    else {
       int i = 0;
       int j = 0;
       try {

@@ -56,7 +56,7 @@ public class Load implements ImageProcessingCommand {
       BufferedImage image;
 
       try {
-        image = ImageIO.read(new File("images/" + fileName));
+        image = ImageIO.read(new File(fileName));
       } catch (IOException e) {
         throw new IllegalStateException("Can't read input file!");
       }

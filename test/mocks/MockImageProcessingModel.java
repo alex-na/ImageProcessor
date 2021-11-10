@@ -1,15 +1,17 @@
 package mocks;
 
 import java.awt.*;
+import java.util.HashMap;
 
 import model.ImageProcessingModel;
 import util.image.Image;
+import util.image.PixelImage;
 
 /**
  * Mock model class utilized for testing.
  */
 public class MockImageProcessingModel implements ImageProcessingModel {
-
+  private HashMap<String, Image> loadMap;
   private StringBuilder log;
 
   /**
@@ -18,6 +20,21 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    * @param log StringBuilder
    */
   public MockImageProcessingModel(StringBuilder log) {
+    this.loadMap = new HashMap<>();
+
+    Color[][] colorfulImage = {
+            {new Color(123, 92, 23),
+                    new Color(25, 215, 205), new Color(215, 205, 21)},
+            {new Color(0, 34, 1),
+                    new Color(0, 252, 50), new Color(20, 50, 250)},
+            {new Color(111, 16, 100),
+                    new Color(16, 200, 15), new Color(11, 240, 50)},
+            {new Color(255, 0, 0),
+                    new Color(0, 255, 0), new Color(111, 24, 5)},
+            {new Color(2, 90, 195),
+                    new Color(100, 60, 0), new Color(80, 20, 100)}};
+
+    loadMap.put("colorful", new PixelImage(colorfulImage));
     this.log = log;
   }
 
@@ -73,17 +90,19 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public void filterImage(String filterType, String imageName, String desiredName) throws IllegalArgumentException {
-
+    log.append(String.format("filterImage method called with parameters: %s, %s, %s",
+            filterType, imageName, desiredName));
   }
 
   @Override
   public void transformImage(String transformType, String imageName, String desiredName) throws IllegalArgumentException {
-
+    log.append(String.format("transformImage method called with parameters: %s, %s, %s",
+            transformType, imageName, desiredName));
   }
 
   @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
-    return null;
+    return loadMap.get(imageName);
   }
 
   @Override

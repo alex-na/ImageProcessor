@@ -24,7 +24,7 @@ public class MockImageProcessingView implements ImageProcessingView {
   }
 
   @Override
-  public void renderMessage(String message) throws IOException {
+  public void renderMessage(String message) {
     log.append(String.format("renderMessage method called with message: %s", message));
   }
 }

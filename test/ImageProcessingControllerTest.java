@@ -3,7 +3,9 @@ import static org.junit.Assert.assertEquals;
 import controller.Controller;
 import controller.ImageProcessingController;
 
-import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 
 import mocks.MockImageProcessingModel;
@@ -66,11 +68,19 @@ public class ImageProcessingControllerTest {
     StringBuilder vLog = new StringBuilder();
     ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
     ImageProcessingView mockView = new MockImageProcessingView(vLog);
-    Readable read = new StringReader("load Koala.ppm koala");
+    Readable read = new StringReader("load images/dumby.ppm dumby");
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
-    String message = "load method called with parameters: Koala.ppm, koala";
+    String message = "The image was processed in the controller," +
+            " and the following imageName: dumby " +
+            "was passed to the model, along with an Image that contains the following " +
+            "color mapping:\n"
+            + "0 0 0 255 255 255 255 255 255 "
+            + "5 5 5 250 250 250 250 250 250 "
+            + "100 100 100 100 100 100 100 100 100 "
+            + "250 250 250 5 5 5 5 5 5 "
+            + "255 255 255 0 0 0 0 0 0 ";
 
     assertEquals(message, mLog.toString());
   }
@@ -82,7 +92,7 @@ public class ImageProcessingControllerTest {
     StringBuilder vLog = new StringBuilder();
     ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
     ImageProcessingView mockView = new MockImageProcessingView(vLog);
-    Readable read = new StringReader("load colorful.jpeg colorful");
+    Readable read = new StringReader("load images/colorful.jpeg colorful");
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
@@ -103,20 +113,65 @@ public class ImageProcessingControllerTest {
 
   // Testing save command
   @Test
-  public void testSave() {
+  public void testSavetoPPM() throws IOException {
     StringBuilder mLog = new StringBuilder();
     StringBuilder vLog = new StringBuilder();
     ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
     ImageProcessingView mockView = new MockImageProcessingView(vLog);
-    Readable read = new StringReader("save images/koala-brighten.ppm koala-brighten");
+    Readable read = new StringReader("save images/colorful.ppm colorful");
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
-    String message =
-            "save method called with parameters: images/koala-brighten.ppm, koala-brighten";
+    String expected =
+            "P3\n3 5\n255\n123\n92\n23\n25\n215\n205\n215\n205\n21\n0\n34\n1\n0\n252\n50\n20\n"
+                    + "50\n250\n111\n16\n100\n16\n200\n15\n11\n240\n50\n255\n0\n0\n0\n255\n"
+                    + "0\n111\n24\n5\n2\n90\n195\n100\n60\n0\n80\n20\n100";
 
-    assertEquals(message, mLog.toString());
+    BufferedReader reader = new BufferedReader(new FileReader("images/colorful.ppm"));
+    StringBuilder sb = new StringBuilder();
+    String line;
+    String ls = System.getProperty("line.separator");
+    while ((line = reader.readLine()) != null) {
+      sb.append(line);
+      sb.append(ls);
+    }
+// delete the last new line separator
+    sb.deleteCharAt(sb.length() - 1);
+    reader.close();
 
+    assertEquals(expected, sb.toString());
+  }
+
+  // Testing save command
+  @Test
+  public void testSavetoBufferedImageFile() throws IOException {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("save images/colorful.png colorful");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String expected =
+            "P3\n" +
+                    "3 5\n255\n123\n92\n23\n25\n215\n205\n215\n205\n21\n0\n34\n1\n0\n252\n50\n20\n"
+                    + "50\n250\n111\n16\n100\n16\n200\n15\n11\n240\n50\n255\n0\n0\n0\n255\n"
+                    + "0\n111\n24\n5\n2\n90\n195\n100\n60\n0\n80\n20\n100";
+
+    BufferedReader reader = new BufferedReader(new FileReader("images/colorful.png"));
+    StringBuilder sb = new StringBuilder();
+    String line;
+    String ls = System.getProperty("line.separator");
+    while ((line = reader.readLine()) != null) {
+      sb.append(line);
+      sb.append(ls);
+    }
+// delete the last new line separator
+    sb.deleteCharAt(sb.length() - 1);
+    reader.close();
+
+    assertEquals(expected, sb.toString());
   }
 
   // Testing brighten command
@@ -267,5 +322,68 @@ public class ImageProcessingControllerTest {
 
   }
 
+  // Testing sharpen command
+  @Test
+  public void testSharpenType() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("sharpen koala koala-sharpen");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String message = "filterImage method called with parameters: sharpen, koala, koala-sharpen";
+
+    assertEquals(message, mLog.toString());
+  }
+
+  // Testing sharpen command
+  @Test
+  public void testBlurType() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("blur koala koala-blur");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String message = "filterImage method called with parameters: blur, koala, koala-blur";
+
+    assertEquals(message, mLog.toString());
+  }
+
+  // Testing sharpen command
+  @Test
+  public void testSepiaType() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("sepia koala koala-sepia");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String message = "transformImage method called with parameters: sepia, koala, koala-sepia";
+
+    assertEquals(message, mLog.toString());
+  }
+
+  @Test
+  public void testGreyscaleType() {
+    StringBuilder mLog = new StringBuilder();
+    StringBuilder vLog = new StringBuilder();
+    ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+    ImageProcessingView mockView = new MockImageProcessingView(vLog);
+    Readable read = new StringReader("greyscale koala koala-greyscale");
+    ImageProcessingController c = new Controller(mockModel, mockView, read);
+    c.processImage();
+
+    String message = "transformImage method called with parameters: "
+            + "greyscale, koala, koala-greyscale";
+
+    assertEquals(message, mLog.toString());
+  }
 
 }
