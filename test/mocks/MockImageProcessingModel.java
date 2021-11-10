@@ -21,6 +21,18 @@ public class MockImageProcessingModel implements ImageProcessingModel {
     this.log = log;
   }
 
+  /**
+   * Load an image from a file path to be used internally within the model.
+   *
+   * @param imageName the name of the image
+   * @param image     the image will be stored in the model.
+   * @throws IllegalArgumentException if the given parameters are null.
+   */
+  @Override
+  public void load(String imageName, Image image) throws IllegalArgumentException {
+
+  }
+
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
       throws IllegalArgumentException {
@@ -52,17 +64,17 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   }
 
-  @Override
-  public void save(String filePath, String imageName) throws IllegalArgumentException {
-    log.append(String.format("save method called with parameters: %s, %s",
-        filePath, imageName));
-  }
-
-  @Override
-  public void load(String filePath, String imageName) throws IllegalArgumentException {
-    log.append(String.format("load method called with parameters: %s, %s",
-        filePath, imageName));
-  }
+//  @Override
+//  public void save(String filePath, String imageName) throws IllegalArgumentException {
+//    log.append(String.format("save method called with parameters: %s, %s",
+//        filePath, imageName));
+//  }
+//
+//  @Override
+//  public void load(String filePath, String imageName) throws IllegalArgumentException {
+//    log.append(String.format("load method called with parameters: %s, %s",
+//        filePath, imageName));
+//  }
 
   @Override
   public Image getImage(String imageName) throws IllegalArgumentException {

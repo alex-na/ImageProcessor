@@ -42,8 +42,8 @@ public class Load implements ImageProcessingCommand {
 
         BufferedImage image = ImageIO.read(file);
 
-        int height = image.getWidth();
-        int width = image.getHeight();
+        int width = image.getWidth();
+        int height = image.getHeight();
 
         Color[][] pixelMatrix = new Color[height][width];
 
@@ -62,12 +62,8 @@ public class Load implements ImageProcessingCommand {
   }
 
     @Override
-    public void apply (ImageProcessingModel model, ImageProcessingView view){
-      try {
-        model.load(imageName, image);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+    public void apply (ImageProcessingModel model, ImageProcessingView view) {
+      model.load(imageName, image);
     }
 }
 //create a new command create a load command in your test and apply to the model

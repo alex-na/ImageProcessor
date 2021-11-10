@@ -266,8 +266,6 @@ public class PixelImage implements Image {
           blue = (float) (this.getPixelAt(r, c).getBlue() * matrix.getValueAt(r, c));
         } catch (ArrayIndexOutOfBoundsException ignore) {
           continue;
-        } catch (IllegalArgumentException ignore) {
-          continue;
         }
       }
     }

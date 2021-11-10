@@ -1,19 +1,11 @@
 package model;
 
-import util.ImageUtil;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import util.image.Image;
 import util.image.PixelImage;
 
-import javax.imageio.ImageIO;
-
-//TODO abstract common functionality into helpers
 /**
  * Representing an ImageProcessingModel that contains the versions of an Image and their supporting
  * operations.
@@ -47,6 +39,9 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
+    if (imageName == null || image == null) {
+      throw new IllegalArgumentException("The imageName and/or image are null");
+    }
     loadMap.put(imageName, image);
   }
 
