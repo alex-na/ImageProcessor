@@ -2,7 +2,9 @@ package util;
 
 import controller.Controller;
 import controller.ImageProcessingController;
+
 import java.io.InputStreamReader;
+
 import model.ImageProcessingModel;
 import model.Model;
 import view.ImageProcessingView;
@@ -23,7 +25,7 @@ public final class ImageProcessingProgram {
     Readable readable = new InputStreamReader(System.in);
     Appendable appendable = new StringBuilder();
 
-    ImageProcessingModel model =  new Model();
+    ImageProcessingModel model = new Model();
     ImageProcessingView view = new View(appendable);
     ImageProcessingController controller = new Controller(model, view, readable);
 

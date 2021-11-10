@@ -8,10 +8,12 @@ import controller.commands.ImageProcessingCommand;
 import controller.commands.Load;
 import controller.commands.Save;
 import controller.commands.Transformation;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
+
 import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
@@ -30,12 +32,12 @@ public class Controller implements ImageProcessingController {
    * Constructs a Controller object.
    *
    * @param model ImageProcessingModel
-   * @param view ImageProcessingView
+   * @param view  ImageProcessingView
    * @param input Readable
    * @throws IllegalArgumentException if any fields are null.
    */
   public Controller(ImageProcessingModel model, ImageProcessingView view, Readable input)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
 
     if (model == null || view == null || input == null) {
       throw new IllegalArgumentException("Inputs may not be null.");
@@ -75,7 +77,7 @@ public class Controller implements ImageProcessingController {
       ImageProcessingCommand c;
       String in = scan.next();
       Function<Scanner, ImageProcessingCommand> cmd =
-          knownCommands.getOrDefault(in, null);
+              knownCommands.getOrDefault(in, null);
 
       if (cmd == null) {
         throw new IllegalArgumentException("Invalid command entered.");

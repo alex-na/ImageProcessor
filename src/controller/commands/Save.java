@@ -21,7 +21,7 @@ public class Save implements ImageProcessingCommand {
   /**
    * Constructing a Save object.
    *
-   * @param fileName the location where the file is to be saved
+   * @param fileName  the location where the file is to be saved
    * @param imageName the name of the file to be saved.
    */
   public Save(String fileName, String imageName) {
@@ -47,8 +47,7 @@ public class Save implements ImageProcessingCommand {
 
     if (splitAtPeriods[indexOfType].equals("ppm")) {
       ImageUtil.writePPM(fileName, model.getImage(imageName));
-    }
-    else {
+    } else {
       int i = 0;
       int j = 0;
       try {
@@ -70,7 +69,7 @@ public class Save implements ImageProcessingCommand {
       } catch (IOException e) {
         throw new IllegalArgumentException(e);
       } catch (NullPointerException e) {
-        System.out.println(i + "  "+ j);
+        System.out.println(i + "  " + j);
 
       }
     }

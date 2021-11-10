@@ -15,13 +15,13 @@ public class Brighten implements ImageProcessingCommand {
   /**
    * Constructs a Brighten object.
    *
-   * @param increment the increment by which an image is brightened/darkened
-   * @param imageName the name of the image
+   * @param increment   the increment by which an image is brightened/darkened
+   * @param imageName   the name of the image
    * @param desiredName the desired name of the image
    * @throws IllegalArgumentException if fields are null
    */
   public Brighten(int increment, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (imageName == null || desiredName == null) {
       throw new IllegalArgumentException("imageName and/or desired name are null");
     }

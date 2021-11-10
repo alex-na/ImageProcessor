@@ -1,4 +1,5 @@
 package util.image;
+
 import java.awt.Color;
 
 /**
@@ -35,9 +36,9 @@ public interface ImageState {
    *
    * @param row the row of a (row, col) grid coordinate.
    * @param col the col of a (row, col) grid coordinate.
+   * @return a Color that represents a Pixel of this Image.
    * @throws IllegalArgumentException if the row or the column are beyond
    *                                  the dimensions of the board.
-   * @return a Color that represents a Pixel of this Image.
    */
   Color getPixelAt(int row, int col) throws IllegalArgumentException;
 }

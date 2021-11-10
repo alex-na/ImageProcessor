@@ -15,8 +15,8 @@ public class Flip implements ImageProcessingCommand {
   /**
    * Constructs a Flip object.
    *
-   * @param type flip type (vertical or horizontal)
-   * @param imageName the name of the image
+   * @param type        flip type (vertical or horizontal)
+   * @param imageName   the name of the image
    * @param desiredName the desired name of the image
    * @throws IllegalArgumentException if fields are null
    */
@@ -33,13 +33,14 @@ public class Flip implements ImageProcessingCommand {
   public void apply(ImageProcessingModel model, ImageProcessingView view) {
     String in = this.type;
     switch (in) {
-      case "horizontal" :
+      case "horizontal":
         model.flipImage("horizontal", this.imageName, this.desiredName);
         break;
-      case "vertical" :
+      case "vertical":
         model.flipImage("vertical", this.imageName, this.desiredName);
         break;
-      default: throw new IllegalArgumentException("Invalid type entered.");
+      default:
+        throw new IllegalArgumentException("Invalid type entered.");
     }
   }
 }
