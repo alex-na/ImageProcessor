@@ -111,8 +111,12 @@ public class Model implements ImageProcessingModel {
     if (!(filterType.equals("blur") || filterType.equals("sharpen"))) {
       throw new IllegalArgumentException("Invalid filter type entered.");
     }
-    Color[][] filtered = getImage(imageName).filterImage(filterType);
-    load(desiredName, new PixelImage(filtered));
+    try {
+      Color[][] filtered = getImage(imageName).filterImage(filterType);
+      loadMap.put(desiredName, new PixelImage(filtered));
+    } catch (NullPointerException e) {
+      throw new IllegalArgumentException("The given input was not found.");
+    }
 
   }
 
@@ -120,12 +124,14 @@ public class Model implements ImageProcessingModel {
   public void transformImage(String transformType, String imageName, String desiredName)
       throws IllegalArgumentException {
     validNames(imageName, desiredName);
-    if (transformType == "greyscale" || transformType == "sepia") {
-      Color[][] transformed = getImage(imageName).transformImage(transformType);
-      load(desiredName, new PixelImage(transformed));
-    }
-    else {
+    if (! transformType.equals("greyscale") && ! transformType.equals("sepia")) {
       throw new IllegalArgumentException("The given transformation type was invalid.");
+    }
+    try {
+      Color[][] transformed = getImage(imageName).transformImage(transformType);
+      loadMap.put(desiredName, new PixelImage(transformed));
+    } catch (NullPointerException e) {
+      throw new IllegalArgumentException("The given input was not found.");
     }
   }
 }
