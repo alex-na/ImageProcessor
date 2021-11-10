@@ -7,8 +7,6 @@ import java.util.Objects;
 import util.kernel.ImageKernel;
 import util.kernel.Kernel;
 
-//TODO abstract common functionality into helpers
-
 /**
  * Represents an image in the form of a 2D array of Colors.
  */
@@ -104,17 +102,17 @@ public class PixelImage implements Image {
             break;
           case "value":
             colorValue = Math.max(tempColor.getRed(),
-                Math.max(tempColor.getGreen(), tempColor.getBlue()));
+                    Math.max(tempColor.getGreen(), tempColor.getBlue()));
             break;
           case "intensity":
             colorValue = ((tempColor.getRed()
-                + tempColor.getGreen()
-                + tempColor.getBlue()) / 3);
+                    + tempColor.getGreen()
+                    + tempColor.getBlue()) / 3);
             break;
           case "luma":
             colorValue = (int) (Math.round(tempColor.getRed() * 0.2126)
-                + Math.round(tempColor.getGreen() * 0.7152)
-                + Math.round(tempColor.getBlue() * 0.0722));
+                    + Math.round(tempColor.getGreen() * 0.7152)
+                    + Math.round(tempColor.getBlue() * 0.0722));
             break;
           default:
             throw new IllegalArgumentException("Invalid input.");
@@ -155,14 +153,14 @@ public class PixelImage implements Image {
     Kernel transformationMatrix;
 
     double[][] sepiaMatrix = {
-        {0.393, 0.769, 0.189},
-        {0.349, 0.686, 0.168},
-        {0.272, 0.534, 0.131}};
+            {0.393, 0.769, 0.189},
+            {0.349, 0.686, 0.168},
+            {0.272, 0.534, 0.131}};
 
     double[][] greyscaleMatrix = {
-        {0.393, 0.769, 0.189},
-        {0.349, 0.686, 0.168},
-        {0.272, 0.534, 0.131}};
+            {0.2126, 0.7152, 0.0722},
+            {0.2126, 0.7152, 0.0722},
+            {0.2126, 0.7152, 0.0722}};
 
     switch (type) {
       case "sepia":
@@ -193,18 +191,18 @@ public class PixelImage implements Image {
       for (int col = 0; col < matrix.getWidth(); col++) {
         if (row == 0) {
           redPrime = (int) (Math.round(matrix.getValueAt(0, 0) * image[imageRow][imageCol].getRed())
-              + Math.round(matrix.getValueAt(0, 1) * image[imageRow][imageCol].getGreen())
-              + Math.round(matrix.getValueAt(0, 2) * image[imageRow][imageCol].getBlue()));
+                  + Math.round(matrix.getValueAt(0, 1) * image[imageRow][imageCol].getGreen())
+                  + Math.round(matrix.getValueAt(0, 2) * image[imageRow][imageCol].getBlue()));
 
         } else if (row == 1) {
           greenPrime = (int) (Math.round(matrix.getValueAt(1, 0) * image[imageRow][imageCol].getRed())
-              + Math.round(matrix.getValueAt(1, 1) * image[imageRow][imageCol].getGreen())
-              + Math.round(matrix.getValueAt(1, 2) * image[imageRow][imageCol].getBlue()));
+                  + Math.round(matrix.getValueAt(1, 1) * image[imageRow][imageCol].getGreen())
+                  + Math.round(matrix.getValueAt(1, 2) * image[imageRow][imageCol].getBlue()));
 
         } else if (row == 2) {
           bluePrime = (int) (Math.round(matrix.getValueAt(2, 0) * image[imageRow][imageCol].getRed())
-              + Math.round(matrix.getValueAt(2, 1) * image[imageRow][imageCol].getGreen())
-              + Math.round(matrix.getValueAt(2, 2) * image[imageRow][imageCol].getBlue()));
+                  + Math.round(matrix.getValueAt(2, 1) * image[imageRow][imageCol].getGreen())
+                  + Math.round(matrix.getValueAt(2, 2) * image[imageRow][imageCol].getBlue()));
         }
       }
     }
@@ -217,16 +215,16 @@ public class PixelImage implements Image {
     Kernel filterMatrix;
 
     double[][] blurMatrix = {
-        {0.0625, 0.125, 0.0625},
-        {0.125, 0.25, 0.125},
-        {0.0625, 0.125, 0.0625}};
+            {0.0625, 0.125, 0.0625},
+            {0.125, 0.25, 0.125},
+            {0.0625, 0.125, 0.0625}};
 
     double[][] sharpenMatrix = {
-        {-0.125, -0.125, -0.125, -0.125, -0.125},
-        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-        {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
-        {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
-        {-0.125, -0.125, -0.125, -0.125, -0.125}};
+            {-0.125, -0.125, -0.125, -0.125, -0.125},
+            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+            {-0.125, 0.25, 0.25, 1, 0.25, -0.125},
+            {-0.125, 0.25, 0.25, 0.25, 0.25, -0.125},
+            {-0.125, -0.125, -0.125, -0.125, -0.125}};
 
     switch (type) {
       case "blur":
@@ -249,8 +247,7 @@ public class PixelImage implements Image {
           for (int j = 0; j < filterMatrix.getWidth(); j++) {
             if (x + i < 0 || x + i >= filtered.length || y + j < 0 || y + j >= filtered[0].length) {
               continue;
-            }
-            else {
+            } else {
               //filtered[x][y] += filterMatrix.getValueAt(i, j) * this.image[i+x][j+y];
             }
           }
@@ -305,8 +302,8 @@ public class PixelImage implements Image {
     // The successful instanceof check means our cast will succeed
     PixelImage that = (PixelImage) o;
     return (this.height == that.height
-        && this.width == that.width
-        && Arrays.deepEquals(this.image, that.image));
+            && this.width == that.width
+            && Arrays.deepEquals(this.image, that.image));
   }
 
   @Override

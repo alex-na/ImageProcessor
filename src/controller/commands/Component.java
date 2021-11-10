@@ -22,7 +22,7 @@ public class Component implements ImageProcessingCommand {
    * @throws IllegalArgumentException if any fields are null.
    */
   public Component(String type, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (type == null) {
       throw new IllegalArgumentException("Type cannot be null.");
     }

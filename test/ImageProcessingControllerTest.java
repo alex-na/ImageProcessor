@@ -2,12 +2,16 @@ import static org.junit.Assert.assertEquals;
 
 import controller.Controller;
 import controller.ImageProcessingController;
+
 import java.io.StringReader;
+
 import mocks.MockImageProcessingModel;
 import mocks.MockImageProcessingView;
 import model.ImageProcessingModel;
 import model.Model;
+
 import org.junit.Test;
+
 import view.ImageProcessingView;
 import view.View;
 
@@ -82,7 +86,7 @@ public class ImageProcessingControllerTest {
     c.processImage();
 
     String message =
-        "save method called with parameters: images/koala-brighten.ppm, koala-brighten";
+            "save method called with parameters: images/koala-brighten.ppm, koala-brighten";
 
     assertEquals(message, mLog.toString());
 
@@ -164,7 +168,7 @@ public class ImageProcessingControllerTest {
     c.processImage();
 
     String message =
-        "displayGreyscale method called with parameters: intensity, koala, koala-intensity";
+            "displayGreyscale method called with parameters: intensity, koala, koala-intensity";
 
     assertEquals(message, mLog.toString());
 

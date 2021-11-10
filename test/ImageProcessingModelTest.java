@@ -46,6 +46,7 @@ public class ImageProcessingModelTest {
                     new Color(100, 60, 0), new Color(80, 20, 100)}};
 
     this.testModel.load("dumby", new PixelImage(dumbyImage));
+    this.testModel.load("colorful", new PixelImage(colorfulImage));
   }
 
 
@@ -197,6 +198,11 @@ public class ImageProcessingModelTest {
   @Test(expected = IllegalArgumentException.class)
   public void axisIsInvalid() {
     this.testModel.flipImage("fff", "dumby", "dumby2");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void nullAxis() {
+    this.testModel.flipImage(null, "dumby", "dumby2");
   }
 
   @Test
@@ -377,31 +383,170 @@ public class ImageProcessingModelTest {
     assertEquals(sb1.toString(), sb2.toString());
   }
 
-  //Greyscale tests
-//  @Override
-//  public void displayGreyscale(String component, String imageName, String desiredName)
-//          throws IllegalArgumentException {
-//    validNames(imageName, desiredName);
-//    if (!(component.equals("red") || component.equals("green")
-//            || component.equals("blue")
-//            || component.equals("value")
-//            || component.equals("intensity")
-//            || component.equals("luma"))) {
-//      throw new IllegalArgumentException("The given component is invalid.");
-//    }
-//    Color[][] greyscale = getImage(imageName).displayGreyscale(component);
-//    loadMap.put(desiredName, new PixelImage(greyscale));
-//  }
   @Test(expected = IllegalArgumentException.class)
   public void invalidComponent() {
-    testModel.displayGreyscale("invalid", "dumby", "dumbyGreyscale");
+    testModel.displayGreyscale("invalid", "colorful", "colorfulGreyscale");
   }
 
-//  @Test(expected = IllegalArgumentException.class)
-//  public void nullComponent() {
-//    testModel.displayGreyscale(null, "dumby", "dumbyGreyscale");
-//  }
+  @Test(expected = IllegalArgumentException.class)
+  public void nullComponent() {
+    testModel.displayGreyscale(null, "dumby", "dumbyGreyscale");
+  }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void nullImageNameGreyscale() {
+    testModel.displayGreyscale("red", null, "dumbyGreyscale");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void nullDesiredNameGreyscale() {
+    testModel.displayGreyscale("red", "dumby", null);
+  }
+
+
+  @Test
+  public void blueGreycale() {
+    this.testModel.displayGreyscale("blue", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("23 23 23 205 205 205 21 21 21 "
+            + "1 1 1 50 50 50 250 250 250 "
+            + "100 100 100 15 15 15 50 50 50 "
+            + "0 0 0 0 0 0 5 5 5 "
+            + "195 195 195 0 0 0 100 100 100 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void redGreycale() {
+    this.testModel.displayGreyscale("red", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("123 123 123 25 25 25 215 215 215 "
+            + "0 0 0 0 0 0 20 20 20 "
+            + "111 111 111 16 16 16 11 11 11 "
+            + "255 255 255 0 0 0 111 111 111 "
+            + "2 2 2 100 100 100 80 80 80 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void greenGreycale() {
+    this.testModel.displayGreyscale("green", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("92 92 92 215 215 215 205 205 205 "
+            + "34 34 34 252 252 252 50 50 50 "
+            + "16 16 16 200 200 200 240 240 240 "
+            + "0 0 0 255 255 255 24 24 24 "
+            + "90 90 90 60 60 60 20 20 20 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void valueGreycale() {
+    this.testModel.displayGreyscale("value", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("123 123 123 215 215 215 215 215 215 "
+            + "34 34 34 252 252 252 250 250 250 "
+            + "111 111 111 200 200 200 240 240 240 "
+            + "255 255 255 255 255 255 111 111 111 "
+            + "195 195 195 100 100 100 100 100 100 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void intensityGreycale() {
+    this.testModel.displayGreyscale("intensity", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("79 79 79 148 148 148 147 147 147 "
+            + "11 11 11 100 100 100 106 106 106 "
+            + "75 75 75 77 77 77 100 100 100 "
+            + "85 85 85 85 85 85 46 46 46 "
+            + "95 95 95 53 53 53 66 66 66 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  @Test
+  public void lumaGreycale() {
+    this.testModel.displayGreyscale("luma", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("94 94 94 174 174 174 195 195 195 "
+            + "24 24 24 184 184 184 58 58 58 "
+            + "42 42 42 147 147 147 178 178 178 "
+            + "54 54 54 182 182 182 41 41 41 "
+            + "78 78 78 64 64 64 38 38 38 ");
+
+    assertEquals(sb1.toString(), sb2.toString());
+  }
 
   // Load tests
   @Test(expected = IllegalArgumentException.class)
@@ -422,7 +567,7 @@ public class ImageProcessingModelTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void invalidImage() throws IOException {
+  public void nullImage() {
     this.testModel.load("notARealFileName", null);
   }
 
@@ -461,7 +606,7 @@ public class ImageProcessingModelTest {
     assertEquals(sb1.toString(), sb2.toString());
   }
 
-  // Tests for sepia
+  // Tests for transformation
   @Test(expected = IllegalArgumentException.class)
   public void imageNameNotInMapTransformation() {
     this.testModel.transformImage("sepia", "notAnImage", "notAnImage2");
@@ -469,38 +614,122 @@ public class ImageProcessingModelTest {
 
 
   @Test(expected = IllegalArgumentException.class)
-  public void ImageInMapIsNullTransformation() {
-    this.testModel.transformImage("sepia", "nullImage", "nullImage2");
+  public void invalidTransformationType() {
+    this.testModel.transformImage("invalid", "colorful", "colorfulSepia");
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void invalidTransformationType() {
-    this.testModel.transformImage("invalid", "nullImage", "nullImage2");
+  public void nullTransformationType() {
+    this.testModel.filterImage(null, "notAnImage", "notAnImage2");
   }
 
   @Test
-  public void sepiaFilter() {
-    this.testModel.transformImage("sepia", "dumby", "dumbySepia");
-    Image dumbyPNGSepia = this.testModel.getImage("dumbySepia");
+  public void sepiaTransformation() {
+    this.testModel.transformImage("sepia", "colorful", "colorfulSepia");
+    Image colorfulSepia = this.testModel.getImage("colorfulSepia");
     StringBuilder sb1 = new StringBuilder();
     StringBuilder sb2 = new StringBuilder();
 
-    for (int row = 0; row < dumbyPNGSepia.getImageHeight(); row++) {
-      for (int col = 0; col < dumbyPNGSepia.getImageWidth(); col++) {
-        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getRed()).append(" ");
-        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getGreen()).append(" ");
-        sb1.append(dumbyPNGSepia.getPixelAt(row, col).getBlue()).append(" ");
+    for (int row = 0; row < colorfulSepia.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulSepia.getImageWidth(); col++) {
+        sb1.append(colorfulSepia.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulSepia.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulSepia.getPixelAt(row, col).getBlue()).append(" ");
       }
     }
 
-    sb2.append("40 40 40 255 255 255 255 255 255 "
-            + "45 45 45 255 255 255 255 255 255 "
-            + "140 140 140 140 140 140 140 140 140 "
-            + "255 255 255 45 45 45 45 45 45 "
-            + "255 255 255 40 40 40 40 40 40 ");
-
+    sb2.append("123 110 85 214 190 149 246 220 170 "
+            + "26 23 18 203 181 142 93 83 65 "
+            + "75 67 52 163 146 113 198 177 138 "
+            + "100 89 69 196 175 136 63 56 44 "
+            + "107 96 75 85 76 59 65 59 46 ");
     assertEquals(sb1.toString(), sb2.toString());
-
   }
+
+  @Test
+  public void greyscaleTransformation() {
+    this.testModel.transformImage("greyscale", "colorful", "colorfulGreyscale");
+    Image colorfulGreyscale = this.testModel.getImage("colorfulGreyscale");
+    StringBuilder sb1 = new StringBuilder();
+    StringBuilder sb2 = new StringBuilder();
+
+    for (int row = 0; row < colorfulGreyscale.getImageHeight(); row++) {
+      for (int col = 0; col < colorfulGreyscale.getImageWidth(); col++) {
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getRed()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getGreen()).append(" ");
+        sb1.append(colorfulGreyscale.getPixelAt(row, col).getBlue()).append(" ");
+      }
+    }
+
+    sb2.append("94 94 94 174 174 174 195 195 195 "
+            + "24 24 24 184 184 184 58 58 58 "
+            + "42 42 42 147 147 147 178 178 178 "
+            + "54 54 54 182 182 182 41 41 41 "
+            + "78 78 78 64 64 64 38 38 38 ");
+    assertEquals(sb1.toString(), sb2.toString());
+  }
+
+  //Filter tests
+  @Test(expected = IllegalArgumentException.class)
+  public void imageNameNotInMapFilter() {
+    this.testModel.filterImage("blur", "notAnImage", "notAnImage2");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void nullFilterType() {
+    this.testModel.filterImage(null, "notAnImage", "notAnImage2");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void invalidFilterType() {
+    this.testModel.transformImage("invalid", "colorful", "colorfulBlur");
+  }
+
+//  @Test
+//  public void blurFilter() {
+//    this.testModel.filterImage("blur", "colorful", "colorfulBlur");
+//    Image colorfulBlur = this.testModel.getImage("colorfulBlur");
+//    StringBuilder sb1 = new StringBuilder();
+//    StringBuilder sb2 = new StringBuilder();
+//
+//    for (int row = 0; row < colorfulBlur.getImageHeight(); row++) {
+//      for (int col = 0; col < colorfulBlur.getImageWidth(); col++) {
+//        sb1.append(colorfulBlur.getPixelAt(row, col).getRed()).append(" ");
+//        sb1.append(colorfulBlur.getPixelAt(row, col).getGreen()).append(" ");
+//        sb1.append(colorfulBlur.getPixelAt(row, col).getBlue()).append(" ");
+//      }
+//    }
+//
+//    sb2.append("123 110 85 214 190 149 246 220 170 "
+//            + "26 23 18 203 181 142 93 83 65 "
+//            + "75 67 52 163 146 113 198 177 138 "
+//            + "100 89 69 196 175 136 63 56 44 "
+//            + "107 96 75 85 76 59 65 59 46 ");
+//    assertEquals(sb1.toString(), sb2.toString());
+//  }
+//
+//  @Test
+//  public void sharpenFilter() {
+//    this.testModel.filterImage("sharpen", "colorful", "colorfulSharpen");
+//    Image colorfulSharpen = this.testModel.getImage("colorfulSharpen");
+//    StringBuilder sb1 = new StringBuilder();
+//    StringBuilder sb2 = new StringBuilder();
+//
+//    for (int row = 0; row < colorfulSharpen.getImageHeight(); row++) {
+//      for (int col = 0; col < colorfulSharpen.getImageWidth(); col++) {
+//        sb1.append(colorfulSharpen.getPixelAt(row, col).getRed()).append(" ");
+//        sb1.append(colorfulSharpen.getPixelAt(row, col).getGreen()).append(" ");
+//        sb1.append(colorfulSharpen.getPixelAt(row, col).getBlue()).append(" ");
+//      }
+//    }
+//
+//    sb2.append("94 94 94 174 174 174 195 195 195 "
+//            + "24 24 24 184 184 184 58 58 58 "
+//            + "42 42 42 147 147 147 178 178 178 "
+//            + "54 54 54 182 182 182 41 41 41 "
+//            + "78 78 78 64 64 64 38 38 38 ");
+//    assertEquals(sb1.toString(), sb2.toString());
+//  }
+
 
 }

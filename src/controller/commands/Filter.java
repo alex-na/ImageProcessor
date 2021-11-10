@@ -21,7 +21,7 @@ public class Filter implements ImageProcessingCommand {
    * @throws IllegalArgumentException if any inputs are null
    */
   public Filter(String type, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (type == null || imageName == null || desiredName == null) {
       throw new IllegalArgumentException("Inputs may not be null.");
     }
@@ -33,7 +33,7 @@ public class Filter implements ImageProcessingCommand {
 
   @Override
   public void apply(ImageProcessingModel model, ImageProcessingView view)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     switch (this.type) {
       case "blur":
         model.filterImage("blur", imageName, desiredName);

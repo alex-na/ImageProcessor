@@ -1,4 +1,5 @@
 package util.image;
+
 import java.awt.Color;
 
 /**
@@ -11,7 +12,6 @@ public interface Image extends ImageState {
    * the brightened version of this image and returns it.
    *
    * @param increment the value that the user wants to change the brightness by.
-   *
    * @return a 2D array of pixels that represents the brightened version of this image.
    * @throws IllegalArgumentException when the given increment value is invalid.
    */
@@ -39,7 +39,6 @@ public interface Image extends ImageState {
 
 
   /**
-   *
    * @param type the methods that will be used to transform the image.
    * @return an image that reflects a post-filtered image.
    * @throws IllegalArgumentException if the transformation type is invalid.
@@ -47,7 +46,6 @@ public interface Image extends ImageState {
   Color[][] transformImage(String type) throws IllegalArgumentException;
 
   /**
-   *
    * @param type the filtering methods that will be applied to the image.
    * @return an image that reflects a post-filtered image.
    * @throws IllegalArgumentException if the filter type is invalid.

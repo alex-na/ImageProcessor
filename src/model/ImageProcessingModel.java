@@ -1,7 +1,5 @@
 package model;
 
-import java.io.IOException;
-
 import util.image.Image;
 
 /**
@@ -13,9 +11,8 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
   /**
    * Load an image from a file path to be used internally within the model.
    *
-   * @param imageName  the name of the image
-   * @param image the image will be stored in the model.
-   *
+   * @param imageName the name of the image
+   * @param image     the image will be stored in the model.
    * @throws IllegalArgumentException if the given parameters are null.
    */
   void load(String imageName, Image image) throws IllegalArgumentException;
@@ -29,7 +26,7 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    * @param desiredName desired name of the image
    */
   void brightenImage(int increment, String imageName, String desiredName)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * Display the component of an image based on user input.
@@ -39,7 +36,7 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    * @param desiredName desired name of the image
    */
   void displayGreyscale(String component, String imageName, String desiredName)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * Rearranges the pixels of an image to flip them over a given axis.
@@ -51,29 +48,29 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    *                                  across.
    */
   void flipImage(String axis, String imageName, String desiredName)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * Filters an image based on user input.
    *
-   * @param filterType the type of filter to be applied to the image
-   * @param imageName the name of the image
+   * @param filterType  the type of filter to be applied to the image
+   * @param imageName   the name of the image
    * @param desiredName the desired name of the image
    * @throws IllegalArgumentException if an invalid filterType is entered
    */
   void filterImage(String filterType, String imageName, String desiredName)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
   /**
    * Transforms an image based on user input.
    *
    * @param transformType the type of transformation to be applied to the image
-   * @param imageName the name of the image
-   * @param desiredName the desired name of the image
+   * @param imageName     the name of the image
+   * @param desiredName   the desired name of the image
    * @throws IllegalArgumentException if an invalid transformType is entered
    */
   void transformImage(String transformType, String imageName, String desiredName)
-      throws IllegalArgumentException;
+          throws IllegalArgumentException;
 
 
 }

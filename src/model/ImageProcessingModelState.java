@@ -1,5 +1,7 @@
 package model;
-import java.awt.*;
+
+import java.awt.Color;
+
 import util.image.Image;
 
 /**
@@ -17,7 +19,6 @@ public interface ImageProcessingModelState {
    * Gets the height of an image associated with the given imageName.
    *
    * @return an int that represents the height of an image.
-   *
    * @throws IllegalArgumentException when the given imageName is not associated with an image.
    */
   int getImageHeight(String imageName) throws IllegalArgumentException;
@@ -26,7 +27,6 @@ public interface ImageProcessingModelState {
    * Gets the width of an image associated with the given imageName.
    *
    * @return an int that represents the width of an image.
-   *
    * @throws IllegalArgumentException when the given imageName is not associated with an image.
    */
   int getImageWidth(String imageName) throws IllegalArgumentException;

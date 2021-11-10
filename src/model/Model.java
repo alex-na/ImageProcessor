@@ -1,8 +1,9 @@
 package model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+
 import util.image.Image;
 import util.image.PixelImage;
 
@@ -47,10 +48,10 @@ public class Model implements ImageProcessingModel {
 
   // Helper method for verifying image names within the loadMap
   private void validNames(String imageName, String desiredImage)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (imageName == null || desiredImage == null) {
       throw new
-          IllegalArgumentException("The given image name and/or desired image name are null.");
+              IllegalArgumentException("The given image name and/or desired image name are null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
@@ -67,7 +68,7 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
 
     Color[][] brightened = loadMap.get(imageName).brightenImage(increment);
@@ -76,13 +77,16 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public void displayGreyscale(String component, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
+    if (component == null) {
+      throw new IllegalArgumentException("component cannot be null.");
+    }
     if (!(component.equals("red") || component.equals("green")
-        || component.equals("blue")
-        || component.equals("value")
-        || component.equals("intensity")
-        || component.equals("luma"))) {
+            || component.equals("blue")
+            || component.equals("value")
+            || component.equals("intensity")
+            || component.equals("luma"))) {
       throw new IllegalArgumentException("The given component is invalid.");
     }
     Color[][] greyscale = getImage(imageName).displayGreyscale(component);
@@ -91,48 +95,39 @@ public class Model implements ImageProcessingModel {
 
   @Override
   public void flipImage(String axis, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
+    if (axis == null) {
+      throw new IllegalArgumentException("axis cannot be null.");
+    }
     if (!(axis.equals("horizontal") || axis.equals("vertical"))) {
-      throw new IllegalArgumentException("The axis must be vertical or horizontal");
+      throw new IllegalArgumentException("The given axis was invalid.");
     }
-    try {
-      Color[][] flippedImage = getImage(imageName).flipImage(axis);
-      loadMap.put(desiredName, new PixelImage(flippedImage));
-    } catch (NullPointerException e) {
-      throw new IllegalArgumentException("The axis was null.");
-    }
+    Color[][] flippedImage = getImage(imageName).flipImage(axis);
+    loadMap.put(desiredName, new PixelImage(flippedImage));
   }
 
   @Override
   public void filterImage(String filterType, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
     if (!(filterType.equals("blur") || filterType.equals("sharpen"))) {
       throw new IllegalArgumentException("Invalid filter type entered.");
     }
-    try {
-      Color[][] filtered = getImage(imageName).filterImage(filterType);
-      loadMap.put(desiredName, new PixelImage(filtered));
-    } catch (NullPointerException e) {
-      throw new IllegalArgumentException("The given input was not found.");
-    }
+    Color[][] filtered = getImage(imageName).filterImage(filterType);
+    loadMap.put(desiredName, new PixelImage(filtered));
 
   }
 
   @Override
   public void transformImage(String transformType, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     validNames(imageName, desiredName);
-    if (! transformType.equals("greyscale") && ! transformType.equals("sepia")) {
+    if (!transformType.equals("greyscale") && !transformType.equals("sepia")) {
       throw new IllegalArgumentException("The given transformation type was invalid.");
     }
-    try {
-      Color[][] transformed = getImage(imageName).transformImage(transformType);
-      loadMap.put(desiredName, new PixelImage(transformed));
-    } catch (NullPointerException e) {
-      throw new IllegalArgumentException("The given input was not found.");
-    }
+    Color[][] transformed = getImage(imageName).transformImage(transformType);
+    loadMap.put(desiredName, new PixelImage(transformed));
   }
 }
 

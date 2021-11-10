@@ -18,7 +18,7 @@ public class Transformation implements ImageProcessingCommand {
    * @throws IllegalArgumentException if any inputs are null
    */
   public Transformation(String type, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     if (type == null || imageName == null || desiredName == null) {
       throw new IllegalArgumentException("Inputs may not be null.");
     }
@@ -29,16 +29,17 @@ public class Transformation implements ImageProcessingCommand {
 
   @Override
   public void apply(ImageProcessingModel model, ImageProcessingView view)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
 
     switch (this.type) {
-      case "greyscale" :
+      case "greyscale":
         model.transformImage("greyscale", imageName, desiredName);
         break;
-      case "sepia" :
+      case "sepia":
         model.transformImage("sepia", imageName, desiredName);
         break;
-      default: throw new IllegalArgumentException("Invalid command.");
+      default:
+        throw new IllegalArgumentException("Invalid command.");
     }
   }
 }
