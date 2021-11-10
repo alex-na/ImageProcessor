@@ -48,8 +48,8 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
     log.append(String.format("The image was processed in the controller, " +
-                    "and the following imageName: %s was passed to the model, " +
-                    "along with an Image that contains the following color mapping:\n", imageName));
+            "and the following imageName: %s was passed to the model, " +
+            "along with an Image that contains the following color mapping:\n", imageName));
     for (int row = 0; row < image.getImageHeight(); row++) {
       for (int col = 0; col < image.getImageWidth(); col++) {
         Color pixel = image.getPixelAt(row, col);
@@ -69,23 +69,23 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     log.append(String.format("brightenImage method called with parameters: %d, %s, %s",
-        increment, imageName, desiredName));
+            increment, imageName, desiredName));
   }
 
   @Override
   public void displayGreyscale(String component, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     log.append(String.format("displayGreyscale method called with parameters: %s, %s, %s",
-        component, imageName, desiredName));
+            component, imageName, desiredName));
   }
 
   @Override
   public void flipImage(String axis, String imageName, String desiredName)
-      throws IllegalArgumentException {
+          throws IllegalArgumentException {
     log.append(String.format("flipImage method called with parameters: %s, %s, %s",
-        axis, imageName, desiredName));
+            axis, imageName, desiredName));
   }
 
   @Override
@@ -112,11 +112,11 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public int getImageHeight(String imageName) throws IllegalArgumentException {
-    return 0;
+    return loadMap.get(imageName).getImageHeight();
   }
 
   @Override
   public int getImageWidth(String imageName) throws IllegalArgumentException {
-    return 0;
+    return loadMap.get(imageName).getImageWidth();
   }
 }

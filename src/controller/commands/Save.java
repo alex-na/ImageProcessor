@@ -3,6 +3,7 @@ package controller.commands;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -34,7 +35,9 @@ public class Save implements ImageProcessingCommand {
 
   @Override
   public void apply(ImageProcessingModel model, ImageProcessingView view) {
-
+    if (fileName == null) {
+      throw new IllegalArgumentException("The filename is null.");
+    }
     if (!(fileName.contains(imageName))) {
       throw new IllegalArgumentException("Specified path does not include imageName");
     }
@@ -47,8 +50,12 @@ public class Save implements ImageProcessingCommand {
 
     if (splitAtPeriods[indexOfType].equals("ppm")) {
       ImageUtil.writePPM(fileName, model.getImage(imageName));
-    }
-    else {
+    } else {
+      String[] supportedSuffixes = ImageIO.getWriterFileSuffixes();
+      if (!(Arrays.asList(supportedSuffixes).contains(splitAtPeriods[indexOfType]))) {
+        throw new IllegalArgumentException("The given file is not supported for writing.");
+      }
+
       int i = 0;
       int j = 0;
       try {
@@ -69,9 +76,6 @@ public class Save implements ImageProcessingCommand {
         ImageIO.write(savedImage, splitAtPeriods[indexOfType], newFile);
       } catch (IOException e) {
         throw new IllegalArgumentException(e);
-      } catch (NullPointerException e) {
-        System.out.println(i + "  " + j);
-
       }
     }
   }
