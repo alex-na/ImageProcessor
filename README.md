@@ -31,6 +31,10 @@ Tests:
 - ImageProcessingViewTest
 - ImageProcessingControllerTest
 
-bunny image citation:
+Bunny image citation:
 
-Allanwood, G. (2018, February 16). Photo by Gavin Allanwood on unsplash. Beautiful Free Images &amp; Pictures. Retrieved November 10, 2021, from https://unsplash.com/photos/hcxqLJjI99E. 
+- Allanwood, G. (2018, February 16). Photo by Gavin Allanwood on unsplash.
+Beautiful Free Images &amp; Pictures. Retrieved November 10, 2021,
+from https://unsplash.com/photos/hcxqLJjI99E. 
+
+All other images (dumby, colorful) created by Ryan Duong and Alexander Naishuler.
