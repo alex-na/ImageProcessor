@@ -151,14 +151,14 @@ public class ImageProcessingControllerTest {
     StringBuilder vLog = new StringBuilder();
     ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
     ImageProcessingView mockView = new MockImageProcessingView(vLog);
-    Readable read = new StringReader("save images/bunny.jpg bunny");
+    Readable read = new StringReader("save images/colorful.jpg colorful");
     ImageProcessingController c = new Controller(mockModel, mockView, read);
     c.processImage();
 
-//    BufferedImage image =  ImageIO.read(new File("images/colorful.png"));
-//
-//    assertEquals(mockModel.getImageHeight("colorful"), image.getHeight());
-//    assertEquals(mockModel.getImageWidth("colorful"), image.getWidth());
+    BufferedImage image =  ImageIO.read(new File("images/colorful.jpg"));
+
+    assertEquals(mockModel.getImageHeight("colorful"), image.getHeight());
+    assertEquals(mockModel.getImageWidth("colorful"), image.getWidth());
   }
 
   // Testing brighten command

@@ -107,11 +107,14 @@ public class MockImageProcessingModel implements ImageProcessingModel {
 
   @Override
   public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
-    return null;
+    return loadMap.get(imageName).getPixelAt(row, col);
   }
 
   @Override
   public int getImageHeight(String imageName) throws IllegalArgumentException {
+    if (imageName == null) {
+      throw new IllegalArgumentException("The image name is null");
+    }
     return loadMap.get(imageName).getImageHeight();
   }
 
