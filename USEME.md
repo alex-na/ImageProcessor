@@ -1,5 +1,4 @@
 Supported functionality:
-
 - load \<file path> \<desired name>
 - save \<save location> \<image name>
 - brighten \<increment> \<image name> \<desired name>
@@ -15,3 +14,10 @@ Supported functionality:
 - sharpen \<image name> \<desired name>
 - sepia \<image name> \<desired name>
 - greyscale \<image name> \<desired name>
+
+For a file script:
+- -file \<file path>
+
+To quit the program:
+
+- Enter: "q", "Q", "quit" or "Quit".

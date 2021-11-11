@@ -30,7 +30,6 @@ public class Filter implements ImageProcessingCommand {
     this.desiredName = desiredName;
   }
 
-
   @Override
   public void apply(ImageProcessingModel model, ImageProcessingView view)
           throws IllegalArgumentException {

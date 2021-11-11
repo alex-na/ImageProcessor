@@ -29,12 +29,17 @@ public final class ImageProcessingProgram {
     Readable read = null;
 
     if (args.length == 2) {
-      try {
-        read = new FileReader(args[1]);
-      } catch (FileNotFoundException e) {
-        System.out.printf("Invalid file. Please re-enter.");
+      if (args[0].equals("-file")) {
+        try {
+          read = new FileReader(args[1]);
+        } catch (FileNotFoundException e) {
+          throw new IllegalArgumentException("Invalid file.");
+        }
       }
     } else {
+//      if (args[0].equals("q") || args[0].equals("Q")) {
+//        System.exit(0);
+//      }
       read = new InputStreamReader(System.in);
     }
 
