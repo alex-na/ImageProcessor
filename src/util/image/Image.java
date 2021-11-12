@@ -39,6 +39,9 @@ public interface Image extends ImageState {
 
 
   /**
+   * Creates a new Matrix of colors that represents
+   * an image after it has undergone a supported transformation.
+   *
    * @param type the methods that will be used to transform the image.
    * @return an image that reflects a post-filtered image.
    * @throws IllegalArgumentException if the transformation type is invalid.
@@ -46,6 +49,8 @@ public interface Image extends ImageState {
   Color[][] transformImage(String type) throws IllegalArgumentException;
 
   /**
+   * Creates a new Matrix of colors that represents an image after a filter has been applied to it.
+   *
    * @param type the filtering methods that will be applied to the image.
    * @return an image that reflects a post-filtered image.
    * @throws IllegalArgumentException if the filter type is invalid.

@@ -1,6 +1,6 @@
 package mocks;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 
 import model.ImageProcessingModel;
@@ -23,16 +23,11 @@ public class MockImageProcessingModel implements ImageProcessingModel {
     this.loadMap = new HashMap<>();
 
     Color[][] colorfulImage = {
-            {new Color(123, 92, 23),
-                    new Color(25, 215, 205), new Color(215, 205, 21)},
-            {new Color(0, 34, 1),
-                    new Color(0, 252, 50), new Color(20, 50, 250)},
-            {new Color(111, 16, 100),
-                    new Color(16, 200, 15), new Color(11, 240, 50)},
-            {new Color(255, 0, 0),
-                    new Color(0, 255, 0), new Color(111, 24, 5)},
-            {new Color(2, 90, 195),
-                    new Color(100, 60, 0), new Color(80, 20, 100)}};
+            {new Color(123, 92, 23), new Color(25, 215, 205), new Color(215, 205, 21)},
+            {new Color(0, 34, 1), new Color(0, 252, 50), new Color(20, 50, 250)},
+            {new Color(111, 16, 100), new Color(16, 200, 15), new Color(11, 240, 50)},
+            {new Color(255, 0, 0), new Color(0, 255, 0), new Color(111, 24, 5)},
+            {new Color(2, 90, 195), new Color(100, 60, 0), new Color(80, 20, 100)}};
 
     loadMap.put("colorful", new PixelImage(colorfulImage));
     this.log = log;
@@ -60,13 +55,6 @@ public class MockImageProcessingModel implements ImageProcessingModel {
     }
   }
 
-  public void save(String imageName, Image image) throws IllegalArgumentException {
-    log.append(String.format("The image was processed in the controller, " +
-                    "and the following imageName and image were passed to the model: %s, %s",
-            imageName, image));
-  }
-
-
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
           throws IllegalArgumentException {
@@ -89,13 +77,15 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
-  public void filterImage(String filterType, String imageName, String desiredName) throws IllegalArgumentException {
+  public void filterImage(String filterType, String imageName, String desiredName)
+          throws IllegalArgumentException {
     log.append(String.format("filterImage method called with parameters: %s, %s, %s",
             filterType, imageName, desiredName));
   }
 
   @Override
-  public void transformImage(String transformType, String imageName, String desiredName) throws IllegalArgumentException {
+  public void transformImage(String transformType, String imageName, String desiredName)
+          throws IllegalArgumentException {
     log.append(String.format("transformImage method called with parameters: %s, %s, %s",
             transformType, imageName, desiredName));
   }

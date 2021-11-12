@@ -137,7 +137,7 @@ public class ImageProcessingControllerTest {
       sb.append(line);
       sb.append(ls);
     }
-// delete the last new line separator
+
     sb.deleteCharAt(sb.length() - 1);
     reader.close();
 

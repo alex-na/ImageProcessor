@@ -1,15 +1,9 @@
 package model;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
-import util.ImageUtil;
 import util.image.Image;
 import util.image.PixelImage;
 
@@ -135,46 +129,5 @@ public class Model implements ImageProcessingModel {
     Color[][] transformed = getImage(imageName).transformImage(transformType);
     loadMap.put(desiredName, new PixelImage(transformed));
   }
-//
-//  public void save(String fileName, String imageName) throws IllegalArgumentException {
-//    if (!(fileName.contains(imageName))) {
-//      throw new IllegalArgumentException("Specified path does not include imageName");
-//    }
-//
-//    String[] splitAtPeriods = fileName.split("\\.");
-//    if (splitAtPeriods.length <= 1) {
-//      throw new IllegalArgumentException("Filepath does not contain a file type.");
-//    }
-//    int indexOfType = splitAtPeriods.length - 1;
-//
-//    if (splitAtPeriods[indexOfType].equals("ppm")) {
-//      ImageUtil.writePPM(fileName, this.getImage(imageName));
-//    } else {
-//      int i = 0;
-//      int j = 0;
-//      try {
-//        int height = this.getImageHeight(imageName);
-//        int width = this.getImageWidth(imageName);
-//        BufferedImage savedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-//
-//        for (i = 0; i < width; i++) {
-//          for (j = 0; j < height; j++) {
-//            int pixel = (this.getPixelAt(imageName, j, i).getRed() << 16)
-//                    | (this.getPixelAt(imageName, j, i).getGreen() << 8)
-//                    | (this.getPixelAt(imageName, j, i).getBlue());
-//            savedImage.setRGB(i, j, pixel);
-//          }
-//        }
-//
-//        File newFile = new File(fileName);
-//        ImageIO.write(savedImage, splitAtPeriods[indexOfType], newFile);
-//      } catch (IOException e) {
-//        throw new IllegalArgumentException(e);
-//      } catch (NullPointerException e) {
-//        System.out.println(i + "  " + j);
-//
-//      }
-//    }
-//  }
 }
 

@@ -1,7 +1,5 @@
 package mocks;
 
-import java.io.IOException;
-
 import view.ImageProcessingView;
 
 /**

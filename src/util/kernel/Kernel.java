@@ -1,5 +1,9 @@
 package util.kernel;
 
+/**
+ * Represents a Kernel used to alter the look of images.
+ * Contains the functionality that is expected of all Kernels
+ */
 public interface Kernel {
 
   /**

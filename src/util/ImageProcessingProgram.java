@@ -3,7 +3,6 @@ package util;
 import controller.Controller;
 import controller.ImageProcessingController;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -37,9 +36,6 @@ public final class ImageProcessingProgram {
         }
       }
     } else {
-//      if (args[0].equals("q") || args[0].equals("Q")) {
-//        System.exit(0);
-//      }
       read = new InputStreamReader(System.in);
     }
 

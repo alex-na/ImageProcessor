@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Color;
 
 import model.ImageProcessingModel;
 import model.Model;
@@ -21,28 +21,18 @@ public class ImageProcessingModelTest {
   public void init() {
     this.testModel = new Model();
     Color[][] dumbyImage = {
-            {new Color(0, 0, 0),
-                    new Color(255, 255, 255), new Color(255, 255, 255)},
-            {new Color(5, 5, 5),
-                    new Color(250, 250, 250), new Color(250, 250, 250)},
-            {new Color(100, 100, 100),
-                    new Color(100, 100, 100), new Color(100, 100, 100)},
-            {new Color(250, 250, 250),
-                    new Color(5, 5, 5), new Color(5, 5, 5)},
-            {new Color(255, 255, 255),
-                    new Color(0, 0, 0), new Color(0, 0, 0)}};
+            {new Color(0, 0, 0), new Color(255, 255, 255), new Color(255, 255, 255)},
+            {new Color(5, 5, 5), new Color(250, 250, 250), new Color(250, 250, 250)},
+            {new Color(100, 100, 100), new Color(100, 100, 100), new Color(100, 100, 100)},
+            {new Color(250, 250, 250), new Color(5, 5, 5), new Color(5, 5, 5)},
+            {new Color(255, 255, 255), new Color(0, 0, 0), new Color(0, 0, 0)}};
 
     Color[][] colorfulImage = {
-            {new Color(123, 92, 23),
-                    new Color(25, 215, 205), new Color(215, 205, 21)},
-            {new Color(0, 34, 1),
-                    new Color(0, 252, 50), new Color(20, 50, 250)},
-            {new Color(111, 16, 100),
-                    new Color(16, 200, 15), new Color(11, 240, 50)},
-            {new Color(255, 0, 0),
-                    new Color(0, 255, 0), new Color(111, 24, 5)},
-            {new Color(2, 90, 195),
-                    new Color(100, 60, 0), new Color(80, 20, 100)}};
+            {new Color(123, 92, 23), new Color(25, 215, 205), new Color(215, 205, 21)},
+            {new Color(0, 34, 1), new Color(0, 252, 50), new Color(20, 50, 250)},
+            {new Color(111, 16, 100), new Color(16, 200, 15), new Color(11, 240, 50)},
+            {new Color(255, 0, 0), new Color(0, 255, 0), new Color(111, 24, 5)},
+            {new Color(2, 90, 195), new Color(100, 60, 0), new Color(80, 20, 100)}};
 
     this.testModel.load("dumby", new PixelImage(dumbyImage));
     this.testModel.load("colorful", new PixelImage(colorfulImage));
@@ -224,12 +214,9 @@ public class ImageProcessingModelTest {
       int height = dumby.getImageHeight();
       for (int col = 0; col < dumby.getImageWidth(); col++) {
         int width = dumby.getImageWidth();
-        sb2.append(dumby.getPixelAt
-                (row, width - col - 1).getRed()).append(" ");
-        sb2.append(dumby.getPixelAt
-                (row, width - col - 1).getGreen()).append(" ");
-        sb2.append(dumby.getPixelAt
-                (row, width - col - 1).getBlue()).append(" ");
+        sb2.append(dumby.getPixelAt(row, width - col - 1).getRed()).append(" ");
+        sb2.append(dumby.getPixelAt(row, width - col - 1).getGreen()).append(" ");
+        sb2.append(dumby.getPixelAt(row, width - col - 1).getBlue()).append(" ");
       }
     }
     assertEquals(sb1.toString(), sb2.toString());
@@ -255,12 +242,9 @@ public class ImageProcessingModelTest {
       int height = dumby.getImageHeight();
       for (int col = 0; col < dumby.getImageWidth(); col++) {
         int width = dumby.getImageWidth();
-        sb2.append(dumby.getPixelAt
-                (height - row - 1, col).getRed()).append(" ");
-        sb2.append(dumby.getPixelAt
-                (height - row - 1, col).getGreen()).append(" ");
-        sb2.append(dumby.getPixelAt
-                (height - row - 1, col).getBlue()).append(" ");
+        sb2.append(dumby.getPixelAt(height - row - 1, col).getRed()).append(" ");
+        sb2.append(dumby.getPixelAt(height - row - 1, col).getGreen()).append(" ");
+        sb2.append(dumby.getPixelAt(height - row - 1, col).getBlue()).append(" ");
       }
     }
     assertEquals(sb1.toString(), sb2.toString());
@@ -551,16 +535,11 @@ public class ImageProcessingModelTest {
   @Test(expected = IllegalArgumentException.class)
   public void nullImageName() {
     Color[][] colorfulImage = {
-            {new Color(123, 92, 23),
-                    new Color(25, 215, 205), new Color(215, 205, 21)},
-            {new Color(0, 34, 1),
-                    new Color(0, 252, 50), new Color(20, 50, 250)},
-            {new Color(111, 16, 100),
-                    new Color(16, 200, 15), new Color(11, 240, 50)},
-            {new Color(255, 0, 0),
-                    new Color(0, 255, 0), new Color(111, 24, 5)},
-            {new Color(2, 90, 195),
-                    new Color(100, 60, 0), new Color(80, 20, 100)}};
+            {new Color(123, 92, 23), new Color(25, 215, 205), new Color(215, 205, 21)},
+            {new Color(0, 34, 1), new Color(0, 252, 50), new Color(20, 50, 250)},
+            {new Color(111, 16, 100), new Color(16, 200, 15), new Color(11, 240, 50)},
+            {new Color(255, 0, 0), new Color(0, 255, 0), new Color(111, 24, 5)},
+            {new Color(2, 90, 195), new Color(100, 60, 0), new Color(80, 20, 100)}};
 
     this.testModel.load(null, new PixelImage(colorfulImage));
   }
@@ -574,16 +553,11 @@ public class ImageProcessingModelTest {
   public void loadDumby() {
     //in init(), the image "dumbyImage" has not yet been loaded into the model.
     Color[][] dumbyImageColor = {
-            {new Color(11, 55, 223),
-                    new Color(95, 218, 5), new Color(123, 25, 255)},
-            {new Color(0, 255, 255),
-                    new Color(20, 70, 20), new Color(20, 20, 220)},
-            {new Color(150, 200, 70),
-                    new Color(10, 180, 110), new Color(110, 110, 170)},
-            {new Color(255, 20, 255),
-                    new Color(11, 23, 55), new Color(213, 5, 5)},
-            {new Color(255, 255, 255),
-                    new Color(0, 0, 0), new Color(9, 0, 9)}};
+            {new Color(11, 55, 223), new Color(95, 218, 5), new Color(123, 25, 255)},
+            {new Color(0, 255, 255), new Color(20, 70, 20), new Color(20, 20, 220)},
+            {new Color(150, 200, 70), new Color(10, 180, 110), new Color(110, 110, 170)},
+            {new Color(255, 20, 255), new Color(11, 23, 55), new Color(213, 5, 5)},
+            {new Color(255, 255, 255), new Color(0, 0, 0), new Color(9, 0, 9)}};
     this.testModel.load("dumbyImageColor", new PixelImage(dumbyImageColor));
 
     StringBuilder sb1 = new StringBuilder();

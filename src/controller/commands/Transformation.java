@@ -3,6 +3,9 @@ package controller.commands;
 import model.ImageProcessingModel;
 import view.ImageProcessingView;
 
+/**
+ * Command class utilized for Transforming an image.
+ */
 public class Transformation implements ImageProcessingCommand {
 
   private String type;

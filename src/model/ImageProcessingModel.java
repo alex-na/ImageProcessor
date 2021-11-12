@@ -71,7 +71,4 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    */
   void transformImage(String transformType, String imageName, String desiredName)
           throws IllegalArgumentException;
-
-
-//  void save(String s, String colorful);
 }
