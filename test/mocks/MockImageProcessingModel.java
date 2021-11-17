@@ -90,6 +90,18 @@ public class MockImageProcessingModel implements ImageProcessingModel {
             transformType, imageName, desiredName));
   }
 
+  /**
+   * Creates a histogram from an image with the a given imageName.
+   *
+   * @param imageName the name of the image that will be used to create a representative histogram.
+   * @throws IllegalArgumentException if the imageName does not correspond to an image stored in the
+   *                                  image processor.
+   */
+  @Override
+  public void createHistogram(String imageName) throws IllegalArgumentException {
+
+  }
+
   @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
     return loadMap.get(imageName);

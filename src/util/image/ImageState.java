@@ -31,4 +31,10 @@ public interface ImageState {
    *                                  the dimensions of the board.
    */
   Color getPixelAt(int row, int col) throws IllegalArgumentException;
+
+  /**
+   *
+   * @return true if for every pixel each RBG component is equal to eachother.
+   */
+  boolean isGreyscale();
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import util.image.Image;
@@ -23,22 +24,19 @@ public class Model implements ImageProcessingModel {
     this.loadMap = new HashMap<>();
   }
 
-  @Override
+  //Getters
   public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
     return getImage(imageName).getPixelAt(row, col);
   }
 
-  @Override
   public int getImageHeight(String imageName) throws IllegalArgumentException {
     return getImage(imageName).getImageHeight();
   }
 
-  @Override
   public int getImageWidth(String imageName) throws IllegalArgumentException {
     return getImage(imageName).getImageWidth();
   }
 
-  @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
     if (imageName == null || image == null) {
       throw new IllegalArgumentException("The imageName and/or image are null");
@@ -46,19 +44,6 @@ public class Model implements ImageProcessingModel {
     loadMap.put(imageName, image);
   }
 
-  // Helper method for verifying image names within the loadMap
-  private void validNames(String imageName, String desiredImage)
-          throws IllegalArgumentException {
-    if (imageName == null || desiredImage == null) {
-      throw new
-              IllegalArgumentException("The given image name and/or desired image name are null.");
-    }
-    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
-      throw new IllegalArgumentException("The given image name isn't associated with an image.");
-    }
-  }
-
-  @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("Image name is not associated with an image.");
@@ -66,19 +51,18 @@ public class Model implements ImageProcessingModel {
     return loadMap.get(imageName);
   }
 
-  @Override
+  //Functionality
   public void brightenImage(int increment, String imageName, String desiredName)
           throws IllegalArgumentException {
-    validNames(imageName, desiredName);
+    validateNames(imageName, desiredName);
 
-    Color[][] brightened = loadMap.get(imageName).brightenImage(increment);
-    loadMap.put(desiredName, new PixelImage(brightened));
+    Color[][] brightened = getImage(imageName).brightenImage(increment);
+    load(desiredName, new PixelImage(brightened));
   }
 
-  @Override
   public void displayGreyscale(String component, String imageName, String desiredName)
           throws IllegalArgumentException {
-    validNames(imageName, desiredName);
+    validateNames(imageName, desiredName);
     if (component == null) {
       throw new IllegalArgumentException("component cannot be null.");
     }
@@ -90,13 +74,12 @@ public class Model implements ImageProcessingModel {
       throw new IllegalArgumentException("The given component is invalid.");
     }
     Color[][] greyscale = getImage(imageName).displayGreyscale(component);
-    loadMap.put(desiredName, new PixelImage(greyscale));
+    load(desiredName, new PixelImage(greyscale));
   }
 
-  @Override
   public void flipImage(String axis, String imageName, String desiredName)
           throws IllegalArgumentException {
-    validNames(imageName, desiredName);
+    validateNames(imageName, desiredName);
     if (axis == null) {
       throw new IllegalArgumentException("axis cannot be null.");
     }
@@ -104,30 +87,112 @@ public class Model implements ImageProcessingModel {
       throw new IllegalArgumentException("The given axis was invalid.");
     }
     Color[][] flippedImage = getImage(imageName).flipImage(axis);
-    loadMap.put(desiredName, new PixelImage(flippedImage));
+    load(desiredName, new PixelImage(flippedImage));
   }
 
-  @Override
   public void filterImage(String filterType, String imageName, String desiredName)
           throws IllegalArgumentException {
-    validNames(imageName, desiredName);
+    validateNames(imageName, desiredName);
     if (!(filterType.equals("blur") || filterType.equals("sharpen"))) {
       throw new IllegalArgumentException("Invalid filter type entered.");
     }
     Color[][] filtered = getImage(imageName).filterImage(filterType);
-    loadMap.put(desiredName, new PixelImage(filtered));
-
+    load(desiredName, new PixelImage(filtered));
   }
 
-  @Override
   public void transformImage(String transformType, String imageName, String desiredName)
           throws IllegalArgumentException {
-    validNames(imageName, desiredName);
+    validateNames(imageName, desiredName);
     if (!transformType.equals("greyscale") && !transformType.equals("sepia")) {
       throw new IllegalArgumentException("The given transformation type was invalid.");
     }
     Color[][] transformed = getImage(imageName).transformImage(transformType);
-    loadMap.put(desiredName, new PixelImage(transformed));
+    load(desiredName, new PixelImage(transformed));
+  }
+
+  public void createHistogram(String imageName) throws IllegalArgumentException {
+    if (imageName == null) {
+      throw new
+              IllegalArgumentException("The given image name is null.");
+    }
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("The given image name isn't associated with an image.");
+    }
+
+
+    //TODO: Decide how to differentiate colored images from greyscale images.
+    //Initialize the table to contain 256 entries. It's okay to do so, as well need to consider
+    //all greyscale values regardless of frequency.
+    Hashtable<Integer, Integer> histogram = new Hashtable<>();
+    for (int i = 0; i < 256; i++) {
+      histogram.put(i, 0);
+    }
+
+    //Grab the Image, height, and width.
+    Image image = loadMap.get(imageName);
+    int height = getImageHeight(imageName);
+    int width = getImageHeight(imageName);
+
+    boolean isGreyscale = image.isGreyscale();
+
+
+    if (isGreyscale) {
+      //Iterate through all pixels and add their values to the histogram.
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+          //consider when the user wants to make a histogram for greyscale
+          //really simple as we only need to make one histogram. we get the value of any component
+          //of an image (I use red) then increment the frequency at the histogram's key by one.
+          int value = image.getPixelAt(row, col).getRed();
+          histogram.put(value, histogram.get(value) + 1);
+        }
+      }
+    }
+    else {
+      //When the image is colored, you need to make four histograms
+      Hashtable<Integer, Integer> frequencyOfRed = new Hashtable<>();
+      Hashtable<Integer, Integer> frequencyOfGreen = new Hashtable<>();
+      Hashtable<Integer, Integer> frequencyOfBlue = new Hashtable<>();
+      Hashtable<Integer, Integer> frequencyOfIntensity = new Hashtable<>();
+      for (int i = 0; i < 256; i++) {
+        frequencyOfRed.put(i, 0);
+        frequencyOfGreen.put(i, 0);
+        frequencyOfBlue.put(i, 0);
+        frequencyOfIntensity.put(i, 0);
+      }
+
+
+      //Iterate through all pixels and add their values to the histogram.
+      for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+          //consider when the user wants to make a histogram for greyscale
+          //really simple as we only need to make one histogram. we get the value of any component
+          //of an image (I use red) then increment the frequency at the histogram's key by one.
+          int redComponent = image.getPixelAt(row, col).getRed();
+          int greenComponent = image.getPixelAt(row, col).getGreen();
+          int blueComponent = image.getPixelAt(row, col).getBlue();
+          int intensity = (redComponent + greenComponent + blueComponent) / 3;
+
+
+          frequencyOfRed.put(redComponent, histogram.get(redComponent) + 1);
+          frequencyOfGreen.put(greenComponent, histogram.get(greenComponent) + 1);
+          frequencyOfBlue.put(blueComponent, histogram.get(blueComponent) + 1);
+          frequencyOfIntensity.put(intensity, histogram.get(intensity) + 1);
+        }
+      }
+    }
+  }
+
+  // Helper methods
+  private void validateNames(String imageName, String desiredImage)
+          throws IllegalArgumentException {
+    if (imageName == null || desiredImage == null) {
+      throw new
+              IllegalArgumentException("The given image name and/or desired image name are null.");
+    }
+    if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
+      throw new IllegalArgumentException("The given image name isn't associated with an image.");
+    }
   }
 }
 

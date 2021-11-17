@@ -18,6 +18,7 @@ public class PixelImage implements Image {
   private final int height;
   private final int width;
 
+
   /**
    * Given a 2D array of Colors, constructs a PixelImage object that contains the Color matrix,
    * along with the height and width of passed in matrix.
@@ -40,6 +41,26 @@ public class PixelImage implements Image {
       throw new IllegalArgumentException("Pixel is out of bounds.");
     }
     return image[row][col];
+  }
+
+  /**
+   * @return true if for every pixel each RBG component is equal to eachother.
+   */
+  @Override
+  public boolean isGreyscale() {
+    for (int row = 0; row < this.height; row++) {
+      for (int col = 0; row < this.height; col++) {
+        Color color = getPixelAt(row, col);
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+
+        if (r != g || g != b) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   @Override
