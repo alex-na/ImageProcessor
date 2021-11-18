@@ -22,6 +22,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenu brightenMenu;
   private JLabel histogram;
   private JScrollPane mainScrollPane;
+  private JButton exit;
+  private JButton save;
+  private JButton load;
 
   public GUIView() {
     super();
