@@ -1,5 +1,6 @@
 package view;
 
+import controller.Features;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -32,8 +33,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     // setting layout to BorderLayout
     this.setLayout(new BorderLayout());
     // adding scroll pane
-    mainScrollPane = new JScrollPane();
-    this.add(mainScrollPane);
+    //mainScrollPane = new JScrollPane();
+    //this.add(mainScrollPane);
 
     // Menu Bar
     menuBar = new JMenuBar();
@@ -48,7 +49,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     JMenuItem sharpen = new JCheckBoxMenuItem("Sharpen");
     sharpen.setActionCommand("Greyscale Button");
     filterMenu.add(sharpen);
-    menuBar.add(filterMenu);
+    menuBar.add(filterMenu, BorderLayout.LINE_START);
 
     // Component Menu
     componentMenu = new JMenu("Component");
@@ -76,7 +77,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     JMenuItem luma = new JCheckBoxMenuItem("Luma Component");
     luma.setActionCommand("Luma Component Button");
     componentMenu.add(luma);
-    menuBar.add(componentMenu);
+    menuBar.add(componentMenu, BorderLayout.LINE_START);
 
     // Transformation Menu
     transformMenu = new JMenu("Transformation");
@@ -88,7 +89,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     JMenuItem greyscale = new JCheckBoxMenuItem("Greyscale");
     greyscale.setActionCommand("Greyscale Button");
     transformMenu.add(greyscale);
-    menuBar.add(transformMenu);
+    menuBar.add(transformMenu, BorderLayout.LINE_START);
 
     // Flip Menu
     flipMenu = new JMenu("Flip");
@@ -100,19 +101,37 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     JMenuItem horizontal = new JCheckBoxMenuItem("Horizontal");
     horizontal.setActionCommand("Horizontal Button");
     flipMenu.add(horizontal);
-    menuBar.add(flipMenu);
+    menuBar.add(flipMenu, BorderLayout.LINE_START);
 
     // Brighten Button
     brightenMenu = new JMenu("Brighten");
     //TODO figure out this functionality
-    menuBar.add(brightenMenu);
-
-
-
-
+    menuBar.add(brightenMenu, BorderLayout.LINE_START);
 
   }
 
+  @Override
+  public void setImage() {
 
+  }
 
+  @Override
+  public void displayHistogram() {
+
+  }
+
+  @Override
+  public void resetFocus() {
+
+  }
+
+  @Override
+  public void addFeatures(Features features) {
+
+  }
+
+  @Override
+  public void displayMessage(String message) {
+
+  }
 }

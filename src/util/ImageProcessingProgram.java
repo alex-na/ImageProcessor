@@ -1,6 +1,7 @@
 package util;
 
 import controller.Controller;
+import controller.GUIController;
 import controller.ImageProcessingController;
 
 import java.io.FileNotFoundException;
@@ -9,6 +10,8 @@ import java.io.InputStreamReader;
 
 import model.ImageProcessingModel;
 import model.Model;
+import view.GUIView;
+import view.ImageProcessingGUIView;
 import view.ImageProcessingView;
 import view.View;
 
@@ -26,6 +29,10 @@ public final class ImageProcessingProgram {
   public static void main(String[] args) {
 
     Readable read = null;
+    Appendable appendable = new StringBuilder();
+    ImageProcessingModel model = new Model();
+    ImageProcessingView textView = new View(appendable);
+    ImageProcessingGUIView guiView = new GUIView();
 
     if (args.length == 2) {
       if (args[0].equals("-file")) {
@@ -35,16 +42,19 @@ public final class ImageProcessingProgram {
           throw new IllegalArgumentException("Invalid file.");
         }
       }
-    } else {
-      read = new InputStreamReader(System.in);
+      else if (args[0].equals("-text")) {
+        read = new InputStreamReader(System.in);
+      }
+      ImageProcessingController controller = new Controller(model, textView, read);
+      controller.processImage();
     }
-
-    Appendable appendable = new StringBuilder();
-
-    ImageProcessingModel model = new Model();
-    ImageProcessingView view = new View(appendable);
-    ImageProcessingController controller = new Controller(model, view, read);
-
-    controller.processImage();
+    else if (args.length == 0) {
+      GUIController controller = new GUIController(model);
+      controller.setView(guiView);
+    }
+    else {
+      System.out.printf("Invalid command entered.");
+      System.exit(-1);
+    }
   }
 }
