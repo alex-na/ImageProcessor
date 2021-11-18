@@ -111,6 +111,7 @@ public class ImageUtil {
 
       try {
         saveFileOutputStream.write(strToBytes);
+        saveFileOutputStream.close();
       } catch (IOException e) {
         throw new IllegalStateException("Cannot write to file.");
       }
