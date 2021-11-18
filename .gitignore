@@ -11,6 +11,7 @@
 .mtj.tmp/
 
 # Package Files #
+# removed *.jar
 *.war
 *.nar
 *.ear
@@ -29,3 +30,6 @@ hs_err_pid*
 
 # out folder
 out/
+
+# DS Store
+.DS_Store
