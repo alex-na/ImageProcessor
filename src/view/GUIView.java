@@ -199,7 +199,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void displayHistogram() {
+  public void displayHistogram(BufferedImage image) {
 
   }
 

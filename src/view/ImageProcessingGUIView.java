@@ -8,7 +8,7 @@ public interface ImageProcessingGUIView {
 
   void displayImage(BufferedImage image);
 
-  void displayHistogram();
+  void displayHistogram(BufferedImage image);
 
   void resetFocus();
 
