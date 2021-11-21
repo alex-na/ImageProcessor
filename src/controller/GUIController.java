@@ -9,7 +9,7 @@ import view.ImageProcessingView;
  */
 public class GUIController implements Features {
 
-  private ImageProcessingModel model;
+  private final ImageProcessingModel model;
   private ImageProcessingGUIView view;
 
   /**
@@ -44,7 +44,7 @@ public class GUIController implements Features {
 
   @Override
   public void exit() {
-
+    System.exit(0);
   }
 
   @Override
@@ -64,6 +64,11 @@ public class GUIController implements Features {
 
   @Override
   public void flip(String axis) {
+
+  }
+
+  @Override
+  public void component(String type) {
 
   }
 }

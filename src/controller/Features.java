@@ -18,4 +18,6 @@ public interface Features {
   void brighten(int increment);
 
   void flip(String axis);
+
+  void component(String type);
 }

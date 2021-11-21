@@ -53,7 +53,7 @@ public final class ImageProcessingProgram {
       controller.setView(guiView);
     }
     else {
-      System.out.printf("Invalid command entered.");
+      System.out.print("Invalid command entered.");
       System.exit(-1);
     }
   }
