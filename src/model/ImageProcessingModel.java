@@ -2,6 +2,8 @@ package model;
 
 import util.image.Image;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Representing the model of an ImageProcessor, utilized for performing operations on an image and
  * storing said operations for future use.
@@ -80,4 +82,11 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    *                                  image processor.
    */
   void createHistogram(String imageName) throws IllegalArgumentException;
+
+  /**
+   * Creates a BufferedImage using the image associated with a given image name.
+   * @param imageName - the name of the image that will be converted to a BufferedImage.
+   * @return a BufferedImage.
+   */
+  BufferedImage toBufferedImage(String imageName);
 }

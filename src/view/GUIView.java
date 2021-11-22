@@ -200,7 +200,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   @Override
   public void displayHistogram(BufferedImage image) {
-
+    //this.add(image, BorderLayout.LINE_END);
   }
 
   @Override

@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -194,6 +196,25 @@ public class Model implements ImageProcessingModel {
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
     }
+  }
+
+
+  public BufferedImage toBufferedImage(String imageName) {
+    int i;
+    int j;
+      int height = getImageHeight(imageName);
+      int width = getImageWidth(imageName);
+      BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+      for (i = 0; i < width; i++) {
+        for (j = 0; j < height; j++) {
+          int pixel = (getPixelAt(imageName, j, i).getRed() << 16)
+                  | (getPixelAt(imageName, j, i).getGreen() << 8)
+                  | (getPixelAt(imageName, j, i).getBlue());
+          bufferedImage.setRGB(i, j, pixel);
+        }
+      }
+      return bufferedImage;
   }
 }
 
