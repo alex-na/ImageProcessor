@@ -45,6 +45,8 @@ public class GUIController implements Features {
   public void load(String filePath) {
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
+    BufferedImage image = (BufferedImage) model.getImage("default");
+    view.displayImage(image);
   }
 
   // Getting most recent image in Map.

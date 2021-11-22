@@ -3,6 +3,7 @@ package view;
 import controller.Features;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import util.image.Image;
 
 public class GUIView extends JFrame implements ImageProcessingGUIView {
@@ -27,8 +30,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenu transformMenu;
   private JMenu componentMenu;
   private JMenu flipMenu;
-  private JMenuItem brighten;
 
+  private JMenuItem imageMessage;
+  private JMenuItem brighten;
   private JMenuItem blur;
   private JMenuItem sharpen;
   private JMenuItem greyscale;
@@ -41,9 +45,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenuItem luma;
   private JMenuItem horizontal;
   private JMenuItem vertical;
-  private JMenuItem imageMessage;
 
-  private JLabel image;
+  private JLabel image = new JLabel("");
+  private JScrollPane imageScrollPane;
   private JLabel histogram;
 
   private JMenuBar bottomMenuBar;
@@ -137,7 +141,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
-    this.add(image, BorderLayout.CENTER);
+
+    // this.add(image, BorderLayout.CENTER);
 //    BufferedImage myPicture = null;
 //    try {
 //      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
@@ -188,14 +193,42 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     // TODO update brighten
     brighten.addActionListener(evt -> features.brighten(0));
     // TODO update load/save
-//    load.addActionListener(evt -> features.load());
-//    save.addActionListener(evt -> features.save());
+    load.addActionListener(evt -> features.load(loadPath()));
+    save.addActionListener(evt -> features.save(savePath()));
     exit.addActionListener(evt -> features.exit());
+  }
+
+  // load file path viz. retrieve string of file path from user keypresses.
+  private String loadPath() {
+    final JFileChooser fchooser = new JFileChooser(".");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "Images", "jpg", "ppm", "jpeg", "bpm", "png");
+    fchooser.setFileFilter(filter);
+    int retvalue = fchooser.showOpenDialog(GUIView.this);
+    if (retvalue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+      return f.getAbsolutePath();
+    }
+    return "";
+  }
+
+  // save file path viz. retrieve string of file path from user keypresses.
+  private String savePath() {
+    final JFileChooser fchooser = new JFileChooser(".");
+    int retvalue = fchooser.showSaveDialog(GUIView.this);
+    if (retvalue == JFileChooser.APPROVE_OPTION) {
+      File f = fchooser.getSelectedFile();
+      return f.getAbsolutePath();
+    }
+    return "";
   }
 
   @Override
   public void displayImage(BufferedImage image) {
     this.image = new JLabel(new ImageIcon(image));
+    imageScrollPane = new JScrollPane(this.image);
+    this.add(imageScrollPane);
+    this.add(this.image, BorderLayout.CENTER);
   }
 
   @Override
