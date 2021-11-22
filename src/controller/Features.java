@@ -5,9 +5,9 @@ package controller;
  */
 public interface Features {
 
-  void load();
+  void load(String filePath);
 
-  void save();
+  void save(String filePath);
 
   void exit();
 

@@ -188,8 +188,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     //TODO update brighten
     brighten.addActionListener(evt -> features.brighten(0));
     //TODO update load/save
-    load.addActionListener(evt -> features.load());
-    save.addActionListener(evt -> features.save());
+//    load.addActionListener(evt -> features.load());
+//    save.addActionListener(evt -> features.save());
     exit.addActionListener(evt -> features.exit());
   }
 
@@ -204,12 +204,12 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void resetFocus() {
+  public void displayMessage(String message) {
 
   }
 
   @Override
-  public void displayMessage(String message) {
+  public void resetFocus() {
 
   }
 }
