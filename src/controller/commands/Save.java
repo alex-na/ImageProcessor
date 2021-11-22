@@ -34,7 +34,7 @@ public class Save implements ImageProcessingCommand {
   }
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model) {
     if (fileName == null) {
       throw new IllegalArgumentException("The filename is null.");
     }

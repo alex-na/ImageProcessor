@@ -14,9 +14,11 @@ import util.image.PixelImage;
  * operations.
  */
 public class Model implements ImageProcessingModel {
+
   private Map<String, Image> loadMap;
   private Stack<String> mainStack;
   private Stack<String> undoStack;
+
   /**
    * Instantiates a Map of Image-names and Images that stores images. Images can be retrieved by
    * their names.
@@ -26,6 +28,7 @@ public class Model implements ImageProcessingModel {
     this.mainStack = new Stack<String>();
     this.undoStack = new Stack<String>();
   }
+
   //Getters
   public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
     return getImage(imageName).getPixelAt(row, col);
@@ -114,13 +117,11 @@ public class Model implements ImageProcessingModel {
 
   public void createHistogram(String imageName) throws IllegalArgumentException {
     if (imageName == null) {
-      throw new
-              IllegalArgumentException("The given image name is null.");
+      throw new IllegalArgumentException("The given image name is null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
     }
-
 
     //TODO: Decide how to differentiate colored images from greyscale images.
     //Initialize the table to contain 256 entries. It's okay to do so, as well need to consider
@@ -163,7 +164,6 @@ public class Model implements ImageProcessingModel {
         frequencyOfIntensity.put(i, 0);
       }
 
-
       //Iterate through all pixels and add their values to the histogram.
       for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -189,8 +189,7 @@ public class Model implements ImageProcessingModel {
   private void validateNames(String imageName, String desiredImage)
           throws IllegalArgumentException {
     if (imageName == null || desiredImage == null) {
-      throw new
-              IllegalArgumentException("The given image name and/or desired image name are null.");
+      throw new IllegalArgumentException("The given image name or desired image name are null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");

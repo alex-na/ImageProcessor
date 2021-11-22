@@ -87,7 +87,7 @@ public class Controller implements ImageProcessingController {
         throw new IllegalArgumentException("Invalid command entered.");
       } else {
         c = cmd.apply(scan);
-        c.apply(this.model, this.view);
+        c.apply(this.model);
       }
     }
   }

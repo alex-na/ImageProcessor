@@ -8,9 +8,10 @@ import view.ImageProcessingView;
  */
 public class Quit implements ImageProcessingCommand {
 
+  public Quit() {}
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view)
+  public void apply(ImageProcessingModel model)
       throws IllegalArgumentException {
     System.out.print("Program Quit!");
     System.exit(0);

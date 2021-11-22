@@ -39,7 +39,7 @@ public class Component implements ImageProcessingCommand {
   }
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model) {
 
     switch (this.type) {
       case "value":

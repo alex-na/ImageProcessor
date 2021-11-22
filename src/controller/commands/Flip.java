@@ -30,7 +30,7 @@ public class Flip implements ImageProcessingCommand {
   }
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model) {
     String in = this.type;
     switch (in) {
       case "horizontal":
