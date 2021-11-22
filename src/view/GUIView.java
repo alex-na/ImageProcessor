@@ -7,11 +7,13 @@ import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -49,6 +51,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JLabel image = new JLabel("");
   private JScrollPane imageScrollPane;
   private JLabel histogram;
+  private JFormattedTextField brightenInputField;
 
   private JMenuBar bottomMenuBar;
   private JButton exit;
@@ -136,8 +139,13 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     topMenuBar.add(flipMenu);
 
     // Brighten Button
-    brighten = new JMenuItem("Brighten");
     // TODO figure out this functionality
+    brighten = new JMenuItem("Brighten");
+//    NumberFormat brightenFormat = NumberFormat.getIntegerInstance();
+//    brightenInputField = new JFormattedTextField(brightenFormat);
+//    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
+//    brightenInputField.setColumns(3);
+//    brighten.add(brightenInputField);
     topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
@@ -191,7 +199,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     vertical.addActionListener(evt -> features.flip("vertical"));
     horizontal.addActionListener(evt -> features.flip("horizontal"));
     // TODO update brighten
-    brighten.addActionListener(evt -> features.brighten(0));
+    brighten.addActionListener(evt -> features.brighten(getBrightnessIncrement()));
     // TODO update load/save
     load.addActionListener(evt -> features.load(loadPath()));
     save.addActionListener(evt -> features.save(savePath()));
@@ -221,6 +229,16 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
       return f.getAbsolutePath();
     }
     return "";
+  }
+
+  // getting the brightness increment value from user input.
+  private int getBrightnessIncrement() {
+    NumberFormat brightenFormat = NumberFormat.getIntegerInstance();
+    brightenInputField = new JFormattedTextField(brightenFormat);
+    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
+    brightenInputField.setColumns(3);
+    brighten.add(brightenInputField);
+    return (Integer) brightenInputField.getValue();
   }
 
   @Override
