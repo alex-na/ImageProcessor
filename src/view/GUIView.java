@@ -133,25 +133,25 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     // Brighten Button
     brighten = new JMenuItem("Brighten");
-    //TODO figure out this functionality
+    // TODO figure out this functionality
     topMenuBar.add(brighten);
 
-    //TODO Adding an image to the center of the screen
-//    this.add(image, BorderLayout.CENTER);
-    BufferedImage myPicture = null;
-    try {
-      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-    this.add(picLabel, BorderLayout.CENTER);
+    // TODO Adding an image to the center of the screen
+    this.add(image, BorderLayout.CENTER);
+//    BufferedImage myPicture = null;
+//    try {
+//      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+//    this.add(picLabel, BorderLayout.CENTER);
 
-    //TODO Adding the histogram visualization to the right side of the screen
+    // TODO Adding the histogram visualization to the right side of the screen
     histogram =  new JLabel("Histogram");
     this.add(histogram, BorderLayout.LINE_END);
 
-    //TODO Adding buttons to the bottom of the screen
+    // TODO Adding buttons to the bottom of the screen
     bottomMenuBar = new JMenuBar();
     this.add(bottomMenuBar, BorderLayout.PAGE_END);
     // Load Button
@@ -185,9 +185,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     luma.addActionListener(evt -> features.component("luma"));
     vertical.addActionListener(evt -> features.flip("vertical"));
     horizontal.addActionListener(evt -> features.flip("horizontal"));
-    //TODO update brighten
+    // TODO update brighten
     brighten.addActionListener(evt -> features.brighten(0));
-    //TODO update load/save
+    // TODO update load/save
 //    load.addActionListener(evt -> features.load());
 //    save.addActionListener(evt -> features.save());
     exit.addActionListener(evt -> features.exit());

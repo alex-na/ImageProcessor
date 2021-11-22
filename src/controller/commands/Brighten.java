@@ -31,7 +31,7 @@ public class Brighten implements ImageProcessingCommand {
   }
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view) {
+  public void apply(ImageProcessingModel model) {
     model.brightenImage(this.increment, this.imageName, this.desiredName);
   }
 }

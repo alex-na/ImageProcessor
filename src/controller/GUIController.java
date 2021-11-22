@@ -2,6 +2,7 @@ package controller;
 
 import controller.commands.ImageProcessingCommand;
 import controller.commands.Load;
+import controller.commands.Save;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class GUIController implements Features {
   private final ImageProcessingModel model;
   private ImageProcessingGUIView view;
   private List<String> imageNames;
+  private String desiredName;
 
   /**
    *
@@ -42,17 +44,18 @@ public class GUIController implements Features {
   @Override
   public void load(String filePath) {
     ImageProcessingCommand load = new Load(filePath, "default");
+    load.apply(this.model);
   }
 
   // Getting most recent image in Map.
   private String getLatestImage() {
-    //String str = this.model.getImage();
-    return "";
+    return this.imageNames.get(imageNames.size() - 1);
   }
 
   @Override
   public void save(String filePath) {
-
+    ImageProcessingCommand save = new Save(filePath, getLatestImage());
+    save.apply(this.model);
   }
 
   @Override
@@ -62,42 +65,51 @@ public class GUIController implements Features {
 
   @Override
   public void filter(String type) {
-    this.model.filterImage(type, getLatestImage(), getLatestImage() + "-" + type);
-    BufferedImage image = (BufferedImage) this.model.getImage(type);
+    desiredName = getLatestImage() + "-" + type;
+    this.model.filterImage(type, getLatestImage(), desiredName);
+    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
+    this.imageNames.add(desiredName);
   }
 
   @Override
   public void transform(String type) {
-    String name = getLatestImage() + type;
-    this.model.transformImage(type, getLatestImage(), name);
-    BufferedImage image = (BufferedImage) this.model.getImage(name);
+    desiredName = getLatestImage() + "-" + type;
+    this.model.transformImage(type, getLatestImage(), desiredName);
+    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
+    this.imageNames.add(desiredName);
   }
 
   @Override
   public void brighten(int increment) {
-    this.model.brightenImage(increment, getLatestImage(), getLatestImage() + "-" + ("brightened-by-" + increment));
-    BufferedImage image = (BufferedImage) this.model.getImage("brightened-by-" + increment);
+    desiredName = getLatestImage() + "-" + ("brightened-by-" + increment);
+    this.model.brightenImage(increment, getLatestImage(), desiredName);
+    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
+    this.imageNames.add(desiredName);
   }
 
   @Override
   public void flip(String axis) {
-    this.model.flipImage(axis, getLatestImage(), getLatestImage() + "-" + axis);
+    desiredName = getLatestImage() + "-" + axis;
+    this.model.flipImage(axis, getLatestImage(), desiredName);
     BufferedImage image = (BufferedImage) this.model.getImage(axis);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
+    this.imageNames.add(desiredName);
   }
 
   @Override
   public void component(String type) {
-    this.model.displayGreyscale(type, getLatestImage(), getLatestImage() + "-" + type);
-    BufferedImage image = (BufferedImage) this.model.getImage(type);
+    desiredName = getLatestImage() + "-" + type;
+    this.model.displayGreyscale(type, getLatestImage(), desiredName);
+    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
+    this.imageNames.add(desiredName);
   }
 }

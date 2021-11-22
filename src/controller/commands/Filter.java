@@ -31,7 +31,7 @@ public class Filter implements ImageProcessingCommand {
   }
 
   @Override
-  public void apply(ImageProcessingModel model, ImageProcessingView view)
+  public void apply(ImageProcessingModel model)
           throws IllegalArgumentException {
     switch (this.type) {
       case "blur":
