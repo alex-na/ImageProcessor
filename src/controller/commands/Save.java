@@ -56,21 +56,12 @@ public class Save implements ImageProcessingCommand {
         throw new IllegalArgumentException("The given file is not supported for writing.");
       }
 
-      int i = 0;
-      int j = 0;
+      int i;
+      int j;
       try {
         int height = model.getImageHeight(imageName);
         int width = model.getImageWidth(imageName);
-        BufferedImage savedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
-        for (i = 0; i < width; i++) {
-          for (j = 0; j < height; j++) {
-            int pixel = (model.getPixelAt(imageName, j, i).getRed() << 16)
-                    | (model.getPixelAt(imageName, j, i).getGreen() << 8)
-                    | (model.getPixelAt(imageName, j, i).getBlue());
-            savedImage.setRGB(i, j, pixel);
-          }
-        }
+        BufferedImage savedImage = model.toBufferedImage(imageName);
 
         File newFile = new File(fileName);
         ImageIO.write(savedImage, splitAtPeriods[indexOfType], newFile);
