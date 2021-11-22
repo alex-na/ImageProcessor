@@ -137,15 +137,15 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     topMenuBar.add(brighten);
 
     //TODO Adding an image to the center of the screen
-    this.add(image, BorderLayout.CENTER);
-//    BufferedImage myPicture = null;
-//    try {
-//      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-//    this.add(picLabel, BorderLayout.CENTER);
+//    this.add(image, BorderLayout.CENTER);
+    BufferedImage myPicture = null;
+    try {
+      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+    this.add(picLabel, BorderLayout.CENTER);
 
     //TODO Adding the histogram visualization to the right side of the screen
     histogram =  new JLabel("Histogram");
