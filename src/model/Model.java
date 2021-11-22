@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Stack;
 
 import util.image.Image;
 import util.image.PixelImage;
@@ -13,17 +14,18 @@ import util.image.PixelImage;
  * operations.
  */
 public class Model implements ImageProcessingModel {
-
   private Map<String, Image> loadMap;
-
+  private Stack<String> mainStack;
+  private Stack<String> undoStack;
   /**
    * Instantiates a Map of Image-names and Images that stores images. Images can be retrieved by
    * their names.
    */
   public Model() {
     this.loadMap = new HashMap<>();
+    this.mainStack = new Stack<String>();
+    this.undoStack = new Stack<String>();
   }
-
   //Getters
   public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
     return getImage(imageName).getPixelAt(row, col);
