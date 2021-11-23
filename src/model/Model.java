@@ -53,7 +53,7 @@ public class Model implements ImageProcessingModel {
 
   //Functionality
   public void brightenImage(int increment, String imageName, String desiredName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     validateNames(imageName, desiredName);
 
     Color[][] brightened = getImage(imageName).brightenImage(increment);
@@ -61,16 +61,16 @@ public class Model implements ImageProcessingModel {
   }
 
   public void displayGreyscale(String component, String imageName, String desiredName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     validateNames(imageName, desiredName);
     if (component == null) {
       throw new IllegalArgumentException("component cannot be null.");
     }
     if (!(component.equals("red") || component.equals("green")
-            || component.equals("blue")
-            || component.equals("value")
-            || component.equals("intensity")
-            || component.equals("luma"))) {
+        || component.equals("blue")
+        || component.equals("value")
+        || component.equals("intensity")
+        || component.equals("luma"))) {
       throw new IllegalArgumentException("The given component is invalid.");
     }
     Color[][] greyscale = getImage(imageName).displayGreyscale(component);
@@ -78,7 +78,7 @@ public class Model implements ImageProcessingModel {
   }
 
   public void flipImage(String axis, String imageName, String desiredName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     validateNames(imageName, desiredName);
     if (axis == null) {
       throw new IllegalArgumentException("axis cannot be null.");
@@ -91,7 +91,7 @@ public class Model implements ImageProcessingModel {
   }
 
   public void filterImage(String filterType, String imageName, String desiredName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     validateNames(imageName, desiredName);
     if (!(filterType.equals("blur") || filterType.equals("sharpen"))) {
       throw new IllegalArgumentException("Invalid filter type entered.");
@@ -101,7 +101,7 @@ public class Model implements ImageProcessingModel {
   }
 
   public void transformImage(String transformType, String imageName, String desiredName)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     validateNames(imageName, desiredName);
     if (!transformType.equals("greyscale") && !transformType.equals("sepia")) {
       throw new IllegalArgumentException("The given transformation type was invalid.");
@@ -145,8 +145,7 @@ public class Model implements ImageProcessingModel {
         }
       }
       histograms.add(histogram);
-    }
-    else {
+    } else {
       //When the image is colored, you need to make four histograms
       List<Integer> frequencyOfRed = new ArrayList<>();
       List<Integer> frequencyOfGreen = new ArrayList<>();
@@ -170,7 +169,6 @@ public class Model implements ImageProcessingModel {
           int blueComponent = image.getPixelAt(row, col).getBlue();
           int intensity = (redComponent + greenComponent + blueComponent) / 3;
 
-
           frequencyOfRed.set(redComponent, frequencyOfRed.get(redComponent) + 1);
           frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
           frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
@@ -187,7 +185,7 @@ public class Model implements ImageProcessingModel {
 
   // Helper methods
   private void validateNames(String imageName, String desiredImage)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (imageName == null || desiredImage == null) {
       throw new IllegalArgumentException("The given image name or desired image name are null.");
     }
@@ -200,19 +198,19 @@ public class Model implements ImageProcessingModel {
   public BufferedImage toBufferedImage(String imageName) {
     int i;
     int j;
-      int height = getImageHeight(imageName);
-      int width = getImageWidth(imageName);
-      BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    int height = getImageHeight(imageName);
+    int width = getImageWidth(imageName);
+    BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-      for (i = 0; i < width; i++) {
-        for (j = 0; j < height; j++) {
-          int pixel = (getPixelAt(imageName, j, i).getRed() << 16)
-                  | (getPixelAt(imageName, j, i).getGreen() << 8)
-                  | (getPixelAt(imageName, j, i).getBlue());
-          bufferedImage.setRGB(i, j, pixel);
-        }
+    for (i = 0; i < width; i++) {
+      for (j = 0; j < height; j++) {
+        int pixel = (getPixelAt(imageName, j, i).getRed() << 16)
+            | (getPixelAt(imageName, j, i).getGreen() << 8)
+            | (getPixelAt(imageName, j, i).getBlue());
+        bufferedImage.setRGB(i, j, pixel);
       }
-      return bufferedImage;
+    }
+    return bufferedImage;
   }
 }
 

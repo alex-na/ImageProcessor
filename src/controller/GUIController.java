@@ -6,6 +6,7 @@ import controller.commands.Save;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import model.ImageProcessingModel;
 import view.GUIView;
 import view.ImageProcessingGUIView;
@@ -25,7 +26,7 @@ public class GUIController implements Features {
    *
    * @param model
    */
-  public GUIController(ImageProcessingModel model) {
+  public GUIController(ImageProcessingModel model) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Model may not be null");
     }
@@ -38,17 +39,24 @@ public class GUIController implements Features {
    * @param view
    */
   public void setView(ImageProcessingGUIView view) {
+    if (view == null) {
+      throw new IllegalArgumentException("View may not be null.");
+    }
     this.view = view;
     this.view.addFeatures(this);
   }
 
   @Override
   public void load(String filePath) {
+    System.out.print("load: " + filePath + "\n");
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
-    BufferedImage image = model.toBufferedImage("default");
-    view.displayImage(image);
-    System.out.print("Controller: " + filePath + "\n");
+    this.imageNames.add("default");
+//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
+//    save.apply(this.model);
+    System.out.print(getLatestImage());
+//    BufferedImage image = model.toBufferedImage("default");
+//    view.displayImage(image);
   }
 
   // Getting most recent image in Map.

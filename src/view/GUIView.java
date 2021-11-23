@@ -2,6 +2,7 @@ package view;
 
 import controller.Features;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
@@ -10,7 +11,18 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.List;
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import util.image.Image;
@@ -38,7 +50,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenuItem vertical;
   private JMenuItem brighten;
 
-  private JLabel image = new JLabel("");
+  private JPanel imagePanel;
+  private JLabel image;
   private JLabel imageMessage;
   private JScrollPane imageScrollPane;
   private JLabel histogram;
@@ -139,24 +152,20 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 //    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
 //    brightenInputField.setColumns(3);
 //    brighten.add(brightenInputField);
-//
     topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
+    imagePanel = new JPanel();
+    imagePanel.setBackground(Color.LIGHT_GRAY);
+    image = new JLabel();
+    imagePanel.add(image);
     imageMessage = new JLabel("Load an image using the Load New... button below.");
-    this.add(imageMessage, BorderLayout.CENTER);
-    // this.add(image, BorderLayout.CENTER);
-//    BufferedImage myPicture = null;
-//    try {
-//      myPicture = ImageIO.read(new File("res/bunny.jpeg"));
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-//    this.add(picLabel, BorderLayout.CENTER);
+    imagePanel.add(imageMessage);
+    this.add(imagePanel, BorderLayout.CENTER);
 
     // TODO Adding the histogram visualization to the right side of the screen
-    histogram =  new JLabel("Histogram");
+    histogram =  new JLabel("Histogram of RBG Value Distribution");
+    histogram.setBackground(Color.LIGHT_GRAY);
     this.add(histogram, BorderLayout.LINE_END);
 
     // TODO Adding buttons to the bottom of the screen
@@ -194,35 +203,42 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     vertical.addActionListener(evt -> features.flip("vertical"));
     horizontal.addActionListener(evt -> features.flip("horizontal"));
     brighten.addActionListener(evt -> features.brighten(getBrightnessIncrement()));
-    load.addActionListener(evt -> features.load(loadPath()));
+    load.addActionListener(evt -> features.load(loadImage()));
     save.addActionListener(evt -> features.save(savePath()));
     exit.addActionListener(evt -> features.exit());
   }
 
-  // load file path viz. retrieve string of file path from user keypresses.
-  private String loadPath() {
-    final JFileChooser fchooser = new JFileChooser(".");
+  // load file path viz. retrieve string of file path from user clicks.
+  private String loadImage() {
+    JFileChooser fileChooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "Images", "jpg", "ppm", "jpeg", "bmp", "png");
-    fchooser.setFileFilter(filter);
-    int retvalue = fchooser.showOpenDialog(GUIView.this);
-    if (retvalue == JFileChooser.APPROVE_OPTION) {
-      File f = fchooser.getSelectedFile();
-      System.out.print("loadPath: Been here.\n");
-      System.out.print("loadPath:" + f.getAbsolutePath() + "\n");
-      return f.getAbsolutePath();
+    fileChooser.setFileFilter(filter);
+    int returnValue = fileChooser.showOpenDialog(GUIView.this);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+      String filePath = file.getAbsolutePath();
+      try {
+        BufferedImage newImage = ImageIO.read(file);
+        image.setIcon(new ImageIcon(newImage));
+        this.repaint();
+        System.out.print("loadPath:" + filePath + "\n");
+      } catch (IOException e) {
+        System.out.print("File loading error");
+      }
+      return filePath;
     }
     System.out.print("loadPath: File path not retrieved\n");
     return "File path not retrieved";
   }
 
-  // save file path viz. retrieve string of file path from user keypresses.
+  // save file path viz. retrieve string of file path from user clicks.
   private String savePath() {
-    final JFileChooser fchooser = new JFileChooser(".");
-    int retvalue = fchooser.showSaveDialog(GUIView.this);
-    if (retvalue == JFileChooser.APPROVE_OPTION) {
-      File f = fchooser.getSelectedFile();
-      return f.getAbsolutePath();
+    final JFileChooser fileChooser = new JFileChooser(".");
+    int returnValue = fileChooser.showSaveDialog(GUIView.this);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+      return file.getAbsolutePath();
     }
     return "";
   }
@@ -233,23 +249,23 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void displayImage(BufferedImage image) {
-    this.image = new JLabel(new ImageIcon(image));
-    imageScrollPane = new JScrollPane(this.image);
-    this.add(imageScrollPane, BorderLayout.CENTER);
-    //this.add(this.image, BorderLayout.CENTER);
-    System.out.print("displayImage:" + loadPath() + "\n");
+  public void displayImage(BufferedImage newImage) {
+    image.setIcon(new ImageIcon(newImage));
+//    this.image = new JLabel(new ImageIcon(image));
+//    imageScrollPane = new JScrollPane(this.image);
+//    this.add(imageScrollPane, BorderLayout.CENTER);
+//    this.add(this.image, BorderLayout.CENTER);
+    System.out.print("displayImage:" + loadImage() + "\n");
   }
-
 
   @Override
   public void displayHistogram(List<List<Integer>> lists) {
-    HistogramPanel newPanel = new HistogramPanel(lists);
-    this.add(newPanel, BorderLayout.LINE_END);
+
   }
 
   @Override
   public void displayMessage(String message) {
+
   }
 
   @Override
