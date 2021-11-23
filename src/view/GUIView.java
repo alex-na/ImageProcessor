@@ -33,8 +33,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenu componentMenu;
   private JMenu flipMenu;
 
-  private JMenuItem imageMessage;
-  private JMenuItem brighten;
+  private JMenuItem menuMessage;
   private JMenuItem blur;
   private JMenuItem sharpen;
   private JMenuItem greyscale;
@@ -47,8 +46,10 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenuItem luma;
   private JMenuItem horizontal;
   private JMenuItem vertical;
+  private JMenuItem brighten;
 
   private JLabel image = new JLabel("");
+  private JLabel imageMessage;
   private JScrollPane imageScrollPane;
   private JLabel histogram;
   private JFormattedTextField brightenInputField;
@@ -59,6 +60,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JButton load;
 
   public GUIView() {
+    super();
 
     setTitle("Image Processor");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,8 +73,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     topMenuBar = new JMenuBar();
     this.add(topMenuBar, BorderLayout.PAGE_START);
 
-    imageMessage = new JMenuItem("Edit Image:");
-    topMenuBar.add(imageMessage);
+    menuMessage = new JMenuItem("Edit Image:");
+    topMenuBar.add(menuMessage);
 
     // Filter Menu
     filterMenu = new JMenu("Filter");
@@ -141,15 +143,18 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     // Brighten Button
     // TODO figure out this functionality
     brighten = new JMenuItem("Brighten");
+    brighten.setActionCommand("Brighten");
 //    NumberFormat brightenFormat = NumberFormat.getIntegerInstance();
 //    brightenInputField = new JFormattedTextField(brightenFormat);
 //    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
 //    brightenInputField.setColumns(3);
 //    brighten.add(brightenInputField);
+//
     topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
-
+    imageMessage = new JLabel("Load an image using the Load New... button below.");
+    this.add(imageMessage, BorderLayout.CENTER);
     // this.add(image, BorderLayout.CENTER);
 //    BufferedImage myPicture = null;
 //    try {
@@ -198,9 +203,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     luma.addActionListener(evt -> features.component("luma"));
     vertical.addActionListener(evt -> features.flip("vertical"));
     horizontal.addActionListener(evt -> features.flip("horizontal"));
-    // TODO update brighten
     brighten.addActionListener(evt -> features.brighten(getBrightnessIncrement()));
-    // TODO update load/save
     load.addActionListener(evt -> features.load(loadPath()));
     save.addActionListener(evt -> features.save(savePath()));
     exit.addActionListener(evt -> features.exit());
@@ -210,14 +213,17 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private String loadPath() {
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "Images", "jpg", "ppm", "jpeg", "bpm", "png");
+        "Images", "jpg", "ppm", "jpeg", "bmp", "png");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(GUIView.this);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
       File f = fchooser.getSelectedFile();
+      System.out.print("loadPath: Been here.\n");
+      System.out.print("loadPath:" + f.getAbsolutePath() + "\n");
       return f.getAbsolutePath();
     }
-    return "";
+    System.out.print("loadPath: File path not retrieved\n");
+    return "File path not retrieved";
   }
 
   // save file path viz. retrieve string of file path from user keypresses.
@@ -233,20 +239,16 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   // getting the brightness increment value from user input.
   private int getBrightnessIncrement() {
-    NumberFormat brightenFormat = NumberFormat.getIntegerInstance();
-    brightenInputField = new JFormattedTextField(brightenFormat);
-    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
-    brightenInputField.setColumns(3);
-    brighten.add(brightenInputField);
-    return (Integer) brightenInputField.getValue();
+    return ((Number) brightenInputField.getValue()).intValue();
   }
 
   @Override
   public void displayImage(BufferedImage image) {
     this.image = new JLabel(new ImageIcon(image));
     imageScrollPane = new JScrollPane(this.image);
-    this.add(imageScrollPane);
-    this.add(this.image, BorderLayout.CENTER);
+    this.add(imageScrollPane, BorderLayout.CENTER);
+    //this.add(this.image, BorderLayout.CENTER);
+    System.out.print("displayImage:" + loadPath() + "\n");
   }
 
   @Override

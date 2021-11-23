@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import model.ImageProcessingModel;
+import view.GUIView;
 import view.ImageProcessingGUIView;
 import view.ImageProcessingView;
 
@@ -45,8 +46,9 @@ public class GUIController implements Features {
   public void load(String filePath) {
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
-    BufferedImage image = (BufferedImage) model.getImage("default");
+    BufferedImage image = model.toBufferedImage("default");
     view.displayImage(image);
+    System.out.print("Controller: " + filePath + "\n");
   }
 
   // Getting most recent image in Map.
@@ -69,7 +71,7 @@ public class GUIController implements Features {
   public void filter(String type) {
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
-    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
+    BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
     this.imageNames.add(desiredName);
@@ -79,7 +81,7 @@ public class GUIController implements Features {
   public void transform(String type) {
     desiredName = getLatestImage() + "-" + type;
     this.model.transformImage(type, getLatestImage(), desiredName);
-    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
+    BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
     this.imageNames.add(desiredName);
@@ -89,7 +91,7 @@ public class GUIController implements Features {
   public void brighten(int increment) {
     desiredName = getLatestImage() + "-" + ("brightened-by-" + increment);
     this.model.brightenImage(increment, getLatestImage(), desiredName);
-    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
+    BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
     this.imageNames.add(desiredName);
@@ -99,7 +101,7 @@ public class GUIController implements Features {
   public void flip(String axis) {
     desiredName = getLatestImage() + "-" + axis;
     this.model.flipImage(axis, getLatestImage(), desiredName);
-    BufferedImage image = (BufferedImage) this.model.getImage(axis);
+    BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
     this.imageNames.add(desiredName);
@@ -109,7 +111,7 @@ public class GUIController implements Features {
   public void component(String type) {
     desiredName = getLatestImage() + "-" + type;
     this.model.displayGreyscale(type, getLatestImage(), desiredName);
-    BufferedImage image = (BufferedImage) this.model.getImage(desiredName);
+    BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
     this.view.displayHistogram(image);
     this.imageNames.add(desiredName);
