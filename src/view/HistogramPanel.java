@@ -78,7 +78,6 @@ public final class HistogramPanel extends JPanel {
             this.yFrom = yFrom;
             this.yTo = yTo;
         }
-
         public void paint(Graphics g) {
             g.drawLine(this.xFrom, this.yFrom, this.xTo, this.yTo);
         }
