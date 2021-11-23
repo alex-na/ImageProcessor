@@ -177,10 +177,10 @@ public class Model implements ImageProcessingModel {
           frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
         }
       }
+      histograms.add(frequencyOfIntensity);
       histograms.add(frequencyOfRed);
       histograms.add(frequencyOfGreen);
       histograms.add(frequencyOfBlue);
-      histograms.add(frequencyOfIntensity);
     }
     return histograms;
   }
