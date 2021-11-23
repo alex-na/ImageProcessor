@@ -21,8 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import util.image.Image;
@@ -48,7 +50,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JMenuItem luma;
   private JMenuItem horizontal;
   private JMenuItem vertical;
-  private JMenuItem brighten;
+  private JButton brighten;
 
   private JPanel imagePanel;
   private JLabel image;
@@ -57,6 +59,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JLabel histogram;
   private JFormattedTextField brightenInputField;
   private HistogramPanel histogramPanel;
+  private JLabel brightenLabel;
+  private JPanel brightenPanel;
 
   private JMenuBar bottomMenuBar;
   private JButton exit;
@@ -107,27 +111,27 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     // Component Menu
     componentMenu = new JMenu("Component");
     // Red Component Button
-    red = new JCheckBoxMenuItem("Red Component");
+    red = new JCheckBoxMenuItem("Red");
     red.setActionCommand("Red Component Button");
     componentMenu.add(red);
     // Green Component Button
-    green = new JCheckBoxMenuItem("Green Component");
+    green = new JCheckBoxMenuItem("Green");
     green.setActionCommand("Green Component Button");
     componentMenu.add(green);
     // Blue Component Button
-    blue = new JCheckBoxMenuItem("Blue Component");
+    blue = new JCheckBoxMenuItem("Blue");
     blue.setActionCommand("Blue Component Button");
     componentMenu.add(blue);
     // Value Component Button
-    value = new JCheckBoxMenuItem("Value Component");
+    value = new JCheckBoxMenuItem("Value");
     value.setActionCommand("Value Component Button");
     componentMenu.add(value);
     // Intensity Component Button
-    intensity = new JCheckBoxMenuItem("Intensity Component");
+    intensity = new JCheckBoxMenuItem("Intensity");
     intensity.setActionCommand("Intensity Component Button");
     componentMenu.add(intensity);
     // Luma Component Button
-    luma = new JCheckBoxMenuItem("Luma Component");
+    luma = new JCheckBoxMenuItem("Luma");
     luma.setActionCommand("Luma Component Button");
     componentMenu.add(luma);
     topMenuBar.add(componentMenu);
@@ -146,26 +150,21 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     // Brighten Button
     // TODO figure out this functionality
-    brighten = new JMenuItem("Brighten");
+    brighten = new JButton("Brighten");
     brighten.setActionCommand("Brighten");
-//    NumberFormat brightenFormat = NumberFormat.getIntegerInstance();
-//    brightenInputField = new JFormattedTextField(brightenFormat);
-//    brightenInputField.setName("Enter a value between (-250, 250) to brighten/darken the image: ");
-//    brightenInputField.setColumns(3);
-//    brighten.add(brightenInputField);
     topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
     imagePanel = new JPanel();
     imagePanel.setBackground(Color.LIGHT_GRAY);
     image = new JLabel();
+    image.setIcon(new ImageIcon());
     imagePanel.add(image);
     imageMessage = new JLabel("Load an image using the Load New... button below.");
     imagePanel.add(imageMessage);
     this.add(imagePanel, BorderLayout.CENTER);
 
     // TODO Adding the histogram visualization to the right side of the screen
-
     histogram =  new JLabel("Histogram of RBG Value Distribution");
     histogram.setBackground(Color.LIGHT_GRAY);
     this.add(histogram, BorderLayout.LINE_END);
@@ -212,6 +211,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   // load file path viz. retrieve string of file path from user clicks.
   private String loadImage() {
+    System.out.print("loadImage: Been Here.\n");
     JFileChooser fileChooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "Images", "jpg", "ppm", "jpeg", "bmp", "png");
@@ -223,14 +223,13 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
       try {
         BufferedImage newImage = ImageIO.read(file);
         image.setIcon(new ImageIcon(newImage));
-        this.repaint();
-        System.out.print("loadPath:" + filePath + "\n");
+        System.out.print("loadImage:" + filePath + "\n");
       } catch (IOException e) {
         System.out.print("File loading error");
       }
       return filePath;
     }
-    System.out.print("loadPath: File path not retrieved\n");
+    System.out.print("loadImage: File path not retrieved\n");
     return "File path not retrieved";
   }
 
@@ -247,17 +246,18 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   // getting the brightness increment value from user input.
   private int getBrightnessIncrement() {
-    return ((Number) brightenInputField.getValue()).intValue();
+    brightenPanel = new JPanel();
+    JOptionPane optionPane = new JOptionPane();
+    JSpinner spinner = new JSpinner();
+    spinner.setBounds(0, -250, 250, 10);
+    brightenPanel.add(spinner);
+    this.add(brightenPanel);
+    return (int) spinner.getValue();
   }
 
   @Override
   public void displayImage(BufferedImage newImage) {
     image.setIcon(new ImageIcon(newImage));
-//    this.image = new JLabel(new ImageIcon(image));
-//    imageScrollPane = new JScrollPane(this.image);
-//    this.add(imageScrollPane, BorderLayout.CENTER);
-//    this.add(this.image, BorderLayout.CENTER);
-    System.out.print("displayImage:" + loadImage() + "\n");
   }
 
   @Override

@@ -52,11 +52,6 @@ public class GUIController implements Features {
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
     this.imageNames.add("default");
-//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
-//    save.apply(this.model);
-    System.out.print(getLatestImage());
-//    BufferedImage image = model.toBufferedImage("default");
-//    view.displayImage(image);
   }
 
   // Getting most recent image in Map.
@@ -77,12 +72,15 @@ public class GUIController implements Features {
 
   @Override
   public void filter(String type) {
+    System.out.print("filter: been here. 1\n");
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
+    System.out.print("filter: been here. 2\n");
     this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
+    System.out.print("filter: been here. 3\n");
   }
 
   @Override
@@ -123,5 +121,10 @@ public class GUIController implements Features {
     this.view.displayImage(image);
     this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
+  }
+
+  @Override
+  public void populateHistogram(List<List<Integer>> list) {
+
   }
 }
