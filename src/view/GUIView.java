@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -232,8 +233,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void displayHistogram(BufferedImage image) {
-    //this.add(image, BorderLayout.LINE_END);
+  public void displayHistogram(List<List<Integer>> lists) {
+    HistogramPanel newPanel = new HistogramPanel(lists);
+    this.add(newPanel, BorderLayout.LINE_END);
   }
 
   @Override
