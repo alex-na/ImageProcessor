@@ -38,9 +38,6 @@ public class Save implements ImageProcessingCommand {
     if (fileName == null) {
       throw new IllegalArgumentException("The filename is null.");
     }
-    if (!(fileName.contains(imageName))) {
-      throw new IllegalArgumentException("Specified path does not include imageName");
-    }
 
     String[] splitAtPeriods = fileName.split("\\.");
     if (splitAtPeriods.length <= 1) {

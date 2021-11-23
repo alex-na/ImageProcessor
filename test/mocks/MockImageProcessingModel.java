@@ -110,11 +110,6 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   }
 
   @Override
-  public BufferedImage toBufferedImage(String imageName) {
-    return null;
-  }
-
-  @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
     return loadMap.get(imageName);
   }
