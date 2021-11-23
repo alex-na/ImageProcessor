@@ -3,6 +3,7 @@ package mocks;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.List;
 
 import model.ImageProcessingModel;
 import util.image.Image;
@@ -99,8 +100,13 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    *                                  image processor.
    */
   @Override
-  public void createHistogram(String imageName) throws IllegalArgumentException {
+  public List<List<Integer>> createHistogram(String imageName) throws IllegalArgumentException {
+    return null;
+  }
 
+  @Override
+  public BufferedImage toBufferedImage(String imageName) {
+    return null;
   }
 
   @Override

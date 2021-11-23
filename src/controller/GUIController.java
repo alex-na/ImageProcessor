@@ -73,7 +73,7 @@ public class GUIController implements Features {
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(image);
+    this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
   }
 
@@ -83,7 +83,7 @@ public class GUIController implements Features {
     this.model.transformImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(image);
+    this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
   }
 
@@ -93,7 +93,7 @@ public class GUIController implements Features {
     this.model.brightenImage(increment, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(image);
+    this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
   }
 
@@ -103,7 +103,7 @@ public class GUIController implements Features {
     this.model.flipImage(axis, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(image);
+    this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
   }
 
@@ -113,7 +113,7 @@ public class GUIController implements Features {
     this.model.displayGreyscale(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(image);
+    this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
   }
 }

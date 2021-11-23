@@ -3,10 +3,7 @@ package model;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 import util.image.Image;
 import util.image.PixelImage;
@@ -18,8 +15,6 @@ import util.image.PixelImage;
 public class Model implements ImageProcessingModel {
 
   private Map<String, Image> loadMap;
-  private Stack<String> mainStack;
-  private Stack<String> undoStack;
 
   /**
    * Instantiates a Map of Image-names and Images that stores images. Images can be retrieved by
@@ -27,8 +22,6 @@ public class Model implements ImageProcessingModel {
    */
   public Model() {
     this.loadMap = new HashMap<>();
-    this.mainStack = new Stack<String>();
-    this.undoStack = new Stack<String>();
   }
 
   //Getters
@@ -117,20 +110,12 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(transformed));
   }
 
-  public void createHistogram(String imageName) throws IllegalArgumentException {
+  public List<List<Integer>> createHistogram(String imageName) throws IllegalArgumentException {
     if (imageName == null) {
       throw new IllegalArgumentException("The given image name is null.");
     }
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("The given image name isn't associated with an image.");
-    }
-
-    //TODO: Decide how to differentiate colored images from greyscale images.
-    //Initialize the table to contain 256 entries. It's okay to do so, as well need to consider
-    //all greyscale values regardless of frequency.
-    Hashtable<Integer, Integer> histogram = new Hashtable<>();
-    for (int i = 0; i < 256; i++) {
-      histogram.put(i, 0);
     }
 
     //Grab the Image, height, and width.
@@ -139,9 +124,16 @@ public class Model implements ImageProcessingModel {
     int width = getImageHeight(imageName);
 
     boolean isGreyscale = image.isGreyscale();
-
+    List<List<Integer>> histograms = new ArrayList<>();
 
     if (isGreyscale) {
+      //Initialize the table to contain 256 entries. It's okay to do so, as well need to consider
+      //all greyscale values regardless of frequency.
+      List<Integer> histogram = new ArrayList<>();
+      for (int i = 0; i < 256; i++) {
+        histogram.add(0);
+      }
+
       //Iterate through all pixels and add their values to the histogram.
       for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -149,21 +141,22 @@ public class Model implements ImageProcessingModel {
           //really simple as we only need to make one histogram. we get the value of any component
           //of an image (I use red) then increment the frequency at the histogram's key by one.
           int value = image.getPixelAt(row, col).getRed();
-          histogram.put(value, histogram.get(value) + 1);
+          histogram.set(value, histogram.get(value) + 1);
         }
       }
+      histograms.add(histogram);
     }
     else {
       //When the image is colored, you need to make four histograms
-      Hashtable<Integer, Integer> frequencyOfRed = new Hashtable<>();
-      Hashtable<Integer, Integer> frequencyOfGreen = new Hashtable<>();
-      Hashtable<Integer, Integer> frequencyOfBlue = new Hashtable<>();
-      Hashtable<Integer, Integer> frequencyOfIntensity = new Hashtable<>();
+      List<Integer> frequencyOfRed = new ArrayList<>();
+      List<Integer> frequencyOfGreen = new ArrayList<>();
+      List<Integer> frequencyOfBlue = new ArrayList<>();
+      List<Integer> frequencyOfIntensity = new ArrayList<>();
       for (int i = 0; i < 256; i++) {
-        frequencyOfRed.put(i, 0);
-        frequencyOfGreen.put(i, 0);
-        frequencyOfBlue.put(i, 0);
-        frequencyOfIntensity.put(i, 0);
+        frequencyOfRed.add(0);
+        frequencyOfGreen.add(0);
+        frequencyOfBlue.add(0);
+        frequencyOfIntensity.add(0);
       }
 
       //Iterate through all pixels and add their values to the histogram.
@@ -178,13 +171,18 @@ public class Model implements ImageProcessingModel {
           int intensity = (redComponent + greenComponent + blueComponent) / 3;
 
 
-          frequencyOfRed.put(redComponent, histogram.get(redComponent) + 1);
-          frequencyOfGreen.put(greenComponent, histogram.get(greenComponent) + 1);
-          frequencyOfBlue.put(blueComponent, histogram.get(blueComponent) + 1);
-          frequencyOfIntensity.put(intensity, histogram.get(intensity) + 1);
+          frequencyOfRed.set(redComponent, frequencyOfRed.get(redComponent) + 1);
+          frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
+          frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
+          frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
         }
       }
+      histograms.add(frequencyOfRed);
+      histograms.add(frequencyOfGreen);
+      histograms.add(frequencyOfBlue);
+      histograms.add(frequencyOfIntensity);
     }
+    return histograms;
   }
 
   // Helper methods

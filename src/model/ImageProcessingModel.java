@@ -3,6 +3,7 @@ package model;
 import util.image.Image;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * Representing the model of an ImageProcessor, utilized for performing operations on an image and
@@ -81,7 +82,7 @@ public interface ImageProcessingModel extends ImageProcessingModelState {
    * @throws IllegalArgumentException if the imageName does not correspond to an image stored in the
    *                                  image processor.
    */
-  void createHistogram(String imageName) throws IllegalArgumentException;
+  List<List<Integer>> createHistogram(String imageName) throws IllegalArgumentException;
 
   /**
    * Creates a BufferedImage using the image associated with a given image name.
