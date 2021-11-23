@@ -26,7 +26,7 @@ public class GUIController implements Features {
    *
    * @param model
    */
-  public GUIController(ImageProcessingModel model) {
+  public GUIController(ImageProcessingModel model) throws IllegalArgumentException {
     if (model == null) {
       throw new IllegalArgumentException("Model may not be null");
     }
@@ -39,6 +39,9 @@ public class GUIController implements Features {
    * @param view
    */
   public void setView(ImageProcessingGUIView view) {
+    if (view == null) {
+      throw new IllegalArgumentException("View may not be null.");
+    }
     this.view = view;
     this.view.addFeatures(this);
   }
@@ -49,8 +52,8 @@ public class GUIController implements Features {
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
     this.imageNames.add("default");
-    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
-    save.apply(this.model);
+//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
+//    save.apply(this.model);
     System.out.print(getLatestImage());
 //    BufferedImage image = model.toBufferedImage("default");
 //    view.displayImage(image);

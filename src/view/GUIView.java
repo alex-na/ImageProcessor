@@ -157,12 +157,15 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     // TODO Adding an image to the center of the screen
     imagePanel = new JPanel();
     imagePanel.setBackground(Color.LIGHT_GRAY);
+    image = new JLabel();
+    imagePanel.add(image);
     imageMessage = new JLabel("Load an image using the Load New... button below.");
     imagePanel.add(imageMessage);
     this.add(imagePanel, BorderLayout.CENTER);
 
     // TODO Adding the histogram visualization to the right side of the screen
-    histogram =  new JLabel("Histogram");
+    histogram =  new JLabel("Histogram of RBG Value Distribution");
+    histogram.setBackground(Color.LIGHT_GRAY);
     this.add(histogram, BorderLayout.LINE_END);
 
     // TODO Adding buttons to the bottom of the screen
@@ -207,20 +210,18 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   // load file path viz. retrieve string of file path from user clicks.
   private String loadImage() {
-    final JFileChooser fileChooser = new JFileChooser(".");
+    JFileChooser fileChooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "Images", "jpg", "ppm", "jpeg", "bmp", "png");
     fileChooser.setFileFilter(filter);
-
     int returnValue = fileChooser.showOpenDialog(GUIView.this);
     if (returnValue == JFileChooser.APPROVE_OPTION) {
       File file = fileChooser.getSelectedFile();
       String filePath = file.getAbsolutePath();
       try {
-        BufferedImage image = ImageIO.read(file);
-        this.image = new JLabel(new ImageIcon(image));
-        imagePanel.add(this.image);
-        imagePanel.repaint();
+        BufferedImage newImage = ImageIO.read(file);
+        image.setIcon(new ImageIcon(newImage));
+        this.repaint();
         System.out.print("loadPath:" + filePath + "\n");
       } catch (IOException e) {
         System.out.print("File loading error");
@@ -233,11 +234,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   // save file path viz. retrieve string of file path from user clicks.
   private String savePath() {
-    final JFileChooser fchooser = new JFileChooser(".");
-    int retvalue = fchooser.showSaveDialog(GUIView.this);
-    if (retvalue == JFileChooser.APPROVE_OPTION) {
-      File f = fchooser.getSelectedFile();
-      return f.getAbsolutePath();
+    final JFileChooser fileChooser = new JFileChooser(".");
+    int returnValue = fileChooser.showSaveDialog(GUIView.this);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      File file = fileChooser.getSelectedFile();
+      return file.getAbsolutePath();
     }
     return "";
   }
@@ -248,11 +249,12 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void displayImage(BufferedImage image) {
-    this.image = new JLabel(new ImageIcon(image));
-    imageScrollPane = new JScrollPane(this.image);
-    this.add(imageScrollPane, BorderLayout.CENTER);
-    this.add(this.image, BorderLayout.CENTER);
+  public void displayImage(BufferedImage newImage) {
+    image.setIcon(new ImageIcon(newImage));
+//    this.image = new JLabel(new ImageIcon(image));
+//    imageScrollPane = new JScrollPane(this.image);
+//    this.add(imageScrollPane, BorderLayout.CENTER);
+//    this.add(this.image, BorderLayout.CENTER);
     System.out.print("displayImage:" + loadImage() + "\n");
   }
 
