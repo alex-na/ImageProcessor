@@ -4,19 +4,15 @@ import controller.Features;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,10 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import util.image.Image;
 
 public class GUIView extends JFrame implements ImageProcessingGUIView {
 
@@ -58,10 +51,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JLabel imageMessage;
   private JScrollPane imageScrollPane;
   private JLabel histogram;
-  private JFormattedTextField brightenInputField;
   private JPanel histogramPanel;
-  private JLabel brightenLabel;
-  private JPanel brightenPanel;
 
   private JMenuBar bottomMenuBar;
   private JButton exit;
@@ -150,14 +140,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     topMenuBar.add(flipMenu);
 
     // Brighten Button
-    // TODO figure out this functionality
-    //brightenPanel = new JPanel();
     brighten = new JButton("Brighten");
     brighten.setActionCommand("Brighten");
-    //brightenPanel.add(brighten);
     topMenuBar.add(brighten);
 
-    // TODO Adding an image to the center of the screen
+    // Setting the image panel
     imagePanel = new JPanel();
     imagePanel.setLayout(new CardLayout());
     image = new JLabel();
@@ -176,7 +163,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     histogramPanel.add(histogram);
     this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
 
-    // TODO Adding buttons to the bottom of the screen
+    // Bottom menu bar with load/save/exit buttons
     bottomMenuBar = new JMenuBar();
     this.add(bottomMenuBar, BorderLayout.PAGE_END);
     // Load Button
@@ -230,14 +217,13 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
       try {
         BufferedImage newImage = ImageIO.read(file);
         image.setIcon(new ImageIcon(newImage));
-        System.out.print("loadImage:" + filePath + "\n");
       } catch (IOException e) {
-        System.out.print("File loading error");
+        displayMessage("Unable to load file. Please try again.");
+        loadImage();
       }
       return filePath;
     }
-    System.out.print("loadImage: File path not retrieved\n");
-    return "File path not retrieved";
+    return "";
   }
 
   // save file path viz. retrieve string of file path from user clicks.
@@ -279,7 +265,6 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   @Override
   public void displayMessage(String message) {
-    JOptionPane optionPane = new JOptionPane();
-    optionPane.showMessageDialog(this, message);
+    JOptionPane.showMessageDialog(this, message);
   }
 }

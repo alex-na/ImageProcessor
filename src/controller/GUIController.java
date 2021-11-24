@@ -6,11 +6,8 @@ import controller.commands.Save;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import model.ImageProcessingModel;
-import view.GUIView;
 import view.ImageProcessingGUIView;
-import view.ImageProcessingView;
 
 /**
  *
@@ -49,16 +46,10 @@ public class GUIController implements Features {
 
   @Override
   public void load(String filePath) {
-    System.out.print("load: " + filePath + "\n");
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
     this.imageNames.add("default");
     this.view.displayHistogram(model.createHistogram("default"));
-//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
-//    save.apply(this.model);
-    System.out.print(getLatestImage());
-//    BufferedImage image = model.toBufferedImage("default");
-//    view.displayImage(image);
   }
 
   // Getting most recent image in Map.
