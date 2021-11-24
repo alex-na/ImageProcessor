@@ -123,47 +123,23 @@ public class Model implements ImageProcessingModel {
     int height = getImageHeight(imageName);
     int width = getImageHeight(imageName);
 
-    boolean isGreyscale = image.isGreyscale();
-    List<List<Integer>> histograms = new ArrayList<>();
+    List<List<Integer>> frequencies = new ArrayList<>();
 
-    if (isGreyscale) {
-      //Initialize the table to contain 256 entries. It's okay to do so, as well need to consider
-      //all greyscale values regardless of frequency.
-      List<Integer> histogram = new ArrayList<>();
-      for (int i = 0; i < 256; i++) {
-        histogram.add(0);
-      }
+    List<Integer> frequencyOfRed = new ArrayList<>();
+    List<Integer> frequencyOfGreen = new ArrayList<>();
+    List<Integer> frequencyOfBlue = new ArrayList<>();
+    List<Integer> frequencyOfIntensity = new ArrayList<>();
 
-      //Iterate through all pixels and add their values to the histogram.
+    for (int i = 0; i < 256; i++) {
+      frequencyOfRed.add(0);
+      frequencyOfGreen.add(0);
+      frequencyOfBlue.add(0);
+      frequencyOfIntensity.add(0);
+    }
+
+      //Iterate through all pixels and add their component values to the representative lists.
       for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-          //consider when the user wants to make a histogram for greyscale
-          //really simple as we only need to make one histogram. we get the value of any component
-          //of an image (I use red) then increment the frequency at the histogram's key by one.
-          int value = image.getPixelAt(row, col).getRed();
-          histogram.set(value, histogram.get(value) + 1);
-        }
-      }
-      histograms.add(histogram);
-    } else {
-      //When the image is colored, you need to make four histograms
-      List<Integer> frequencyOfRed = new ArrayList<>();
-      List<Integer> frequencyOfGreen = new ArrayList<>();
-      List<Integer> frequencyOfBlue = new ArrayList<>();
-      List<Integer> frequencyOfIntensity = new ArrayList<>();
-      for (int i = 0; i < 256; i++) {
-        frequencyOfRed.add(0);
-        frequencyOfGreen.add(0);
-        frequencyOfBlue.add(0);
-        frequencyOfIntensity.add(0);
-      }
-
-      //Iterate through all pixels and add their values to the histogram.
-      for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-          //consider when the user wants to make a histogram for greyscale
-          //really simple as we only need to make one histogram. we get the value of any component
-          //of an image (I use red) then increment the frequency at the histogram's key by one.
           int redComponent = image.getPixelAt(row, col).getRed();
           int greenComponent = image.getPixelAt(row, col).getGreen();
           int blueComponent = image.getPixelAt(row, col).getBlue();
@@ -175,12 +151,11 @@ public class Model implements ImageProcessingModel {
           frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
         }
       }
-      histograms.add(frequencyOfIntensity);
-      histograms.add(frequencyOfRed);
-      histograms.add(frequencyOfGreen);
-      histograms.add(frequencyOfBlue);
-    }
-    return histograms;
+    frequencies.add(frequencyOfIntensity);
+    frequencies.add(frequencyOfRed);
+    frequencies.add(frequencyOfGreen);
+    frequencies.add(frequencyOfBlue);
+    return frequencies;
   }
 
   // Helper methods

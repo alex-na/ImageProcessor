@@ -89,6 +89,8 @@ public class ImageProcessingModelTest {
       }
     }
 
+
+
     sb2.append("10 10 10 255 255 255 255 255 255"
             + " 15 15 15 255 255 255 255 255 255"
             + " 110 110 110 110 110 110 110 110 110"
@@ -97,6 +99,32 @@ public class ImageProcessingModelTest {
 
     assertEquals(sb1.toString(), sb2.toString());
   }
+
+//  @Test
+//  public void TestHistogram() {
+//    this.testModel.brightenImage(10, "dumby", "dumbyBrighten");
+//    Image dumbyBrighten = this.testModel.getImage("dumbyBrighten");
+//    StringBuilder sb1 = new StringBuilder();
+//    StringBuilder sb2 = new StringBuilder();
+//    testModel.createHistogram("dumbyBrighten");
+//    for (int row = 0; row < dumbyBrighten.getImageHeight(); row++) {
+//      for (int col = 0; col < dumbyBrighten.getImageWidth(); col++) {
+//        sb1.append(dumbyBrighten.getPixelAt(row, col).getRed()).append(" ");
+//        sb1.append(dumbyBrighten.getPixelAt(row, col).getGreen()).append(" ");
+//        sb1.append(dumbyBrighten.getPixelAt(row, col).getBlue()).append(" ");
+//      }
+//    }
+//
+//
+//
+//    sb2.append("10 10 10 255 255 255 255 255 255"
+//            + " 15 15 15 255 255 255 255 255 255"
+//            + " 110 110 110 110 110 110 110 110 110"
+//            + " 255 255 255 15 15 15 15 15 15"
+//            + " 255 255 255 10 10 10 10 10 10 ");
+//
+//    assertEquals(sb1.toString(), sb2.toString());
+//  }
 
 
   @Test

@@ -51,6 +51,7 @@ public class GUIController implements Features {
     System.out.print("load: " + filePath + "\n");
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
+    this.view.displayHistogram(model.createHistogram("default"));
     this.imageNames.add("default");
 //    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
 //    save.apply(this.model);
@@ -80,8 +81,9 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -90,8 +92,9 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.transformImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -100,8 +103,9 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + ("brightened-by-" + increment);
     this.model.brightenImage(increment, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -110,8 +114,9 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + axis;
     this.model.flipImage(axis, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -120,8 +125,9 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.displayGreyscale(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 }

@@ -10,7 +10,7 @@ public interface ImageProcessingGUIView {
 
   void displayImage(BufferedImage image);
 
-  void displayHistogram(List<List<Integer>> lists);
+  void displayHistogram(List<List<Integer>> histogram);
 
   void resetFocus();
 

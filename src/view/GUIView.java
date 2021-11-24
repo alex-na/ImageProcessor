@@ -55,6 +55,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   private JLabel imageMessage;
   private JScrollPane imageScrollPane;
   private JLabel histogram;
+  private JPanel histogramPanel;
   private JFormattedTextField brightenInputField;
 
   private JMenuBar bottomMenuBar;
@@ -164,9 +165,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     this.add(imagePanel, BorderLayout.CENTER);
 
     // TODO Adding the histogram visualization to the right side of the screen
+    histogramPanel = new JPanel();
     histogram =  new JLabel("Histogram of RBG Value Distribution");
     histogram.setBackground(Color.LIGHT_GRAY);
-    this.add(histogram, BorderLayout.LINE_END);
+    histogramPanel.add(histogram);
+    this.add(histogramPanel, BorderLayout.LINE_END);
 
     // TODO Adding buttons to the bottom of the screen
     bottomMenuBar = new JMenuBar();
@@ -223,6 +226,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         image.setIcon(new ImageIcon(newImage));
         this.repaint();
         System.out.print("loadPath:" + filePath + "\n");
+
       } catch (IOException e) {
         System.out.print("File loading error");
       }
@@ -259,8 +263,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   @Override
-  public void displayHistogram(List<List<Integer>> lists) {
-
+  public void displayHistogram(List<List<Integer>> histogram) {
+    histogramPanel = new Histogram(histogram);
+    System.out.println("Calling Histogram");
   }
 
   @Override
