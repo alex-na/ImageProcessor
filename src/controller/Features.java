@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 /**
  * Representing the features that our graphical user interface supports.
  */
@@ -20,4 +22,6 @@ public interface Features {
   void flip(String axis);
 
   void component(String type);
+
+  void populateHistogram(List<List<Integer>> list);
 }
