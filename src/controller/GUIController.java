@@ -83,7 +83,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(histogram);
+    this.view.updateHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -94,7 +94,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(histogram);
+    this.view.updateHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -105,7 +105,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(histogram);
+    this.view.updateHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -116,7 +116,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(histogram);
+    this.view.updateHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
@@ -127,12 +127,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(histogram);
+    this.view.updateHistogram(histogram);
     this.imageNames.add(desiredName);
-  }
-
-  @Override
-  public void populateHistogram(List<List<Integer>> list) {
-
   }
 }
