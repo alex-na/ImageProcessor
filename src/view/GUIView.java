@@ -1,8 +1,10 @@
 package view;
 
 import controller.Features;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -262,21 +264,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   @Override
   public void displayHistogram(List<List<Integer>> lists) {
-    histogramPanel.add(new Histogram(lists));
-    histogram.setVisible(false);
-    histogramPanel.validate();
-    histogramPanel.repaint();
-    this.validate();
-    this.repaint();
-  }
-
-  public void updateHistogram(List<List<Integer>> lists) {
-    histogramPanel.removeAll();
-    histogramPanel.add(new Histogram(lists));
-    histogramPanel.validate();
-    histogramPanel.repaint();
-    this.validate();
-    this.repaint();
+    histogramPanel = new Histogram(lists);
+    this.add(histogramPanel, BorderLayout.LINE_END);
+    repaint();
   }
 
   @Override

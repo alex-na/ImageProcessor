@@ -53,7 +53,11 @@ public class GUIController implements Features {
     load.apply(this.model);
     this.imageNames.add("default");
     this.view.displayHistogram(model.createHistogram("default"));
+//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
+//    save.apply(this.model);
     System.out.print(getLatestImage());
+//    BufferedImage image = model.toBufferedImage("default");
+//    view.displayImage(image);
   }
 
   // Getting most recent image in Map.
@@ -77,10 +81,10 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
-    this.view.updateHistogram(model.createHistogram(desiredName));
-
   }
 
   @Override
@@ -88,9 +92,10 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.transformImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
-    this.view.updateHistogram(model.createHistogram(desiredName));
   }
 
   @Override
@@ -98,9 +103,10 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + ("brightened-by-" + increment);
     this.model.brightenImage(increment, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
-    this.view.updateHistogram(model.createHistogram(desiredName));
   }
 
   @Override
@@ -108,9 +114,10 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + axis;
     this.model.flipImage(axis, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
-    this.view.updateHistogram(model.createHistogram(desiredName));
   }
 
   @Override
@@ -118,8 +125,14 @@ public class GUIController implements Features {
     desiredName = getLatestImage() + "-" + type;
     this.model.displayGreyscale(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
+    List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
-    this.view.updateHistogram(model.createHistogram(desiredName));
+  }
+
+  @Override
+  public void populateHistogram(List<List<Integer>> list) {
+
   }
 }
