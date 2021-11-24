@@ -52,6 +52,9 @@ public final class Histogram extends JPanel {
             }
         }
     }
+    public void repaint() {
+        super.repaint();
+    }
 
     public static class Line {
         public final int xFrom;
