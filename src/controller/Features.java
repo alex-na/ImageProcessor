@@ -22,7 +22,4 @@ public interface Features {
   void flip(String axis);
 
   void component(String type);
-
-  void populateHistogram(List<List<Integer>> list);
-
 }

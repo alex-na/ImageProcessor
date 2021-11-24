@@ -12,8 +12,6 @@ public interface ImageProcessingGUIView {
 
   void displayHistogram(List<List<Integer>> histogram);
 
-  void resetFocus();
-
   void addFeatures(Features features);
 
   void displayMessage(String message);

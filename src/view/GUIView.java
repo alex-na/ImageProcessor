@@ -2,6 +2,7 @@ package view;
 
 import controller.Features;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
@@ -150,28 +151,30 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     // Brighten Button
     // TODO figure out this functionality
-    brightenPanel = new JPanel();
+    //brightenPanel = new JPanel();
     brighten = new JButton("Brighten");
     brighten.setActionCommand("Brighten");
-    brightenPanel.add(brighten);
-    topMenuBar.add(brightenPanel);
+    //brightenPanel.add(brighten);
+    topMenuBar.add(brighten);
 
     // TODO Adding an image to the center of the screen
     imagePanel = new JPanel();
-    imagePanel.setBackground(Color.LIGHT_GRAY);
+    imagePanel.setLayout(new CardLayout());
     image = new JLabel();
     image.setIcon(new ImageIcon());
-    imagePanel.add(image);
+    imageScrollPane = new JScrollPane(image);
+    imagePanel.add(imageScrollPane);
     imageMessage = new JLabel("Load an image using the Load New... button below.");
     imagePanel.add(imageMessage);
+    imagePanel.setBackground(Color.LIGHT_GRAY);
     this.add(imagePanel, BorderLayout.CENTER);
 
     // TODO Adding the histogram visualization to the right side of the screen
     histogramPanel = new JPanel();
-    histogram =  new JLabel("Histogram of RBG Value Distribution");
+    histogram =  new JLabel("Histogram of RBG Value Frequencies");
     histogram.setBackground(Color.LIGHT_GRAY);
     histogramPanel.add(histogram);
-    this.add(histogramPanel, BorderLayout.LINE_END);
+    this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
 
     // TODO Adding buttons to the bottom of the screen
     bottomMenuBar = new JMenuBar();
@@ -207,7 +210,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     luma.addActionListener(evt -> features.component("luma"));
     vertical.addActionListener(evt -> features.flip("vertical"));
     horizontal.addActionListener(evt -> features.flip("horizontal"));
-    brighten.addActionListener(evt -> features.brighten(getBrightnessIncrement()));
+    brighten.addActionListener(evt -> features.brighten(getBrightness()));
     load.addActionListener(evt -> features.load(loadImage()));
     save.addActionListener(evt -> features.save(savePath()));
     exit.addActionListener(evt -> features.exit());
@@ -249,14 +252,17 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   }
 
   // getting the brightness increment value from user input.
-  private int getBrightnessIncrement() {
-    brightenPanel = new JPanel();
-    brighten.setText(JOptionPane.showInputDialog("Enter a value."));
-//    JSpinner spinner = new JSpinner();
-//    spinner.setBounds(0, -250, 250, 10);
-//    brightenPanel.add(optionPane);
-//    this.add(brightenPanel);
-    return 0;
+  private int getBrightness() {
+    JOptionPane optionPane = new JOptionPane();
+    String input = optionPane.showInputDialog("Enter a value between (-250,250)"
+        + " to brighten/darken the image.");
+    int value = Integer.parseInt(input);
+    if (value > 250 || value < -250) {
+      displayMessage("Brightness input out of range. Please re-enter.");
+      getBrightness();
+      return 0;
+    }
+    return value;
   }
 
   @Override
@@ -273,11 +279,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
   @Override
   public void displayMessage(String message) {
-
-  }
-
-  @Override
-  public void resetFocus() {
-
+    JOptionPane optionPane = new JOptionPane();
+    optionPane.showMessageDialog(this, message);
   }
 }
