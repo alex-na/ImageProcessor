@@ -72,15 +72,12 @@ public class GUIController implements Features {
 
   @Override
   public void filter(String type) {
-    System.out.print("filter: been here. 1\n");
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     this.view.displayImage(image);
-    System.out.print("filter: been here. 2\n");
     this.view.displayHistogram(model.createHistogram(desiredName));
     this.imageNames.add(desiredName);
-    System.out.print("filter: been here. 3\n");
   }
 
   @Override

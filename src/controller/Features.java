@@ -24,4 +24,5 @@ public interface Features {
   void component(String type);
 
   void populateHistogram(List<List<Integer>> list);
+
 }

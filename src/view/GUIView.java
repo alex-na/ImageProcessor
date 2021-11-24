@@ -150,9 +150,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     // Brighten Button
     // TODO figure out this functionality
+    brightenPanel = new JPanel();
     brighten = new JButton("Brighten");
     brighten.setActionCommand("Brighten");
-    topMenuBar.add(brighten);
+    brightenPanel.add(brighten);
+    topMenuBar.add(brightenPanel);
 
     // TODO Adding an image to the center of the screen
     imagePanel = new JPanel();
@@ -247,12 +249,12 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
   // getting the brightness increment value from user input.
   private int getBrightnessIncrement() {
     brightenPanel = new JPanel();
-    JOptionPane optionPane = new JOptionPane();
-    JSpinner spinner = new JSpinner();
-    spinner.setBounds(0, -250, 250, 10);
-    brightenPanel.add(spinner);
-    this.add(brightenPanel);
-    return (int) spinner.getValue();
+    brighten.setText(JOptionPane.showInputDialog("Enter a value."));
+//    JSpinner spinner = new JSpinner();
+//    spinner.setBounds(0, -250, 250, 10);
+//    brightenPanel.add(optionPane);
+//    this.add(brightenPanel);
+    return 0;
   }
 
   @Override
