@@ -8,32 +8,33 @@ import java.util.List;
 
 public final class Histogram extends JPanel {
 
-    private final int height = 500;
-    private final int width = 500;
-    private final int unitY; //height / maxFrequency
+    private final int height = 300;
+    private final int width = 510;
+    private final double unitY; //height / maxFrequency
     private final int unitX = width / 255;
     private final int maxFreq;
     private final List<List<Line>> lineLists = new ArrayList<>();
 
     public Histogram(List<List<Integer>> frequencies) {
         super();
-        super.setPreferredSize(new Dimension(500, 500));
+        super.setPreferredSize(new Dimension(510, 300));
 
-        int maxFreq = 0;
+        int maxFreqTemp = 0;
 
         for (List<Integer> list : frequencies) {
             for (Integer i : list) {
-                maxFreq = Math.max(maxFreq, i);
+                maxFreqTemp = Math.max(maxFreqTemp, i);
             }
         }
-        this.maxFreq = maxFreq;
-        this.unitY = height / this.maxFreq;
+        this.maxFreq = maxFreqTemp;
+
+        this.unitY = (double) height / this.maxFreq;
 
         for (List<Integer> list : frequencies) {
             List<Line> newList = new ArrayList<>();
             for (int i = 0; i < 255; i++) {
-                newList.add(new Line(i * unitX, 300 - list.get(i) * unitY,
-                        (i + 1) * unitX, 300 - list.get(i + 1) * unitY));
+                newList.add(new Line(i * unitX, (int) (height - (list.get(i) * unitY)),
+                        (i + 1) * unitX, (int) (height - (list.get(i + 1) * unitY))));
             }
             lineLists.add(newList);
         }
@@ -47,31 +48,27 @@ public final class Histogram extends JPanel {
         for (int i = 0; i < lineLists.size(); i++) {
             g.setColor(lineColors.get(i));
             for (Line l : lineLists.get(i)) {
-                l.paint(g);
+                g.drawLine(l.xFrom, l.yFrom, l.xTo, l.yTo);
             }
         }
     }
 
     public static class Line {
         public final int xFrom;
-        public final int yTo;
-        public final int xTo;
         public final int yFrom;
+        public final int xTo;
+        public final int yTo;
 
         public Line(int xFrom, int yFrom, int xTo, int yTo) {
             this.xFrom = xFrom;
-            this.xTo = xTo;
             this.yFrom = yFrom;
+            this.xTo = xTo;
             this.yTo = yTo;
-        }
-
-        public void paint(Graphics g) {
-            g.drawLine(this.xFrom, this.yFrom, this.xTo, this.yTo);
         }
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500, 500);
+        return new Dimension(400, 510);
     }
 }
