@@ -8,30 +8,47 @@ import java.util.List;
 
 public final class Histogram extends JPanel {
 
-    private final int height = 400;
+    private final int height = 500;
     private final int width = 500;
     private final int unitY; //height / maxFrequency
     private final int unitX = width / 255;
-    private final ArrayList<Line> lines = new ArrayList<Line>();
+    private final int maxFreq;
+    private final List<List<Line>> lineLists = new ArrayList<>();
 
-    public Histogram(List<Integer> frequencies, int maxFreq) {
+    public Histogram(List<List<Integer>> frequencies) {
         super();
-        super.setPreferredSize(new Dimension(500, 400));
+        super.setPreferredSize(new Dimension(500, 500));
 
-        this.unitY = height / maxFreq;
-        for (int i = 0; i < 255; i++) {
-            addLine(i * unitX, frequencies.get(i) * unitY, (i + 1) * unitX, frequencies.get(i + 1) * unitY);
+        int maxFreq = 0;
+
+        for (List<Integer> list : frequencies) {
+            for (Integer i : list) {
+                maxFreq = Math.max(maxFreq, i);
+            }
         }
+        this.maxFreq = maxFreq;
+        this.unitY = height / this.maxFreq;
+
+        for (List<Integer> list : frequencies) {
+            List<Line> newList = new ArrayList<>();
+            for (int i = 0; i < 255; i++) {
+                newList.add(new Line(i * unitX, 300 - list.get(i) * unitY,
+                        (i + 1) * unitX, 300 - list.get(i + 1) * unitY));
+            }
+            lineLists.add(newList);
+        }
+        setVisible(true);
     }
 
-
-    public void addLine(int xFrom, int yFrom, int xTo, int yTo) {
-        this.lines.add(new Line(xFrom, yFrom, xTo, yTo));
-    }
-
+    @Override
     public void paintComponent(Graphics g) {
-        for (Line l : lines) {
-            l.paint(g);
+        super.paintComponent(g);
+        List<Color> lineColors = new ArrayList<>(Arrays.asList(Color.RED, Color.GREEN, Color.BLUE, Color.MAGENTA));
+        for (int i = 0; i < lineLists.size(); i++) {
+            g.setColor(lineColors.get(i));
+            for (Line l : lineLists.get(i)) {
+                l.paint(g);
+            }
         }
     }
 
@@ -55,6 +72,6 @@ public final class Histogram extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(400, 300);
+        return new Dimension(500, 500);
     }
 }

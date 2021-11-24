@@ -49,7 +49,7 @@ public class PixelImage implements Image {
   @Override
   public boolean isGreyscale() {
     for (int row = 0; row < this.height; row++) {
-      for (int col = 0; row < this.height; col++) {
+      for (int col = 0; col < this.width; col++) {
         Color color = getPixelAt(row, col);
         int r = color.getRed();
         int g = color.getGreen();
