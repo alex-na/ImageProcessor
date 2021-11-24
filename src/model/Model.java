@@ -149,6 +149,8 @@ public class Model implements ImageProcessingModel {
           frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
           frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
           frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
+
+
         }
       }
     frequencies.add(frequencyOfIntensity);

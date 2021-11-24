@@ -51,8 +51,8 @@ public class GUIController implements Features {
     System.out.print("load: " + filePath + "\n");
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
-    this.view.displayHistogram(model.createHistogram("default"));
     this.imageNames.add("default");
+    this.view.displayHistogram(model.createHistogram("default"));
 //    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
 //    save.apply(this.model);
     System.out.print(getLatestImage());
@@ -129,5 +129,10 @@ public class GUIController implements Features {
     this.view.displayImage(image);
     this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
+  }
+
+  @Override
+  public void populateHistogram(List<List<Integer>> list) {
+
   }
 }
