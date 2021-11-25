@@ -6,11 +6,8 @@ import controller.commands.Save;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import model.ImageProcessingModel;
-import view.GUIView;
 import view.ImageProcessingGUIView;
-import view.ImageProcessingView;
 
 /**
  *
@@ -44,20 +41,15 @@ public class GUIController implements Features {
     }
     this.view = view;
     this.view.addFeatures(this);
+    view.displayMessage("Welcome! Please load an image using the Load New... button below.");
   }
 
   @Override
   public void load(String filePath) {
-    System.out.print("load: " + filePath + "\n");
     ImageProcessingCommand load = new Load(filePath, "default");
     load.apply(this.model);
     this.imageNames.add("default");
     this.view.displayHistogram(model.createHistogram("default"));
-//    ImageProcessingCommand save = new Save("images/testing.jpeg", "default");
-//    save.apply(this.model);
-    System.out.print(getLatestImage());
-//    BufferedImage image = model.toBufferedImage("default");
-//    view.displayImage(image);
   }
 
   // Getting most recent image in Map.
@@ -65,8 +57,18 @@ public class GUIController implements Features {
     return this.imageNames.get(imageNames.size() - 1);
   }
 
+  // If no image is loaded, throw an error when a button is pressed.
+  private boolean throwErrorIfNoImageLoaded() {
+    if ((imageNames.size()) == 0) {
+      view.displayMessage("Please load an image before performing an operation.");
+      return false;
+    }
+    return true;
+  }
+
   @Override
   public void save(String filePath) {
+    throwErrorIfNoImageLoaded();
     ImageProcessingCommand save = new Save(filePath, getLatestImage());
     save.apply(this.model);
   }
@@ -78,56 +80,62 @@ public class GUIController implements Features {
 
   @Override
   public void filter(String type) {
+    throwErrorIfNoImageLoaded();
     desiredName = getLatestImage() + "-" + type;
     this.model.filterImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.updateHistogram(histogram);
+    this.view.displayHistogram(model.createHistogram(desiredName));
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
   @Override
   public void transform(String type) {
+    throwErrorIfNoImageLoaded();
     desiredName = getLatestImage() + "-" + type;
     this.model.transformImage(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.updateHistogram(histogram);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
   @Override
   public void brighten(int increment) {
+    throwErrorIfNoImageLoaded();
     desiredName = getLatestImage() + "-" + ("brightened-by-" + increment);
     this.model.brightenImage(increment, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.updateHistogram(histogram);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
   @Override
   public void flip(String axis) {
+    throwErrorIfNoImageLoaded();
     desiredName = getLatestImage() + "-" + axis;
     this.model.flipImage(axis, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.updateHistogram(histogram);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 
   @Override
   public void component(String type) {
+    throwErrorIfNoImageLoaded();
     desiredName = getLatestImage() + "-" + type;
     this.model.displayGreyscale(type, getLatestImage(), desiredName);
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.updateHistogram(histogram);
+    this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }
 }

@@ -1,22 +1,18 @@
 package view;
 
 import controller.Features;
-
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,11 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import util.image.Image;
 
 public class GUIView extends JFrame implements ImageProcessingGUIView {
 
@@ -59,10 +51,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JLabel imageMessage;
     private JScrollPane imageScrollPane;
     private JLabel histogram;
-    private JFormattedTextField brightenInputField;
     private JPanel histogramPanel;
-    private JLabel brightenLabel;
-    private JPanel brightenPanel;
 
     private JMenuBar bottomMenuBar;
     private JButton exit;
@@ -151,29 +140,30 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         topMenuBar.add(flipMenu);
 
         // Brighten Button
-        // TODO figure out this functionality
         brighten = new JButton("Brighten");
         brighten.setActionCommand("Brighten");
         topMenuBar.add(brighten);
 
-        // TODO Adding an image to the center of the screen
+        // Setting the image panel
         imagePanel = new JPanel();
-        imagePanel.setBackground(Color.LIGHT_GRAY);
+        imagePanel.setLayout(new CardLayout());
         image = new JLabel();
         image.setIcon(new ImageIcon());
-        imagePanel.add(image);
+        imageScrollPane = new JScrollPane(image);
+        imagePanel.add(imageScrollPane);
         imageMessage = new JLabel("Load an image using the Load New... button below.");
         imagePanel.add(imageMessage);
+        imagePanel.setBackground(Color.LIGHT_GRAY);
         this.add(imagePanel, BorderLayout.CENTER);
 
         // TODO Adding the histogram visualization to the right side of the screen
         histogramPanel = new JPanel();
-        histogram = new JLabel("Histogram of RBG Value Distribution");
+        histogram =  new JLabel("Histogram of RBG Value Frequencies");
         histogram.setBackground(Color.LIGHT_GRAY);
         histogramPanel.add(histogram);
-        this.add(histogramPanel, BorderLayout.LINE_END);
+        this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
 
-        // TODO Adding buttons to the bottom of the screen
+        // Bottom menu bar with load/save/exit buttons
         bottomMenuBar = new JMenuBar();
         this.add(bottomMenuBar, BorderLayout.PAGE_END);
         // Load Button
@@ -207,23 +197,18 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         luma.addActionListener(evt -> features.component("luma"));
         vertical.addActionListener(evt -> features.flip("vertical"));
         horizontal.addActionListener(evt -> features.flip("horizontal"));
-        brighten.addActionListener(evt -> features.brighten(getBrightnessIncrement()));
+        brighten.addActionListener(evt -> features.brighten(getBrightness()));
         load.addActionListener(evt -> features.load(loadImage()));
-        save.addActionListener(evt -> features.save(savePath()));
+        save.addActionListener(evt -> features.save(saveImage()));
         exit.addActionListener(evt -> features.exit());
-    }
-
-    @Override
-    public void displayMessage(String message) {
-
     }
 
     // load file path viz. retrieve string of file path from user clicks.
     private String loadImage() {
+        System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
-        imageMessage.setVisible(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Images", "jpg", "ppm", "jpeg", "bmp", "png");
+            "Images", "jpg", "ppm", "jpeg", "bmp", "png");
         fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(GUIView.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -232,18 +217,17 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
             try {
                 BufferedImage newImage = ImageIO.read(file);
                 image.setIcon(new ImageIcon(newImage));
-                System.out.print("loadImage:" + filePath + "\n");
             } catch (IOException e) {
-                System.out.print("File loading error");
+                displayMessage("Unable to load file. Please try again.");
+                loadImage();
             }
             return filePath;
         }
-        System.out.print("loadImage: File path not retrieved\n");
-        return "File path not retrieved";
+        return "";
     }
 
     // save file path viz. retrieve string of file path from user clicks.
-    private String savePath() {
+    private String saveImage() {
         final JFileChooser fileChooser = new JFileChooser(".");
         int returnValue = fileChooser.showSaveDialog(GUIView.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -254,21 +238,23 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     }
 
     // getting the brightness increment value from user input.
-    private int getBrightnessIncrement() {
-        brightenPanel = new JPanel();
+    private int getBrightness() {
         JOptionPane optionPane = new JOptionPane();
-        JSpinner spinner = new JSpinner();
-        spinner.setBounds(0, -250, 250, 10);
-        brightenPanel.add(spinner);
-        this.add(brightenPanel);
-        return (int) spinner.getValue();
+        String input = optionPane.showInputDialog("Enter a value between (-250,250)"
+            + " to brighten/darken the image.");
+        int value = Integer.parseInt(input);
+        if (value > 250 || value < -250) {
+            displayMessage("Brightness input out of range. Please re-enter.");
+            getBrightness();
+            return 0;
+        }
+        return value;
     }
 
     @Override
     public void displayImage(BufferedImage newImage) {
         image.setIcon(new ImageIcon(newImage));
     }
-
 
     @Override
     public void displayHistogram(List<List<Integer>> lists) {
@@ -281,6 +267,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         this.repaint();
     }
 
+    @Override
     public void updateHistogram(List<List<Integer>> lists) {
         histogramPanel.removeAll();
         histogramPanel.add(new Histogram(lists));
@@ -290,4 +277,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         this.repaint();
     }
 
-  }
+    @Override
+    public void displayMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+}

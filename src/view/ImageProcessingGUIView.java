@@ -16,5 +16,5 @@ public interface ImageProcessingGUIView {
 
   void displayMessage(String message);
 
-    void updateHistogram(List<List<Integer>> histogram);
+  void updateHistogram(List<List<Integer>> histogram);
 }
