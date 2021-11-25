@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ *
+ */
 public final class Histogram extends JPanel {
 
     private final int height = 300;
@@ -15,6 +18,10 @@ public final class Histogram extends JPanel {
     private final int maxFreq;
     private final List<List<Line>> lineLists = new ArrayList<>();
 
+    /**
+     *
+     * @param frequencies
+     */
     public Histogram(List<List<Integer>> frequencies) {
         super();
         super.setPreferredSize(new Dimension(500, 300));
@@ -55,6 +62,7 @@ public final class Histogram extends JPanel {
             }
         }
     }
+
     public void repaint() {
         super.repaint();
     }
