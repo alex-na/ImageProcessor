@@ -18,7 +18,7 @@ import view.View;
 /**
  * Class utilized for running the ImageProcessingProgram.
  */
-public final class ImageProcessingProgram {
+  public final class ImageProcessingProgram {
 
   /**
    * Main method used to instantiate the class objects and run the controller's processImage()

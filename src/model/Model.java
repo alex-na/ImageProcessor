@@ -121,7 +121,7 @@ public class Model implements ImageProcessingModel {
     //Grab the Image, height, and width.
     Image image = loadMap.get(imageName);
     int height = getImageHeight(imageName);
-    int width = getImageHeight(imageName);
+    int width = getImageWidth(imageName);
 
     List<List<Integer>> frequencies = new ArrayList<>();
 

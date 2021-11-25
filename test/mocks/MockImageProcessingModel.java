@@ -2,6 +2,7 @@ package mocks;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class MockImageProcessingModel implements ImageProcessingModel {
   @Override
   public void brightenImage(int increment, String imageName, String desiredName)
           throws IllegalArgumentException {
+
     log.append(String.format("brightenImage method called with parameters: %d, %s, %s",
             increment, imageName, desiredName));
   }
@@ -101,7 +103,7 @@ public class MockImageProcessingModel implements ImageProcessingModel {
    */
   @Override
   public List<List<Integer>> createHistogram(String imageName) throws IllegalArgumentException {
-    return null;
+    return new ArrayList<>();
   }
 
   @Override
@@ -125,6 +127,7 @@ public class MockImageProcessingModel implements ImageProcessingModel {
       throw new IllegalArgumentException("The image name is null");
     }
     return loadMap.get(imageName).getImageHeight();
+
   }
 
   @Override

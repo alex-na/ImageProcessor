@@ -10,7 +10,7 @@ import model.ImageProcessingModel;
 import view.ImageProcessingGUIView;
 
 /**
- *
+ * Class that represents a controller for a Graphic User Interface.
  */
 public class GUIController implements Features {
 
@@ -20,8 +20,8 @@ public class GUIController implements Features {
   private String desiredName;
 
   /**
-   *
-   * @param model
+   * Given a model for an Image processor, constructs a GUI that passes information to the given model.
+   * @param model the model that information from the controller will be passed to.
    */
   public GUIController(ImageProcessingModel model) throws IllegalArgumentException {
     if (model == null) {
@@ -31,10 +31,7 @@ public class GUIController implements Features {
     this.imageNames = new ArrayList<>();
   }
 
-  /**
-   *
-   * @param view
-   */
+
   public void setView(ImageProcessingGUIView view) {
     if (view == null) {
       throw new IllegalArgumentException("View may not be null.");

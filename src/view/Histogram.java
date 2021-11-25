@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A class that represents a Histogram supporting JPanel.
+ */
 public final class Histogram extends JPanel {
 
     private final int height = 300;
@@ -15,6 +18,10 @@ public final class Histogram extends JPanel {
     private final int maxFreq;
     private final List<List<Line>> lineLists = new ArrayList<>();
 
+    /**
+     * Given lists of integers that represent the frequency that each value of a component was use
+     * @param frequencies the lists of frequency values.
+     */
     public Histogram(List<List<Integer>> frequencies) {
         super();
         super.setPreferredSize(new Dimension(510, 300));
@@ -52,6 +59,8 @@ public final class Histogram extends JPanel {
             }
         }
     }
+
+    @Override
     public void repaint() {
         super.repaint();
     }
