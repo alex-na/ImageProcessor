@@ -24,7 +24,7 @@ public final class Histogram extends JPanel {
      */
     public Histogram(List<List<Integer>> frequencies) {
         super();
-        super.setPreferredSize(new Dimension(500, 300));
+        super.setPreferredSize(new Dimension(510, 300));
         //this.setBackground(Color.LIGHT_GRAY);
         this.setLayout(new CardLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black));
