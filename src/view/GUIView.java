@@ -220,8 +220,8 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     // load file path viz. retrieve string of file path from user clicks.
     private String loadImage() {
-        System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
+        imageMessage.setVisible(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Images", "jpg", "ppm", "jpeg", "bmp", "png");
         fileChooser.setFileFilter(filter);
@@ -272,6 +272,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     @Override
     public void displayHistogram(List<List<Integer>> lists) {
+        histogramPanel.removeAll();
         histogramPanel.add(new Histogram(lists));
         histogram.setVisible(false);
         histogramPanel.validate();
