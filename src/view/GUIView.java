@@ -78,11 +78,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Filter Menu
         filterMenu = new JMenu("Filter");
         // Blur Button
-        blur = new JCheckBoxMenuItem("Blur");
+        blur = new JMenuItem("Blur");
         blur.setActionCommand("Blur Button");
         filterMenu.add(blur);
         // Sharpen Button
-        sharpen = new JCheckBoxMenuItem("Sharpen");
+        sharpen = new JMenuItem("Sharpen");
         sharpen.setActionCommand("Greyscale Button");
         filterMenu.add(sharpen);
         topMenuBar.add(filterMenu);
@@ -90,11 +90,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Transformation Menu
         transformMenu = new JMenu("Transform");
         // Sepia Button
-        sepia = new JCheckBoxMenuItem("Sepia");
+        sepia = new JMenuItem("Sepia");
         sepia.setActionCommand("Sepia Button");
         transformMenu.add(sepia);
         // Greyscale Button
-        greyscale = new JCheckBoxMenuItem("Greyscale");
+        greyscale = new JMenuItem("Greyscale");
         greyscale.setActionCommand("Greyscale Button");
         transformMenu.add(greyscale);
         topMenuBar.add(transformMenu);
@@ -102,27 +102,27 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Component Menu
         componentMenu = new JMenu("Component");
         // Red Component Button
-        red = new JCheckBoxMenuItem("Red");
+        red = new JMenuItem("Red");
         red.setActionCommand("Red Component Button");
         componentMenu.add(red);
         // Green Component Button
-        green = new JCheckBoxMenuItem("Green");
+        green = new JMenuItem("Green");
         green.setActionCommand("Green Component Button");
         componentMenu.add(green);
         // Blue Component Button
-        blue = new JCheckBoxMenuItem("Blue");
+        blue = new JMenuItem("Blue");
         blue.setActionCommand("Blue Component Button");
         componentMenu.add(blue);
         // Value Component Button
-        value = new JCheckBoxMenuItem("Value");
+        value = new JMenuItem("Value");
         value.setActionCommand("Value Component Button");
         componentMenu.add(value);
         // Intensity Component Button
-        intensity = new JCheckBoxMenuItem("Intensity");
+        intensity = new JMenuItem("Intensity");
         intensity.setActionCommand("Intensity Component Button");
         componentMenu.add(intensity);
         // Luma Component Button
-        luma = new JCheckBoxMenuItem("Luma");
+        luma = new JMenuItem("Luma");
         luma.setActionCommand("Luma Component Button");
         componentMenu.add(luma);
         topMenuBar.add(componentMenu);
@@ -130,11 +130,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Flip Menu
         flipMenu = new JMenu("Flip");
         // Vertical Button
-        vertical = new JCheckBoxMenuItem("Vertical");
+        vertical = new JMenuItem("Vertical");
         vertical.setActionCommand("Vertical Button");
         flipMenu.add(vertical);
         // Horizontal Button
-        horizontal = new JCheckBoxMenuItem("Horizontal");
+        horizontal = new JMenuItem("Horizontal");
         horizontal.setActionCommand("Horizontal Button");
         flipMenu.add(horizontal);
         topMenuBar.add(flipMenu);
@@ -203,7 +203,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         exit.addActionListener(evt -> features.exit());
     }
 
-    // load file path viz. retrieve string of file path from user clicks.
+    // load file path, retrieve string of file path from user clicks.
     private String loadImage() {
         System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
@@ -226,7 +226,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         return "";
     }
 
-    // save file path viz. retrieve string of file path from user clicks.
+    // save file path, retrieve string of file path from user clicks.
     private String saveImage() {
         final JFileChooser fileChooser = new JFileChooser(".");
         int returnValue = fileChooser.showSaveDialog(GUIView.this);
