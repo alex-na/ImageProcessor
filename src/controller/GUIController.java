@@ -86,7 +86,7 @@ public class GUIController implements Features {
     BufferedImage image = model.toBufferedImage(desiredName);
     List<List<Integer>> histogram = model.createHistogram(desiredName);
     this.view.displayImage(image);
-    this.view.displayHistogram(model.createHistogram(desiredName));
+    //this.view.displayHistogram(model.createHistogram(desiredName));
     this.view.displayHistogram(histogram);
     this.imageNames.add(desiredName);
   }

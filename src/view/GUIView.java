@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -50,7 +52,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JLabel image;
     private JLabel imageMessage;
     private JScrollPane imageScrollPane;
-    private JLabel histogram;
+    private JLabel histogramMessage;
     private JPanel histogramPanel;
 
     private JMenuBar bottomMenuBar;
@@ -158,9 +160,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
         // TODO Adding the histogram visualization to the right side of the screen
         histogramPanel = new JPanel();
-        histogram =  new JLabel("Histogram of RBG Value Frequencies");
-        histogram.setBackground(Color.LIGHT_GRAY);
-        histogramPanel.add(histogram);
+        histogramPanel.setLayout(new BoxLayout(histogramPanel, BoxLayout.Y_AXIS));
+        histogramPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        histogramPanel.setBackground(Color.LIGHT_GRAY);
+        histogramMessage =  new JLabel("Histogram of RBG Value Frequencies");
+        histogramPanel.add(histogramMessage);
         this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
 
         // Bottom menu bar with load/save/exit buttons
@@ -208,7 +212,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images", "jpg", "ppm", "jpeg", "bmp", "png");
+            "Images", "jpg", "jpeg", "bmp", "png");
         fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(GUIView.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -259,18 +263,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     @Override
     public void displayHistogram(List<List<Integer>> lists) {
         histogramPanel.removeAll();
-        histogramPanel.add(new Histogram(lists));
-        histogram.setVisible(false);
-        histogramPanel.validate();
-        histogramPanel.repaint();
-        this.validate();
-        this.repaint();
-    }
-
-    @Override
-    public void updateHistogram(List<List<Integer>> lists) {
-        histogramPanel.removeAll();
-        histogramPanel.add(new Histogram(lists));
+        histogramPanel.add(histogramMessage, BoxLayout.X_AXIS);
+        histogramPanel.add(new Histogram(lists), BoxLayout.Y_AXIS);
+        //histogram.setVisible(false);
         histogramPanel.validate();
         histogramPanel.repaint();
         this.validate();
