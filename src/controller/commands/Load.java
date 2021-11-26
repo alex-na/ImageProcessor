@@ -11,8 +11,6 @@ import javax.imageio.ImageIO;
 import model.ImageProcessingModel;
 import util.image.Image;
 import util.image.PixelImage;
-import view.ImageProcessingView;
-
 
 import util.ImageUtil;
 

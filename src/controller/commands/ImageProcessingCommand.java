@@ -1,7 +1,6 @@
 package controller.commands;
 
 import model.ImageProcessingModel;
-import view.ImageProcessingView;
 
 /**
  * Representing the commands that an ImageProcessingController

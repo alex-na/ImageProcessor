@@ -33,7 +33,7 @@ public interface ImageState {
   Color getPixelAt(int row, int col) throws IllegalArgumentException;
 
   /**
-   *
+   * Checking if the image is greyscale.
    * @return true if for every pixel each RBG component is equal to eachother.
    */
   boolean isGreyscale();

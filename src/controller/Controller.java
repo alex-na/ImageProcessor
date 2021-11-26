@@ -25,7 +25,7 @@ import view.ImageProcessingView;
 public class Controller implements ImageProcessingController {
 
   private final ImageProcessingModel model;
-  private final ImageProcessingView view;
+  //private final ImageProcessingView view;
   private final Readable input;
 
   /**
@@ -44,7 +44,7 @@ public class Controller implements ImageProcessingController {
     }
 
     this.model = model;
-    this.view = view;
+    //this.view = view;
     this.input = input;
 
   }

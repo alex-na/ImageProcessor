@@ -2,8 +2,11 @@ package model;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import util.image.Image;
 import util.image.PixelImage;
 
@@ -146,20 +149,20 @@ public class Model implements ImageProcessingModel {
       frequencyOfBlue.add(0);
       frequencyOfIntensity.add(0);
     }
-      //Iterate through all pixels and add their component values to the representative lists.
-      for (int row = 0; row < height; row++) {
-        for (int col = 0; col < width; col++) {
-          int redComponent = image.getPixelAt(row, col).getRed();
-          int greenComponent = image.getPixelAt(row, col).getGreen();
-          int blueComponent = image.getPixelAt(row, col).getBlue();
-          int intensity = (redComponent + greenComponent + blueComponent) / 3;
+    //Iterate through all pixels and add their component values to the representative lists.
+    for (int row = 0; row < height; row++) {
+      for (int col = 0; col < width; col++) {
+        int redComponent = image.getPixelAt(row, col).getRed();
+        int greenComponent = image.getPixelAt(row, col).getGreen();
+        int blueComponent = image.getPixelAt(row, col).getBlue();
+        int intensity = (redComponent + greenComponent + blueComponent) / 3;
 
-          frequencyOfRed.set(redComponent, frequencyOfRed.get(redComponent) + 1);
-          frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
-          frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
-          frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
-        }
+        frequencyOfRed.set(redComponent, frequencyOfRed.get(redComponent) + 1);
+        frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
+        frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
+        frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
       }
+    }
 
     frequencies.add(frequencyOfIntensity);
     frequencies.add(frequencyOfRed);

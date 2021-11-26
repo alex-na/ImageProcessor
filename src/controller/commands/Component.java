@@ -1,7 +1,6 @@
 package controller.commands;
 
 import model.ImageProcessingModel;
-import view.ImageProcessingView;
 
 /**
  * Command class used for methods pertaining to a "component" input,

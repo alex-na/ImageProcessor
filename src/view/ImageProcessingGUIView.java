@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- *
+ * Representing a GUI View.
  */
 public interface ImageProcessingGUIView {
 
@@ -16,10 +16,12 @@ public interface ImageProcessingGUIView {
   void displayImage(BufferedImage image);
 
   /**
-   * Given lists of integers that represent the frequency that pixels of an image display color components
-   * of varying greyscale values, creates a histogram line chart so that the user can visual the value disparity.
-   * @param histogram lists of integers tht represent the frequency that values of color components are used
-   *                  in an image.
+   * Given lists of integers that represent the frequency that pixels of an
+   * image display color components
+   * of varying greyscale values, creates a histogram line chart
+   * so that the user can visual the value disparity.
+   * @param histogram lists of integers tht represent the frequency that
+   *                 values of color components are used in an image.
    */
   void displayHistogram(List<List<Integer>> histogram);
 

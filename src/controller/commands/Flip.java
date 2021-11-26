@@ -1,7 +1,6 @@
 package controller.commands;
 
 import model.ImageProcessingModel;
-import view.ImageProcessingView;
 
 /**
  * Command class used to execute flip operations.

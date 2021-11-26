@@ -20,7 +20,8 @@ public class GUIController implements Features {
   private String desiredName;
 
   /**
-   * Given a model for an Image processor, constructs a GUI that passes information to the given model.
+   * Given a model for an Image processor, constructs a GUI that
+   * passes information to the given model.
    * @param model the model that information from the controller will be passed to.
    */
   public GUIController(ImageProcessingModel model) throws IllegalArgumentException {
@@ -31,7 +32,7 @@ public class GUIController implements Features {
     this.imageNames = new ArrayList<>();
   }
 
-
+  @Override
   public void setView(ImageProcessingGUIView view) {
     if (view == null) {
       throw new IllegalArgumentException("View may not be null.");

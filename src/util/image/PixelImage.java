@@ -43,9 +43,6 @@ public class PixelImage implements Image {
     return image[row][col];
   }
 
-  /**
-   * @return true if for every pixel each RBG component is equal to eachother.
-   */
   @Override
   public boolean isGreyscale() {
     for (int row = 0; row < this.height; row++) {
