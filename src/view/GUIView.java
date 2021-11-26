@@ -23,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Class that represents a the view of a GUI.
+ */
 public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     private JMenuBar topMenuBar;
@@ -58,6 +61,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JButton save;
     private JButton load;
 
+    /**
+     * Constructs the view of a GUI, and allows users to apply actions to the program.
+     */
     public GUIView() {
         super();
 
@@ -261,16 +267,6 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         histogramPanel.removeAll();
         histogramPanel.add(new Histogram(lists));
         histogram.setVisible(false);
-        histogramPanel.validate();
-        histogramPanel.repaint();
-        this.validate();
-        this.repaint();
-    }
-
-    @Override
-    public void updateHistogram(List<List<Integer>> lists) {
-        histogramPanel.removeAll();
-        histogramPanel.add(new Histogram(lists));
         histogramPanel.validate();
         histogramPanel.repaint();
         this.validate();
