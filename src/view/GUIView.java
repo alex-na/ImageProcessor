@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -23,9 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- * Class that represents a the view of a GUI.
- */
 public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     private JMenuBar topMenuBar;
@@ -53,7 +52,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JLabel image;
     private JLabel imageMessage;
     private JScrollPane imageScrollPane;
-    private JLabel histogram;
+    private JLabel histogramMessage;
     private JPanel histogramPanel;
 
     private JMenuBar bottomMenuBar;
@@ -61,9 +60,6 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JButton save;
     private JButton load;
 
-    /**
-     * Constructs the view of a GUI, and allows users to apply actions to the program.
-     */
     public GUIView() {
         super();
 
@@ -84,11 +80,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Filter Menu
         filterMenu = new JMenu("Filter");
         // Blur Button
-        blur = new JCheckBoxMenuItem("Blur");
+        blur = new JMenuItem("Blur");
         blur.setActionCommand("Blur Button");
         filterMenu.add(blur);
         // Sharpen Button
-        sharpen = new JCheckBoxMenuItem("Sharpen");
+        sharpen = new JMenuItem("Sharpen");
         sharpen.setActionCommand("Greyscale Button");
         filterMenu.add(sharpen);
         topMenuBar.add(filterMenu);
@@ -96,11 +92,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Transformation Menu
         transformMenu = new JMenu("Transform");
         // Sepia Button
-        sepia = new JCheckBoxMenuItem("Sepia");
+        sepia = new JMenuItem("Sepia");
         sepia.setActionCommand("Sepia Button");
         transformMenu.add(sepia);
         // Greyscale Button
-        greyscale = new JCheckBoxMenuItem("Greyscale");
+        greyscale = new JMenuItem("Greyscale");
         greyscale.setActionCommand("Greyscale Button");
         transformMenu.add(greyscale);
         topMenuBar.add(transformMenu);
@@ -108,27 +104,27 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Component Menu
         componentMenu = new JMenu("Component");
         // Red Component Button
-        red = new JCheckBoxMenuItem("Red");
+        red = new JMenuItem("Red");
         red.setActionCommand("Red Component Button");
         componentMenu.add(red);
         // Green Component Button
-        green = new JCheckBoxMenuItem("Green");
+        green = new JMenuItem("Green");
         green.setActionCommand("Green Component Button");
         componentMenu.add(green);
         // Blue Component Button
-        blue = new JCheckBoxMenuItem("Blue");
+        blue = new JMenuItem("Blue");
         blue.setActionCommand("Blue Component Button");
         componentMenu.add(blue);
         // Value Component Button
-        value = new JCheckBoxMenuItem("Value");
+        value = new JMenuItem("Value");
         value.setActionCommand("Value Component Button");
         componentMenu.add(value);
         // Intensity Component Button
-        intensity = new JCheckBoxMenuItem("Intensity");
+        intensity = new JMenuItem("Intensity");
         intensity.setActionCommand("Intensity Component Button");
         componentMenu.add(intensity);
         // Luma Component Button
-        luma = new JCheckBoxMenuItem("Luma");
+        luma = new JMenuItem("Luma");
         luma.setActionCommand("Luma Component Button");
         componentMenu.add(luma);
         topMenuBar.add(componentMenu);
@@ -136,11 +132,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         // Flip Menu
         flipMenu = new JMenu("Flip");
         // Vertical Button
-        vertical = new JCheckBoxMenuItem("Vertical");
+        vertical = new JMenuItem("Vertical");
         vertical.setActionCommand("Vertical Button");
         flipMenu.add(vertical);
         // Horizontal Button
-        horizontal = new JCheckBoxMenuItem("Horizontal");
+        horizontal = new JMenuItem("Horizontal");
         horizontal.setActionCommand("Horizontal Button");
         flipMenu.add(horizontal);
         topMenuBar.add(flipMenu);
@@ -164,9 +160,11 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
         // TODO Adding the histogram visualization to the right side of the screen
         histogramPanel = new JPanel();
-        histogram =  new JLabel("Histogram of RBG Value Frequencies");
-        histogram.setBackground(Color.LIGHT_GRAY);
-        histogramPanel.add(histogram);
+        histogramPanel.setLayout(new BoxLayout(histogramPanel, BoxLayout.Y_AXIS));
+        histogramPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        histogramPanel.setBackground(Color.LIGHT_GRAY);
+        histogramMessage =  new JLabel("Histogram of RBG Value Frequencies");
+        histogramPanel.add(histogramMessage);
         this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
 
         // Bottom menu bar with load/save/exit buttons
@@ -209,12 +207,12 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         exit.addActionListener(evt -> features.exit());
     }
 
-    // load file path viz. retrieve string of file path from user clicks.
+    // load file path, retrieve string of file path from user clicks.
     private String loadImage() {
         System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Images", "jpg", "ppm", "jpeg", "bmp", "png");
+            "Images", "jpg", "jpeg", "bmp", "png");
         fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(GUIView.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -232,7 +230,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         return "";
     }
 
-    // save file path viz. retrieve string of file path from user clicks.
+    // save file path, retrieve string of file path from user clicks.
     private String saveImage() {
         final JFileChooser fileChooser = new JFileChooser(".");
         int returnValue = fileChooser.showSaveDialog(GUIView.this);
@@ -265,8 +263,9 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     @Override
     public void displayHistogram(List<List<Integer>> lists) {
         histogramPanel.removeAll();
-        histogramPanel.add(new Histogram(lists));
-        histogram.setVisible(false);
+        histogramPanel.add(histogramMessage, BoxLayout.X_AXIS);
+        histogramPanel.add(new Histogram(lists), BoxLayout.Y_AXIS);
+        //histogram.setVisible(false);
         histogramPanel.validate();
         histogramPanel.repaint();
         this.validate();
