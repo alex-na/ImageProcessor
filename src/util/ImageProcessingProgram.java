@@ -18,7 +18,7 @@ import view.View;
 /**
  * Class utilized for running the ImageProcessingProgram.
  */
-  public final class ImageProcessingProgram {
+public final class ImageProcessingProgram {
 
   /**
    * Main method used to instantiate the class objects and run the controller's processImage()
@@ -41,14 +41,18 @@ import view.View;
         } catch (FileNotFoundException e) {
           throw new IllegalArgumentException("Invalid file.");
         }
+        ImageProcessingController controller = new Controller(model, textView, read);
+        controller.processImage();
       }
-      else if (args[0].equals("-text")) {
-        read = new InputStreamReader(System.in);
-      }
-      ImageProcessingController controller = new Controller(model, textView, read);
-      controller.processImage();
     }
-    else if (args.length == 0) {
+    if (args.length == 1) {
+      if (args[0].equals("-text")) {
+        read = new InputStreamReader(System.in);
+        ImageProcessingController controller = new Controller(model, textView, read);
+        controller.processImage();
+      }
+    }
+    if (args.length == 0) {
       GUIController controller = new GUIController(model);
       controller.setView(guiView);
     }
