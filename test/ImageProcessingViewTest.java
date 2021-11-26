@@ -14,7 +14,6 @@ public class ImageProcessingViewTest {
 
   Appendable append = new StringBuilder();
   ImageProcessingView view = new View(append);
-  ImageProcessingView emptyView = new View();
 
   @Test(expected = IllegalArgumentException.class)
   public void constTest1() {

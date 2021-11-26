@@ -3,9 +3,7 @@ import static org.junit.Assert.assertEquals;
 import controller.Controller;
 import controller.ImageProcessingController;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,7 +15,6 @@ import model.Model;
 
 import org.junit.Test;
 
-import javax.imageio.ImageIO;
 
 import view.ImageProcessingView;
 import view.View;
@@ -144,22 +141,22 @@ public class ImageProcessingControllerTest {
         assertEquals(expected, sb.toString());
     }
 
-    // Testing save command
-    @Test
-    public void testSavetoBufferedImageFile() throws IOException {
-        StringBuilder mLog = new StringBuilder();
-        StringBuilder vLog = new StringBuilder();
-        ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
-        ImageProcessingView mockView = new MockImageProcessingView(vLog);
-        Readable read = new StringReader("save images/colorful.jpg colorful");
-        ImageProcessingController c = new Controller(mockModel, mockView, read);
-        c.processImage();
-
-        BufferedImage image = ImageIO.read(new File("images/colorful.jpg"));
-
-        assertEquals(mockModel.getImageHeight("colorful"), image.getHeight());
-        assertEquals(mockModel.getImageWidth("colorful"), image.getWidth());
-    }
+//    // Testing save command
+//    @Test
+//    public void testSavetoBufferedImageFile() throws IOException {
+//        StringBuilder mLog = new StringBuilder();
+//        StringBuilder vLog = new StringBuilder();
+//        ImageProcessingModel mockModel = new MockImageProcessingModel(mLog);
+//        ImageProcessingView mockView = new MockImageProcessingView(vLog);
+//        Readable read = new StringReader("save images/colorful.jpg colorful");
+//        ImageProcessingController c = new Controller(mockModel, mockView, read);
+//        c.processImage();
+//
+//        BufferedImage image = ImageIO.read(new File("images/colorful.jpg"));
+//
+//        assertEquals(mockModel.getImageHeight("colorful"), image.getHeight());
+//        assertEquals(mockModel.getImageWidth("colorful"), image.getWidth());
+//    }
 
     // Testing brighten command
     @Test

@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.*;
 
 import util.image.Image;

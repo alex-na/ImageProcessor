@@ -2,8 +2,6 @@ package controller;
 
 import view.ImageProcessingGUIView;
 
-import java.util.List;
-
 /**
  * Representing the features that our graphical user interface supports.
  */
