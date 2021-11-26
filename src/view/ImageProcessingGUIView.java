@@ -4,8 +4,9 @@ import controller.Features;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import util.image.Image;
-
+/**
+ *
+ */
 public interface ImageProcessingGUIView {
 
   /**

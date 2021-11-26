@@ -1,7 +1,6 @@
 package view;
 
 import controller.Features;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -24,9 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-/**
- * Represents a view that supports the Graphic User Interface of an image processor.
- */
 public class GUIView extends JFrame implements ImageProcessingGUIView {
 
     private JMenuBar topMenuBar;
@@ -62,10 +58,6 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private JButton save;
     private JButton load;
 
-    /**
-     * Constructs the intial view of an image processor, and displays the supported functionality of this image
-     * processor that a user can interact with in order to display desired changes to an image.
-     */
     public GUIView() {
         super();
 
@@ -166,7 +158,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
 
         // TODO Adding the histogram visualization to the right side of the screen
         histogramPanel = new JPanel();
-        histogram = new JLabel("Histogram of RBG Value Frequencies");
+        histogram =  new JLabel("Histogram of RBG Value Frequencies");
         histogram.setBackground(Color.LIGHT_GRAY);
         histogramPanel.add(histogram);
         this.add(histogramPanel, BorderLayout.AFTER_LINE_ENDS);
@@ -216,7 +208,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         System.out.print("loadImage: Been Here.\n");
         JFileChooser fileChooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Images", "jpg", "ppm", "jpeg", "bmp", "png");
+            "Images", "jpg", "ppm", "jpeg", "bmp", "png");
         fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(GUIView.this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -249,7 +241,7 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
     private int getBrightness() {
         JOptionPane optionPane = new JOptionPane();
         String input = optionPane.showInputDialog("Enter a value between (-250,250)"
-                + " to brighten/darken the image.");
+            + " to brighten/darken the image.");
         int value = Integer.parseInt(input);
         if (value > 250 || value < -250) {
             displayMessage("Brightness input out of range. Please re-enter.");
@@ -269,6 +261,16 @@ public class GUIView extends JFrame implements ImageProcessingGUIView {
         histogramPanel.removeAll();
         histogramPanel.add(new Histogram(lists));
         histogram.setVisible(false);
+        histogramPanel.validate();
+        histogramPanel.repaint();
+        this.validate();
+        this.repaint();
+    }
+
+    @Override
+    public void updateHistogram(List<List<Integer>> lists) {
+        histogramPanel.removeAll();
+        histogramPanel.add(new Histogram(lists));
         histogramPanel.validate();
         histogramPanel.repaint();
         this.validate();

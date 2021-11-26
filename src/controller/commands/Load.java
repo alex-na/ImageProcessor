@@ -50,6 +50,7 @@ public class Load implements ImageProcessingCommand {
       if (!(Arrays.asList(supportedSuffixes).contains(splitAtPeriods[indexOfType]))) {
         throw new IllegalArgumentException("The given file is not supported for reading.");
       }
+
       BufferedImage image;
 
       try {

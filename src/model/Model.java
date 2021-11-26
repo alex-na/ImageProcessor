@@ -25,18 +25,22 @@ public class Model implements ImageProcessingModel {
   }
 
   //Getters
+  @Override
   public Color getPixelAt(String imageName, int row, int col) throws IllegalArgumentException {
     return getImage(imageName).getPixelAt(row, col);
   }
 
+  @Override
   public int getImageHeight(String imageName) throws IllegalArgumentException {
     return getImage(imageName).getImageHeight();
   }
 
+  @Override
   public int getImageWidth(String imageName) throws IllegalArgumentException {
     return getImage(imageName).getImageWidth();
   }
 
+  @Override
   public void load(String imageName, Image image) throws IllegalArgumentException {
     if (imageName == null || image == null) {
       throw new IllegalArgumentException("The imageName and/or image are null");
@@ -44,6 +48,7 @@ public class Model implements ImageProcessingModel {
     loadMap.put(imageName, image);
   }
 
+  @Override
   public Image getImage(String imageName) throws IllegalArgumentException {
     if (!(loadMap.containsKey(imageName)) || loadMap.get(imageName) == null) {
       throw new IllegalArgumentException("Image name is not associated with an image.");
@@ -52,6 +57,7 @@ public class Model implements ImageProcessingModel {
   }
 
   //Functionality
+  @Override
   public void brightenImage(int increment, String imageName, String desiredName)
       throws IllegalArgumentException {
     validateNames(imageName, desiredName);
@@ -60,6 +66,7 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(brightened));
   }
 
+  @Override
   public void displayGreyscale(String component, String imageName, String desiredName)
       throws IllegalArgumentException {
     validateNames(imageName, desiredName);
@@ -77,6 +84,7 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(greyscale));
   }
 
+  @Override
   public void flipImage(String axis, String imageName, String desiredName)
       throws IllegalArgumentException {
     validateNames(imageName, desiredName);
@@ -90,6 +98,7 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(flippedImage));
   }
 
+  @Override
   public void filterImage(String filterType, String imageName, String desiredName)
       throws IllegalArgumentException {
     validateNames(imageName, desiredName);
@@ -100,6 +109,7 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(filtered));
   }
 
+  @Override
   public void transformImage(String transformType, String imageName, String desiredName)
       throws IllegalArgumentException {
     validateNames(imageName, desiredName);
@@ -110,6 +120,7 @@ public class Model implements ImageProcessingModel {
     load(desiredName, new PixelImage(transformed));
   }
 
+  @Override
   public List<List<Integer>> createHistogram(String imageName) throws IllegalArgumentException {
     if (imageName == null) {
       throw new IllegalArgumentException("The given image name is null.");
@@ -136,7 +147,6 @@ public class Model implements ImageProcessingModel {
       frequencyOfBlue.add(0);
       frequencyOfIntensity.add(0);
     }
-
       //Iterate through all pixels and add their component values to the representative lists.
       for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -149,10 +159,9 @@ public class Model implements ImageProcessingModel {
           frequencyOfGreen.set(greenComponent, frequencyOfGreen.get(greenComponent) + 1);
           frequencyOfBlue.set(blueComponent, frequencyOfBlue.get(blueComponent) + 1);
           frequencyOfIntensity.set(intensity, frequencyOfIntensity.get(intensity) + 1);
-
-
         }
       }
+
     frequencies.add(frequencyOfIntensity);
     frequencies.add(frequencyOfRed);
     frequencies.add(frequencyOfGreen);
@@ -171,7 +180,7 @@ public class Model implements ImageProcessingModel {
     }
   }
 
-
+  @Override
   public BufferedImage toBufferedImage(String imageName) {
     int i;
     int j;
